@@ -29,9 +29,6 @@
                             Sign In
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -66,6 +63,8 @@ export default {
     .navbar-nav {
         .nav-link {
             font-weight: 600;
+
+            margin-left: 1.2rem;
         }
 
         .show > .nav-link,
