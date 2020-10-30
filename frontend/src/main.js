@@ -5,4 +5,10 @@ import store from './store'
 
 import './assets/scss/app.scss'
 
-createApp(App).use(store).use(router).mount('#app')
+import FontAwesomeIcon from './plugins/FontAwesomeIcon'
+
+createApp(App)
+    .use(store)
+    .use(router)
+    .component('font-awesome-icon', FontAwesomeIcon)
+    .mount('#app')

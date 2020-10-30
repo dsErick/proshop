@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-lg container-fluid">
-            <a class="navbar-brand" href="#">ProShop</a>
+            <router-link :to="{ name: 'Home' }" class="navbar-brand">ProShop</router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -10,15 +10,24 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link>
+                        <router-link :to="{ name: 'Home' }" class="nav-link">
+                            <font-awesome-icon :icon="['fas', 'home']" fixed-width />
+                            Home
+                        </router-link>
                     </li>
                     <li class="nav-item">
                         <!-- <router-link to="/cart" class="nav-link">Cart</router-link> -->
-                        <a class="nav-link" href="#">Cart</a>
+                        <a class="nav-link" href="#">
+                            <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
+                            Cart
+                        </a>
                     </li>
                     <li class="nav-item">
                         <!-- <router-link to="/login" class="nav-link">Sign In</router-link> -->
-                        <a class="nav-link" href="#">Sign In</a>
+                        <a class="nav-link" href="#">
+                            <font-awesome-icon :icon="['fas', 'user']" fixed-width />
+                            Sign In
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
