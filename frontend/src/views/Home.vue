@@ -1,12 +1,10 @@
 <template>
-<div class="home">
+<div id="home" class="container-lg container-fluid ">
     <h1>Welcome to ProShop</h1>
 </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
     name: 'Home',
     components: {}
