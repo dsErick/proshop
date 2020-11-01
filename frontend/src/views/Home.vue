@@ -24,7 +24,7 @@ import productsArray from '@/products.js'
 export default {
     name: 'Home',
     components: {
-        VProduct: defineAsyncComponent(() => import(/* webpackChunkName: "v-product" */ '../components/VProduct'))
+        VProduct: defineAsyncComponent(() => import(/* webpackChunkName: "product-component" */ '@/components/products/VProduct'))
     },
     setup() {
         const products = ref(productsArray)
