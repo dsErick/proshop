@@ -16,14 +16,20 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <!-- <router-link to="/cart" class="nav-link">Cart</router-link> -->
+                        <!-- <router-link to="/cart" class="nav-link">
+                            <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
+                            Cart
+                        </router-link> -->
                         <a class="nav-link" href="#">
                             <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
                             Cart
                         </a>
                     </li>
                     <li class="nav-item">
-                        <!-- <router-link to="/login" class="nav-link">Sign In</router-link> -->
+                        <!-- <router-link to="/login" class="nav-link">
+                            <font-awesome-icon :icon="['fas', 'user']" fixed-width />
+                            Sign In
+                        </router-link> -->
                         <a class="nav-link" href="#">
                             <font-awesome-icon :icon="['fas', 'user']" fixed-width />
                             Sign In

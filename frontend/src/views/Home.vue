@@ -1,5 +1,5 @@
 <template>
-<div id="home" class="container-lg container-fluid ">
+<div id="home" class="container-lg container-fluid">
     <h2>Latest Products</h2>
 
     <div class="row" v-if="products.length">
