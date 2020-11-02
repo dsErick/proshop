@@ -12,7 +12,7 @@
         <div class="card-text my-3">
             <v-rating
                 :value="product.rating"
-                :text="` from ${product.numReviews} reviews`"
+                :text="` ${product.numReviews} reviews`"
             />
         </div>
 
