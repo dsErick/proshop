@@ -4,6 +4,9 @@ const webpack = require('webpack')
 module.exports = {
     lintOnSave: false,
     
+    devServer: {
+        proxy: 'http://localhost:8000'
+    },
     configureWebpack: {
         plugins: [
             new BundleAnalyzerPlugin(),

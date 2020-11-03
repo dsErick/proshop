@@ -1,11 +1,11 @@
 <template>
 <div class="card">
-    <router-link :to="{ name: 'Product', params: { productId: product._id } }">
+    <router-link :to="{ name: 'Product', params: { id: product._id } }">
         <img :src="product.image" class="card-img-top">
     </router-link>
 
     <div class="card-body">
-        <router-link :to="{ name: 'Product', params: { productId: product._id } }" class="text-dark">
+        <router-link :to="{ name: 'Product', params: { id: product._id } }" class="text-dark">
             <h5 class="card-title"><strong>{{ product.name }}</strong></h5>
         </router-link>
 

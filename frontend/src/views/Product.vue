@@ -2,7 +2,7 @@
 <div id="product" class="container-lg container-fluid">
     <router-link :to="{ name: 'Home' }" class="btn btn-dark mb-3">Go back</router-link>
 
-    <div class="row">
+    <div class="row" v-if="product._id">
         <div class="col-lg-6 text-center">
             <img :src="product.image" :alt="`${product.name} image`" class="img-fluid">
         </div>
@@ -49,14 +49,22 @@
             </div>
         </div>
     </div>
+
+    <div
+        class="alert alert-danger"
+        role="alert"
+        v-if="error"
+    >
+        {{ error }}
+    </div>
 </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import productsArray from '@/products.js'
 import VRating from '@/components/products/VRating'
+import axios from 'axios'
 
 export default {
     name: 'Product',
@@ -64,11 +72,29 @@ export default {
         VRating
     },
     setup() {
-        const $route = useRoute()
-        const product = computed(() => productsArray.find(product => product._id === $route.params.productId) ?? {})
+        const product = ref({})
+        const setProduct = data => product.value = data
+
+        const error = ref('')
+        const setError = err => error.value = err
+
+        onMounted(async () => {
+            try {
+                const $route = useRoute()
+                const { data } = await axios.get(`/api/products/${$route.params.id}`)
+    
+                if (data.success) setProduct(data.data)
+                
+            } catch (err) {
+                console.log(err, err.response)
+
+                if (!err.response.data.success) setError(err.response.data.message)
+            }
+        })
         
-        return{
-            product
+        return {
+            product,
+            error
         }
     }
 }
