@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { ref, onMounted, defineAsyncComponent } from 'vue'
-import axios from 'axios'
+import { onMounted, defineAsyncComponent } from 'vue'
+import useProducts from '@/composables/useProducts.js'
 
 export default {
     name: 'Home',
@@ -27,19 +27,8 @@ export default {
         VProduct: defineAsyncComponent(() => import(/* webpackChunkName: "product-component" */ '@/components/products/VProduct'))
     },
     setup() {
-        const products = ref([])
-        const setProducts = data => products.value = data
-
-        onMounted(async () => {
-            try {
-                const { data } = await axios.get('/api/products')
-
-                if (data.success) setProducts(data.data)
-
-            } catch (err) {
-                console.log(err, err.response)
-            }
-        })
+        const { products, setProducts } = useProducts()
+        onMounted(() => setProducts())
         
         return {
             products

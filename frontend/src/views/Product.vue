@@ -61,10 +61,9 @@
 </template>
 
 <script>
-import { computed, ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted } from 'vue'
+import useProducts from '@/composables/useProducts.js'
 import VRating from '@/components/products/VRating'
-import axios from 'axios'
 
 export default {
     name: 'Product',
@@ -72,26 +71,9 @@ export default {
         VRating
     },
     setup() {
-        const product = ref({})
-        const setProduct = data => product.value = data
+        const { product, error, setProduct } = useProducts()
+        onMounted(() => setProduct())
 
-        const error = ref('')
-        const setError = err => error.value = err
-
-        onMounted(async () => {
-            try {
-                const $route = useRoute()
-                const { data } = await axios.get(`/api/products/${$route.params.id}`)
-    
-                if (data.success) setProduct(data.data)
-                
-            } catch (err) {
-                console.log(err, err.response)
-
-                if (!err.response.data.success) setError(err.response.data.message)
-            }
-        })
-        
         return {
             product,
             error
