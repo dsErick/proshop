@@ -5,7 +5,7 @@ module.exports = {
     lintOnSave: false,
     
     devServer: {
-        proxy: 'http://localhost:8000'
+        proxy: 'http://localhost:5000'
     },
     configureWebpack: {
         plugins: [
