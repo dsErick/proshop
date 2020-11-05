@@ -4,7 +4,7 @@
 
     <div class="row" v-if="products.length">
         <div
-            class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-3"
+            class="col-xl-3 col-lg-4 col-md-6 col-sm-12"
             v-for="product in products"
             :key="product._id"
         >
@@ -40,10 +40,11 @@ export default {
 <style scoped lang="scss">
 #home {
     > .row {
-        margin: 0 -.5rem;
+        margin: 0 -.25rem;
 
         > div.col-xl-3 {
-            padding: 0 .5rem;
+            padding: 0 .25rem;
+            margin-bottom: .5rem;
         }
     }
 }

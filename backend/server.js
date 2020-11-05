@@ -1,9 +1,9 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const morgan = require('morgan')
-const products = require('./data/products.js')
+import express from 'express'
+import dotenv from 'dotenv'
+import morgan from 'morgan'
+import products from './data/products.js'
 
-// dotenv setup
+// Dotenv setup
 dotenv.config()
 
 // Express initialized 
