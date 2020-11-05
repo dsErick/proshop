@@ -5,7 +5,9 @@
     "main": "server.js",
     "scripts": {
         "start": "node backend/server.js",
-        "dev": "nodemon backend/server.js"
+        "server": "nodemon backend/server.js",
+        "client": "npm run serve --prefix frontend",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "keywords": [],
     "author": "Erick Silva",
@@ -14,6 +16,7 @@
         "express": "^4.17.1"
     },
     "devDependencies": {
+        "concurrently": "^5.3.0",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.6"
     }

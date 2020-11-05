@@ -4,7 +4,11 @@
 
     <div class="row" v-if="product._id">
         <div class="col-lg-6 text-center">
-            <img :src="product.image" :alt="`${product.name} image`" class="img-fluid">
+            <img
+                class="img-fluid"
+                :src="product.image"
+                :alt="`${product.name} image`"
+            >
         </div>
         <div class="col-lg-3 col-md-6 col-sm-7">
             <ul class="list-group list-group-flush">
