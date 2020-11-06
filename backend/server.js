@@ -1,10 +1,14 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
+import connectDB from './config/db.js'
 import products from './data/products.js'
 
 // Dotenv setup
 dotenv.config()
+
+// Connect MongoDB
+connectDB()
 
 // Express initialized 
 const app = express()
