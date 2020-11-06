@@ -9,11 +9,11 @@ export default async function connectDB() {
             useUnifiedTopology: true
         })
     
-        console.log(`MongoDB connected: \x1b[36m${conn.connection.host}\x1b[0m`)
+        console.log(`MongoDB connected: ${conn.connection.host}\n`.cyan.bold)
 
     } catch (err) {
-        console.error(`\x1b[31mError: ${err.message}\x1b[0m`)
-        
+        console.error(`Error: ${err.message}`.red.underline.bold)
+
         process.exit(1)
     }
 }

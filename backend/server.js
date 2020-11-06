@@ -1,6 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
+import colors from 'colors'
+
 import connectDB from './config/db.js'
 import products from './data/products.js'
 
@@ -50,4 +52,4 @@ app.get('/api/products/:id', (req, res) => {
 })
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT, console.log(`Server running in \x1b[36m${process.env.NODE_ENV}\x1b[0m mode on port \x1b[36m${PORT}\x1b[0m`))
+app.listen(PORT, console.log(`\nServer running in "${process.env.NODE_ENV}" mode on port "${PORT}"`.yellow.bold))
