@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
-import colors from 'colors'
+import 'colors'
 
 import connectDB from './config/db.js'
 import products from './data/products.js'
