@@ -8,7 +8,9 @@
         "start": "node backend/server.js",
         "server": "nodemon backend/server.js",
         "client": "npm run serve --prefix frontend",
-        "dev": "concurrently \"npm run server\" \"npm run client\""
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "data:import": "node backend/seeder.js",
+        "data:destroy": "node backend/seeder.js -d"
     },
     "keywords": [],
     "author": "Erick Silva",
