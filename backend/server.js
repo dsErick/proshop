@@ -4,7 +4,6 @@ import morgan from 'morgan'
 import 'colors'
 
 import connectDB from './config/db.js'
-import products from './data/products.js'
 
 // Dotenv setup
 dotenv.config()
@@ -18,7 +17,11 @@ const app = express()
 // HTTP Request logger for dev mode
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
-// API routes
+/* 
+ * API routes
+ */
+import ProductRoutes from './routes/ProductRoutes.js'
+
 app.get('/', (req, res) => {
     res.status(200).json({
         success: true,
@@ -26,30 +29,9 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/api/products', (req, res) => {
-    res.status(200).json({
-        success: true,
-        data: products
-    })
-})
+app.use('/api/products', ProductRoutes)
 
-app.get('/api/products/:id', (req, res) => {
-    const product = products.find(p => p._id === req.params.id)
 
-    let response = {
-        success: true,
-        data: product
-    }
-
-    if (product === undefined) {
-        response = {
-            success: false,
-            message: `Product not found with the id of ${req.params.id}`
-        }
-    }
-
-    res.status(response.success ? 200 : 404).json(response)
-})
-
+// Listening for a port 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, console.log(`\nServer running in "${process.env.NODE_ENV}" mode on port "${PORT}"`.yellow.bold))
