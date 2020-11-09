@@ -11,7 +11,8 @@ const ReviewSchema = new mongoose.Schema({
     },
     comment: {
         type: String,
-        required: [true, 'The comment field is required']
+        required: [true, 'The comment field is required'],
+        default: ''
     }
 }, {
     timestamps: true

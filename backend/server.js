@@ -5,6 +5,11 @@ import 'colors'
 
 import connectDB from './config/db.js'
 
+import { notFound, errorHandler } from './middleware/errorHandler.js'
+
+import ProductRoutes from './routes/ProductRoutes.js'
+
+
 // Dotenv setup
 dotenv.config()
 
@@ -17,19 +22,19 @@ const app = express()
 // HTTP Request logger for dev mode
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
-/* 
- * API routes
- */
-import ProductRoutes from './routes/ProductRoutes.js'
 
+// API routes
 app.get('/', (req, res) => {
     res.status(200).json({
-        success: true,
         data: 'API is Running'
     })
 })
 
 app.use('/api/products', ProductRoutes)
+
+
+// Custom Error Handler Middleware
+app.use(notFound, errorHandler)
 
 
 // Listening for a port 

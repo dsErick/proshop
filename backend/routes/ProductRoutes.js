@@ -13,7 +13,6 @@ router.get('/', asyncHandler(async (_, res) => {
     const products = await Product.find({})
     
     res.status(200).json({
-        success: true,
         data: products
     })
 }))
@@ -24,23 +23,16 @@ router.get('/', asyncHandler(async (_, res) => {
  * @access      Public
  */
 router.get('/:id', asyncHandler(async (req, res) => {
-    let response = {
-        success: true,
-        data: null
-    }
-    
     const product = await Product.findById(req.params.id)
     
-    response.data = product
-
-    if (product === null) {
-        response = {
-            success: false,
-            message: `Product not found with the id of ${req.params.id}`
-        }
+    if (!product) {
+        res.status(404)
+        throw new Error(`Product not found with the id of ${req.params.id}`)
     }
 
-    res.status(response.success ? 200 : 404).json(response)
+    res.status(200).json({
+        data: product
+    })
 }))
 
 export default router

@@ -8,7 +8,7 @@ export default function useProducts() {
         try {
             const { data } = await axios.get('/api/products')
     
-            if (data.success) products.value = data.data
+            products.value = data.data
 
         } catch (err) {
             console.log(err, err.response)
@@ -18,16 +18,18 @@ export default function useProducts() {
     const product = ref({})
     const error = ref('')
     const setProduct = async () => {
+        const $route = useRoute()
         try {
-            const $route = useRoute()
             const { data } = await axios.get(`/api/products/${$route.params.id}`)
 
-            if (data.success) product.value = data.data
+            product.value = data.data
             
         } catch (err) {
             console.log(err, err.response)
 
-            if (!err.response.data.success) error.value = err.response.data.message
+            if (err.response.status === 404) error.value = err.response.data.message
+
+            if (err.response.status === 422) error.value = `Product not found with the id of ${$route.params.id}`
         }
     }
 
