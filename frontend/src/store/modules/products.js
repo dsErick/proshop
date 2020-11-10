@@ -1,5 +1,5 @@
 import axios from 'axios'
-import actionHandler from '@/utils/actionHandler'
+import actionHandler from '@/store/actionHandler'
 
 const state = {
     products: []
