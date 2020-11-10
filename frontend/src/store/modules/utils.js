@@ -2,12 +2,12 @@ let isLoading = 0
 
 const state = {
     loading: false,
-    errors: null
+    error: null
 }
 
 const getters = {
     isLoading: state => state.loading,
-    getErrors: state => state.errors
+    getError: state => state.error
 }
 
 const mutations = {
@@ -22,8 +22,8 @@ const mutations = {
         }
     },
 
-    resetErrors: state => state.errors = null,
-    setErrors: (state, errors) => state.errors = errors
+    resetError: state => state.error = null,
+    setError: (state, error) => state.error = error
 }
 
 export default {

@@ -1,19 +1,14 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import axios from 'axios'
 
 export default function useProducts() {
-    const products = ref([])
-    const setProducts = async () => {
-        try {
-            const { data } = await axios.get('/api/products')
-    
-            products.value = data.data
+    const store = useStore()
 
-        } catch (err) {
-            console.log(err, err.response)
-        }
-    }
+    const products = computed(() => store.getters.getProducts)
+    const setProducts = () => store.dispatch('fetchProducts')
+
 
     const product = ref({})
     const error = ref('')
@@ -37,7 +32,8 @@ export default function useProducts() {
         products,
         setProducts,
         product,
-        error,
-        setProduct
+        setProduct,
+        isLoading: computed(() => store.getters['utils/isLoading']),
+        error: computed(() => store.getters['utils/getError'])
     }
 }

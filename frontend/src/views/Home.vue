@@ -2,7 +2,17 @@
 <div id="home" class="container-lg container-fluid">
     <h2>Latest Products</h2>
 
-    <div class="row" v-if="products.length">
+    <h4 v-if="isLoading">
+        Loading...
+    </h4>
+    <div v-else-if="error">
+        <h4>{{ error }}</h4>
+    </div>
+
+    <div
+        class="row"
+        v-else-if="products.length"
+    >
         <div
             class="col-xl-3 col-lg-4 col-md-6 col-sm-12"
             v-for="product in products"
@@ -14,15 +24,12 @@
             />
         </div>
     </div>
-
-    <pre>{{productsList}}</pre>
 </div>
 </template>
 
 <script>
-import { onMounted, defineAsyncComponent, computed } from 'vue'
+import { onMounted, defineAsyncComponent } from 'vue'
 import useProducts from '@/composables/useProducts.js'
-import { useStore } from 'vuex'
 
 export default {
     name: 'Home',
@@ -30,17 +37,13 @@ export default {
         VProduct: defineAsyncComponent(() => import(/* webpackChunkName: "product-component" */ '@/components/products/VProduct'))
     },
     setup() {
-        const { products, setProducts } = useProducts()
-        onMounted(() => setProducts())
-
-        const store = useStore()
-        const productsList = computed(() => store.getters.getProducts)
-
-        console.log(store, store.dispatch('fetchProducts'))
+        const { products, setProducts, isLoading, error } = useProducts()
+        onMounted(setProducts())
         
         return {
             products,
-            productsList
+            isLoading,
+            error
         }
     }
 }
