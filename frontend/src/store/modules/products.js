@@ -1,4 +1,5 @@
 import axios from 'axios'
+import actionHandler from '@/utils/actionHandler'
 
 const state = {
     products: []
@@ -9,21 +10,11 @@ const getters = {
 }
 
 const actions = {
-    fetchProducts: async ({ commit }) => {
-        try {
-            commit('utils/setLoading', true, { root: true })
+    fetchProducts: actionHandler(async ({ commit }) => {
+        const { data } = await axios.get('/api/products')
 
-            const { data } = await axios.get('/api/products')
-
-            commit('setProducts', data.data)
-            
-        } catch (err) {
-            console.log(err, err.response)
-            
-        } finally {
-            commit('utils/setLoading', false, { root: true })
-        }
-    }
+        commit('setProducts', data.data)
+    })
 }
 
 const mutations = {
