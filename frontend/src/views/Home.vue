@@ -1,13 +1,17 @@
 <template>
 <div id="home" class="container-lg container-fluid">
-    <h2>Latest Products</h2>
+    <h2 class="mb-3">Latest Products</h2>
 
-    <h4 v-if="isLoading">
-        Loading...
-    </h4>
-    <div v-else-if="error">
+    <v-loader v-if="isLoading" />
+
+    <v-alert
+        v-else-if="error"
+        :message="error"
+    />
+    
+    <!-- <div v-else-if="error">
         <h4>{{ error }}</h4>
-    </div>
+    </div> -->
 
     <div
         class="row"
@@ -34,7 +38,9 @@ import useProducts from '@/composables/useProducts.js'
 export default {
     name: 'Home',
     components: {
-        VProduct: defineAsyncComponent(() => import(/* webpackChunkName: "product-component" */ '@/components/products/VProduct'))
+        VProduct: defineAsyncComponent(() => import(/* webpackChunkName: "product-component" */ '@/components/products/VProduct')),
+        VLoader: defineAsyncComponent(() => import(/* webpackChunkName: "loader-component" */ '@/components/utils/VLoader')),
+        VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
         const { products, setProducts, isLoading, error } = useProducts()
