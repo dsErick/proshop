@@ -14,12 +14,15 @@
             />
         </div>
     </div>
+
+    <pre>{{productsList}}</pre>
 </div>
 </template>
 
 <script>
-import { onMounted, defineAsyncComponent } from 'vue'
+import { onMounted, defineAsyncComponent, computed } from 'vue'
 import useProducts from '@/composables/useProducts.js'
+import { useStore } from 'vuex'
 
 export default {
     name: 'Home',
@@ -29,9 +32,15 @@ export default {
     setup() {
         const { products, setProducts } = useProducts()
         onMounted(() => setProducts())
+
+        const store = useStore()
+        const productsList = computed(() => store.getters.getProducts)
+
+        console.log(store, store.dispatch('fetchProducts'))
         
         return {
-            products
+            products,
+            productsList
         }
     }
 }
