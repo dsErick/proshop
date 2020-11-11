@@ -15,8 +15,10 @@ export default function useProducts() {
 
     const addToCart = (id, qty = 1) => router.push({
         name: 'Cart',
-        params: { productId: id },
-        query: { qty }
+        query: {
+            product: id,
+            qty
+        }
     })
 
     return {
