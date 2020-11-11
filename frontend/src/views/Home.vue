@@ -9,10 +9,6 @@
         :message="error"
     />
     
-    <!-- <div v-else-if="error">
-        <h4>{{ error }}</h4>
-    </div> -->
-
     <div
         class="row"
         v-else-if="products.length"
@@ -44,7 +40,7 @@ export default {
     },
     setup() {
         const { products, setProducts, isLoading, error } = useProducts()
-        onMounted(setProducts())
+        onMounted(() => setProducts())
         
         return {
             products,

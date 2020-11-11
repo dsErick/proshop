@@ -2,7 +2,14 @@
 <div id="product" class="container-lg container-fluid">
     <router-link :to="{ name: 'Home' }" class="btn btn-dark mb-3">Go back</router-link>
 
-    <div class="row" v-if="product._id">
+    <v-loader v-if="isLoading" />
+
+    <v-alert
+        v-else-if="error"
+        :message="error"
+    />
+    
+    <div class="row" v-else>
         <div class="col-lg-6 text-center">
             <img
                 class="img-fluid"
@@ -53,33 +60,28 @@
             </div>
         </div>
     </div>
-
-    <div
-        class="alert alert-danger"
-        role="alert"
-        v-if="error"
-    >
-        {{ error }}
-    </div>
 </div>
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, defineAsyncComponent } from 'vue'
 import useProducts from '@/composables/useProducts.js'
 import VRating from '@/components/products/VRating'
 
 export default {
     name: 'Product',
     components: {
-        VRating
+        VRating,
+        VLoader: defineAsyncComponent(() => import(/* webpackChunkName: "loader-component" */ '@/components/utils/VLoader')),
+        VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { product, error, setProduct } = useProducts()
+        const { product, setProduct, isLoading, error } = useProducts()
         onMounted(() => setProduct())
 
         return {
             product,
+            isLoading,
             error
         }
     }

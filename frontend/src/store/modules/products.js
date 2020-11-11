@@ -1,24 +1,48 @@
 import axios from 'axios'
 import actionHandler from '@/store/actionHandler'
 
+const initialSingleProductState = () => ({
+    user: '',
+    name: '',
+    image: '',
+    brand: '',
+    category: '',
+    description: '',
+    reviews: [],
+    rating: 0,
+    numReviews: 0,
+    price: 0,
+    countInStock: 0
+})
+
 const state = {
-    products: []
+    products: [],
+    product: initialSingleProductState()
 }
 
 const getters = {
-    getProducts: state => state.products
+    getAllProducts: state => state.products,
+    getSingleProduct: state => state.product
 }
 
 const actions = {
-    fetchProducts: actionHandler(async ({ commit }) => {
+    fetchAllProducts: actionHandler(async ({ commit }) => {
         const { data } = await axios.get('/api/products')
 
-        commit('setProducts', data.data)
+        commit('setAllProducts', data.data)
+        commit('utils/resetError', null, { root: true })
+    }),
+    fetchSingleProduct: actionHandler(async ({ commit }, product) => {
+        const { data } = await axios.get(`/api/products/${product}`)
+
+        commit('setSingleProduct', data.data)
+        commit('utils/resetError', null, { root: true })
     })
 }
 
 const mutations = {
-    setProducts: (state, products) => state.products = products
+    setAllProducts: (state, products) => state.products = products,
+    setSingleProduct: (state, newProduct) => Object.keys(newProduct).forEach(key => state.product[key] = newProduct[key])
 }
 
 export default {

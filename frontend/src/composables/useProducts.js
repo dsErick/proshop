@@ -1,32 +1,16 @@
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import axios from 'axios'
 
 export default function useProducts() {
     const store = useStore()
+    const route = useRoute()
 
-    const products = computed(() => store.getters.getProducts)
-    const setProducts = () => store.dispatch('fetchProducts')
+    const products = computed(() => store.getters['getAllProducts'])
+    const setProducts = () => store.dispatch('fetchAllProducts')
 
-
-    const product = ref({})
-    const error = ref('')
-    const setProduct = async () => {
-        const $route = useRoute()
-        try {
-            const { data } = await axios.get(`/api/products/${$route.params.id}`)
-
-            product.value = data.data
-            
-        } catch (err) {
-            console.log(err, err.response)
-
-            if (err.response.status === 404) error.value = err.response.data.message
-
-            if (err.response.status === 422) error.value = `Product not found with the id of ${$route.params.id}`
-        }
-    }
+    const product = computed(() => store.getters['getSingleProduct'])
+    const setProduct = () => store.dispatch('fetchSingleProduct', route.params.id)
 
     return {
         products,
