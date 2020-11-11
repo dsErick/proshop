@@ -9,21 +9,17 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <router-link :to="{ name: 'Home' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'home']" fixed-width />
                             Home
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <!-- <router-link to="/cart" class="nav-link">
+                        <router-link :to="{ name: 'Cart' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
                             Cart
-                        </router-link> -->
-                        <a class="nav-link" href="#">
-                            <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
-                            Cart
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
                         <!-- <router-link to="/login" class="nav-link">
@@ -73,11 +69,11 @@ export default {
             margin-left: 1.2rem;
         }
 
-        .show > .nav-link,
-        .active > .nav-link,
-        .nav-link.show,
-        .nav-link.active,
-        .nav-link.router-link-exact-active {
+        // .show > .nav-link,
+        // .active > .nav-link,
+        // .nav-link.show,
+        // .nav-link.active,
+        .nav-link.router-link-active {
             color: #42b983;
         }
     }

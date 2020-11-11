@@ -45,13 +45,25 @@
                     </li>
                     <li class="list-group-item">
                         Status:
-                        <strong>{{ product.countInStock ? 'In Stock' : 'Out of Stock' }}</strong>
+                        <strong>{{ product.countInStock > 0 ? 'In Stock' : 'Out of Stock' }}</strong>
+                    </li>
+                    <li
+                        class="list-group-item"
+                        v-if="product.countInStock > 0"
+                    >
+                        Quantity:
+                        <select class="form-control w-50" v-model="quantity">
+                            <option v-for="value in product.countInStock" :key="value">
+                                {{ value}}
+                            </option>
+                        </select>
                     </li>
                     <li class="list-group-item">
                         <button
                             class="btn btn-block btn-dark"
                             type="button"
                             :disabled="product.countInStock === 0"
+                            @click="addToCart(product._id, quantity)"
                         >
                             ADD TO CART
                         </button>
@@ -64,7 +76,7 @@
 </template>
 
 <script>
-import { onMounted, defineAsyncComponent } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 import useProducts from '@/composables/useProducts.js'
 import VRating from '@/components/products/VRating'
 
@@ -76,13 +88,16 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { product, setProduct, isLoading, error } = useProducts()
+        const quantity = ref(1)
+        const { product, setProduct, isLoading, error, addToCart } = useProducts()
         onMounted(() => setProduct())
 
         return {
             product,
             isLoading,
-            error
+            error,
+            quantity,
+            addToCart
         }
     }
 }
