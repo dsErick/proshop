@@ -6,7 +6,8 @@ const state = {
 }
 
 const getters = {
-    getCart: state => state.items
+    getCart: state => state.items,
+    getCartCount: state => state.items.length
 }
 
 const actions = {
@@ -14,9 +15,9 @@ const actions = {
         const { data } = await axios.get(`/api/products/${id}`)
         const { _id, name, image, price } = data.data
         
-        const existItem = state.items.find(item => item.product === _id)
-
-        commit(existItem ? 'updateCartItem' : 'addItemToCart', {
+        const existItem = state.items.findIndex(item => item.product === _id)
+        
+        commit(existItem !== -1 ? 'updateCartItem' : 'addItemToCart', {
             product: _id,
             name,
             image,

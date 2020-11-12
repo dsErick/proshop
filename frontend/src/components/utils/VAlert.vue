@@ -4,7 +4,9 @@
     :class="type"
     role="alert"
 >
-    <strong>{{ message }}</strong>
+    <strong>
+        <slot />
+    </strong>
 </div>
 </template>
 
@@ -12,10 +14,6 @@
 export default {
     name: 'VAlert',
     props: {
-        message: {
-            type: String,
-            required: true
-        },
         type: {
             type: String,
             default: 'alert-danger'

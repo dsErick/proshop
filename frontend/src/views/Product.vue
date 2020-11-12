@@ -4,10 +4,9 @@
 
     <v-loader v-if="isLoading" />
 
-    <v-alert
-        v-else-if="error"
-        :message="error"
-    />
+    <v-alert v-else-if="error">
+        {{ error }}
+    </v-alert>
     
     <div class="row" v-else>
         <div class="col-lg-6 text-center">

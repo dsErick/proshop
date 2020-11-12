@@ -19,6 +19,9 @@
                         <router-link :to="{ name: 'Cart' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
                             Cart
+                            <span class="badge rounded-circle">
+                                {{ cart }}
+                            </span>
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -40,9 +43,20 @@
 
 <script>
 import 'bootstrap/js/dist/collapse'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
     name: 'VHeader',
+    setup() {
+        const store = useStore()
+
+        const cart = computed(() => store.getters['getCartCount'])
+
+        return {
+            cart
+        }
+    },
     mounted() {
         // Close collapsed navbar after clicking any nav-link
         $(document).on('click', '.navbar-collapse.show .nav-item .nav-link', () => {
@@ -67,6 +81,11 @@ export default {
             font-weight: 600;
 
             margin-left: 1.2rem;
+
+            > .badge {
+                color: #000;
+                background-color: rgba(255, 255, 255, .5);
+            }
         }
 
         // .show > .nav-link,
@@ -75,6 +94,8 @@ export default {
         // .nav-link.active,
         .nav-link.router-link-active {
             color: #42b983;
+
+            > .badge { background-color: #42b983 }
         }
     }
 
