@@ -8,6 +8,7 @@ import connectDB from './config/db.js'
 import { notFound, errorHandler } from './middleware/errorHandler.js'
 
 import ProductRoutes from './routes/ProductRoutes.js'
+import UserRoutes from './routes/UserRoutes.js'
 
 
 // Dotenv setup
@@ -22,6 +23,8 @@ const app = express()
 // HTTP Request logger for dev mode
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
+app.use(express.json())
+
 
 // API routes
 app.get('/', (req, res) => {
@@ -31,6 +34,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/products', ProductRoutes)
+app.use('/api/users', UserRoutes)
 
 
 // Custom Error Handler Middleware
