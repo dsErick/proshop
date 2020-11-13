@@ -1,22 +1,99 @@
 <template>
-<div class="container-lg container-fluid">
-    <h2>Cart</h2>
-
+<div id="cart" class="container-lg container-fluid">
     <v-loader v-if="isLoading" />
 
-    <v-alert
-        v-else-if="error"
-        :message="error"
-    />
+    <v-alert v-else-if="error">
+        {{ error }}
+    </v-alert>
     
-    <pre>{{ cart }}</pre>
+    <div class="row" v-else>
+        <div class="col-md-8">
+            <h2 class="mb-3">Shopping cart</h2>
+
+            <v-alert
+                v-if="cartItems.length === 0"
+                :type="'alert-info'"
+            >
+                Your cart is empty
+                <router-link :to="{ name: 'Home' }" class="btn btn-info btn-sm">Go back</router-link>
+            </v-alert>
+
+            <ul id="cart-items-wrapper" class="list-group list-group-flush" v-else>
+                <li
+                    class="list-group-item"
+                    v-for="item in cartItems"
+                    :key="item.product"
+                >
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img :src="item.image" :alt="item.name" class="img-fluid">
+                        </div>
+                        <div class="col">
+                            <router-link :to="{ name: 'Product', params: { id: item.product }}">
+                                {{ item.name }}
+                            </router-link>
+                        </div>
+                        <div class="col-md-2">
+                            {{ item.price }}
+                        </div>
+                        <div class="col-md-2">
+                            <select
+                                class="form-control"
+                                :value="item.quantity"
+                                @change="addToCart(item.product, $event.target.value)"
+                            >
+                                <option v-for="value in item.countInStock" :key="value">
+                                    {{ value }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button
+                                class="btn btn-light btn-sm"
+                                type="button"
+                                @click="removeFromCart(item.product)"
+                            >
+                                <font-awesome-icon :icon="['fas', 'trash']" />
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <ul id="checkout-wrapper" class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h3 class="h5 mb-1">Subtotal ({{ cartItems.reduce((acc, item) => acc + item.quantity, 0) }}) items</h3>
+                        {{
+                            new Intl.NumberFormat('en-US', {
+                                style: 'currency',
+                                currency: 'USD'
+                            }).format(cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0))
+                        }}
+                    </li>
+                    <li class="list-group-item">
+                        <button
+                            type="button"
+                            class="btn btn-dark btn-block"
+                            :disabled="cartItems.length === 0"
+                            @click="checkout"
+                        >
+                            Proceed To Chekout
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 </template>
 
 <script>
-import { computed, onMounted, defineAsyncComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, defineAsyncComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import useProducts from '@/composables/useProducts'
 
 export default {
     name: 'Cart',
@@ -26,19 +103,22 @@ export default {
     },
     setup() {
         const route = useRoute()
+        const router = useRouter()
         const store = useStore()
 
-        const cart = computed(() => store.getters['getCart'])
+        const cartItems = computed(() => store.getters['getCartItems'])
+        const { addToCart, removeFromCart } = useProducts()
+        const checkout = () => {
+            console.log('%cCheckout', 'color: cyan')
 
-        onMounted(() => {
-            if (route.query.product) store.dispatch('addItem', {
-                id: route.query.product,
-                quantity: route.query.qty ?? 1
-            })
-        })
+            // router.push({ name: 'Login', query: { redirect: 'shipping' } })
+        }
         
         return {
-            cart,
+            cartItems,
+            addToCart,
+            removeFromCart,
+            checkout,
             isLoading: computed(() => store.getters['utils/isLoading']),
             error: computed(() => store.getters['utils/getError'])
         }
@@ -47,4 +127,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+#cart {
+    #cart-items-wrapper {
+        li {
+            padding: .25rem .5rem;
+    
+            > .row {
+                margin: 0 -.5rem;
+    
+                > div {
+                    padding: 0 .5rem;
+                    margin: auto 0;
+                }
+            }
+        }
+    }
+    // #checkout-wrapper {}
+}
 </style>

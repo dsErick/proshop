@@ -13,13 +13,14 @@ export default function useProducts() {
     const product = computed(() => store.getters['getSingleProduct'])
     const setProduct = () => store.dispatch('fetchSingleProduct', route.params.id)
 
-    const addToCart = (id, qty = 1) => router.push({
-        name: 'Cart',
-        query: {
-            product: id,
-            qty
-        }
-    })
+    const addToCart = (id, qty = 1) => {
+        store.dispatch('addItem', {
+            id,
+            quantity: Number(qty)
+        })
+        router.push({ name: 'Cart' })
+    }
+    const removeFromCart = id => store.dispatch('removeItem', id)
 
     return {
         products,
@@ -27,6 +28,7 @@ export default function useProducts() {
         product,
         setProduct,
         addToCart,
+        removeFromCart,
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])
     }

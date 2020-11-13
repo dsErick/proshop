@@ -6,14 +6,14 @@ const state = {
 }
 
 const getters = {
-    getCart: state => state.items,
+    getCartItems: state => state.items,
     getCartCount: state => state.items.length
 }
 
 const actions = {
     addItem: actionHandler(async ({ commit, state }, { id, quantity }) => {
         const { data } = await axios.get(`/api/products/${id}`)
-        const { _id, name, image, price } = data.data
+        const { _id, name, image, price, countInStock } = data.data
         
         const existItem = state.items.findIndex(item => item.product === _id)
         
@@ -22,13 +22,14 @@ const actions = {
             name,
             image,
             price,
+            countInStock,
             quantity
         })
 
         localStorage.setItem('cartItems', JSON.stringify(state.items))
     }),
-    removeItem() {
-        console.log('Remove item from cart')
+    removeItem({ commit }, id) {
+        console.log(`Remove ${id} from cart`)
     }
 }
 

@@ -5,13 +5,14 @@ import {
     faUser,
     faHome,
     faStar as faStarSolid,
-    faStarHalfAlt
+    faStarHalfAlt,
+    faTrash
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
     faStar as faStarRegular
 } from '@fortawesome/free-regular-svg-icons'
 
-library.add(faShoppingCart, faUser, faHome, faStarSolid, faStarRegular, faStarHalfAlt)
+library.add(faShoppingCart, faUser, faHome, faStarSolid, faStarRegular, faStarHalfAlt, faTrash)
 
 export default FontAwesomeIcon
