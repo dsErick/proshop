@@ -36,39 +36,37 @@
             </ul>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-5">
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        Price:
-                        <strong>${{ product.price }}</strong>
-                    </li>
-                    <li class="list-group-item">
-                        Status:
-                        <strong>{{ product.countInStock > 0 ? 'In Stock' : 'Out of Stock' }}</strong>
-                    </li>
-                    <li
-                        class="list-group-item"
-                        v-if="product.countInStock > 0"
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Price:
+                    <strong>${{ product.price }}</strong>
+                </li>
+                <li class="list-group-item">
+                    Status:
+                    <strong>{{ product.countInStock > 0 ? 'In Stock' : 'Out of Stock' }}</strong>
+                </li>
+                <li
+                    class="list-group-item"
+                    v-if="product.countInStock > 0"
+                >
+                    Quantity:
+                    <select class="form-control w-50" v-model="quantity">
+                        <option v-for="value in product.countInStock" :key="value">
+                            {{ value}}
+                        </option>
+                    </select>
+                </li>
+                <li class="list-group-item">
+                    <button
+                        class="btn btn-block btn-dark"
+                        type="button"
+                        :disabled="product.countInStock === 0"
+                        @click="addToCart(product._id, quantity)"
                     >
-                        Quantity:
-                        <select class="form-control w-50" v-model="quantity">
-                            <option v-for="value in product.countInStock" :key="value">
-                                {{ value}}
-                            </option>
-                        </select>
-                    </li>
-                    <li class="list-group-item">
-                        <button
-                            class="btn btn-block btn-dark"
-                            type="button"
-                            :disabled="product.countInStock === 0"
-                            @click="addToCart(product._id, quantity)"
-                        >
-                            ADD TO CART
-                        </button>
-                    </li>
-                </ul>
-            </div>
+                        ADD TO CART
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

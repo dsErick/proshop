@@ -1,6 +1,6 @@
 @media (min-width: 1500px) {
     html { font-size: 18px; }
-    .container-lg { max-width: 80%; }
+    // .container-lg { max-width: 80%; }
 }
 @media (min-width: 1800px) {
     html { font-size: 22px; }
@@ -16,6 +16,7 @@
 
 @media (max-width: 767px) {
     html { font-size: 14px; }
+    .container-fluid { padding: 0 .5rem }
 }
 
 @media (max-width: 575px) {

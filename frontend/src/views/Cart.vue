@@ -7,12 +7,12 @@
     </v-alert>
     
     <div class="row" v-else>
-        <div class="col-md-8">
+        <div class="col-md-8 col-12">
             <h2 class="mb-3">Shopping cart</h2>
 
             <v-alert
                 v-if="cartItems.length === 0"
-                :type="'alert-info'"
+                type="alert-info"
             >
                 Your cart is empty
                 <router-link :to="{ name: 'Home' }" class="btn btn-info btn-sm">Go back</router-link>
@@ -24,19 +24,24 @@
                     v-for="item in cartItems"
                     :key="item.product"
                 >
-                    <div class="row">
-                        <div class="col-md-2">
+                    <div class="row font-weight-bold">
+                        <div class="col-2">
                             <img :src="item.image" :alt="item.name" class="img-fluid">
                         </div>
                         <div class="col">
-                            <router-link :to="{ name: 'Product', params: { id: item.product }}">
+                            <router-link :to="{ name: 'Product', params: { id: item.product }}" class="text-wrap text-dark">
                                 {{ item.name }}
                             </router-link>
                         </div>
-                        <div class="col-md-2">
-                            {{ item.price }}
+                        <div class="col-auto">
+                            {{
+                                new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                }).format(item.price)
+                            }}
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-2">
                             <select
                                 class="form-control"
                                 :value="item.quantity"
@@ -49,7 +54,7 @@
                         </div>
                         <div class="col-auto">
                             <button
-                                class="btn btn-light btn-sm"
+                                class="btn btn-outline-dark btn-sm"
                                 type="button"
                                 @click="removeFromCart(item.product)"
                             >
@@ -60,30 +65,28 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <ul id="checkout-wrapper" class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h3 class="h5 mb-1">Subtotal ({{ cartItems.reduce((acc, item) => acc + item.quantity, 0) }}) items</h3>
-                        {{
-                            new Intl.NumberFormat('en-US', {
-                                style: 'currency',
-                                currency: 'USD'
-                            }).format(cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0))
-                        }}
-                    </li>
-                    <li class="list-group-item">
-                        <button
-                            type="button"
-                            class="btn btn-dark btn-block"
-                            :disabled="cartItems.length === 0"
-                            @click="checkout"
-                        >
-                            Proceed To Chekout
-                        </button>
-                    </li>
-                </ul>
-            </div>
+        <div class="col-md-4 col-12 mt-md-0 mt-3">
+            <ul id="checkout-wrapper" class="list-group">
+                <li class="list-group-item">
+                    <h3 class="h5 mb-1">Subtotal ({{ cartItems.reduce((acc, item) => acc + item.quantity, 0) }}) items</h3>
+                    {{
+                        new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD'
+                        }).format(cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0))
+                    }}
+                </li>
+                <li class="list-group-item">
+                    <button
+                        type="button"
+                        class="btn btn-dark btn-block"
+                        :disabled="cartItems.length === 0"
+                        @click="checkout"
+                    >
+                        Proceed To Chekout
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
@@ -143,5 +146,20 @@ export default {
         }
     }
     // #checkout-wrapper {}
+}
+
+@media (max-width: 767px) {
+    #cart {
+        > .row {
+            margin: 0;
+
+            > div { padding: 0 }
+        }
+    }
+}
+@media (max-width: 575px) {
+    #cart-items-wrapper {
+        select { padding: .125rem .25rem }
+    }
 }
 </style>
