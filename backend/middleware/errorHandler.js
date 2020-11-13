@@ -1,11 +1,11 @@
-const notFound = (req, res, next) => {
+export const notFound = (req, res, next) => {
     const error = new Error(`Not Found - ${req.originalUrl}`)
 
     res.status('404')
     next(error)
 }
 
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
     // console.error(err)
     // console.log(Object.getOwnPropertyNames(err))
     
@@ -22,9 +22,4 @@ const errorHandler = (err, req, res, next) => {
         message,
         stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
     })
-}
-
-export {
-    notFound,
-    errorHandler
 }
