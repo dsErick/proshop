@@ -28,8 +28,10 @@ const actions = {
 
         localStorage.setItem('cartItems', JSON.stringify(state.items))
     }),
-    removeItem({ commit }, id) {
-        console.log(`Remove ${id} from cart`)
+    removeItem({ commit, state }, id) {
+        commit('removeCartItem', id)
+        
+        localStorage.setItem('cartItems', JSON.stringify(state.items))
     }
 }
 
@@ -38,7 +40,8 @@ const mutations = {
     updateCartItem: (state, newItem) => {
         const item = state.items.find(item => item.product === newItem.product)
         Object.keys(newItem).forEach(key => item[key] = newItem[key])
-    }
+    },
+    removeCartItem: (state, id) => state.items = state.items.filter(item => item.product !== id)
 }
 
 export default {
