@@ -28,6 +28,27 @@ export const authUser = asyncHandler(async (req, res) => {
 })
 
 /* 
+ * @desc    Register a new user
+ * @route   POST /api/users
+ * @access  Public
+ */
+export const registerUser = asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body
+
+    const user = await User.create({ name, email, password })
+    
+    res.status(201).json({
+        data: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            token: user.generateToken()
+        }
+    })
+})
+
+/* 
  * @desc    Get logged in user
  * @route   GET /api/users/profile
  * @access  Private
