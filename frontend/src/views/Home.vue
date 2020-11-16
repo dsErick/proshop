@@ -4,8 +4,8 @@
 
     <v-loader v-if="isLoading" />
 
-    <v-alert v-else-if="error">
-        {{ error }}
+    <v-alert v-else-if="error.message">
+        {{ error.message }}
     </v-alert>
     
     <div

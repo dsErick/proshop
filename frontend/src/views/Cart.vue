@@ -2,8 +2,8 @@
 <div id="cart" class="container-lg container-fluid">
     <v-loader v-if="isLoading" />
 
-    <v-alert v-else-if="error">
-        {{ error }}
+    <v-alert v-else-if="error.message">
+        {{ error.message }}
     </v-alert>
     
     <div class="row" v-else>

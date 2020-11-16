@@ -4,10 +4,18 @@ export default fn => (context, payload) => {
     Promise.resolve(fn(context, payload))
         .catch(err => {
             console.log(err, err.response)
-            let error = err.response && err.response.data.message
-                ? err.response.data.message
-                : err.message
+            const error = {
+                message: err.response && err.response.data.message ? err.response.data.message : err.message,
+                errors: err.response && err.response.data.errors ? err.response.data.errors : undefined
+            }
 
+            // if (err.response.status === 422) {
+            //     error = {
+            //         message: err.response.data.message,
+            //         errors: err.response.data.errors
+            //     }
+            // }
+                
             context.commit('utils/setError', error, { root: true })
         })
         .finally(() => {

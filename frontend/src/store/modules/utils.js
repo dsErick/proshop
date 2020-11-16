@@ -2,7 +2,7 @@ let isLoading = 0
 
 const state = {
     loading: false,
-    error: null
+    error: { message: '' }
 }
 
 const getters = {
@@ -22,7 +22,7 @@ const mutations = {
         }
     },
 
-    resetError: state => state.error = null,
+    resetError: state => state.error = { message: '' },
     setError: (state, error) => state.error = error
 }
 
