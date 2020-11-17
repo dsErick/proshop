@@ -6,6 +6,7 @@ const initialUserState = () => (JSON.parse(localStorage.getItem('user')) ?? {
     name: '',
     email: '',
     isAdmin: false,
+    token: null
 })
 
 const state = {

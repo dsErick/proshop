@@ -25,14 +25,10 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <!-- <router-link to="/login" class="nav-link">
+                        <router-link :to="{ name: 'Login' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'user']" fixed-width />
                             Sign In
-                        </router-link> -->
-                        <a class="nav-link" href="#">
-                            <font-awesome-icon :icon="['fas', 'user']" fixed-width />
-                            Sign In
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
             </div>
