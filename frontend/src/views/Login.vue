@@ -9,7 +9,7 @@
             {{ error.message }}
         </v-alert>
 
-        <form @submit.prevent="authUser(formData)">
+        <form @submit.prevent="loginUser(formData)">
             <v-form-input
                 v-model="formData.email"
                 inputId="email"
@@ -58,7 +58,7 @@ export default {
     setup() {
         const route = useRoute()
         const router = useRouter()
-        const { user, authUser, isLoading, error } = useUsers()
+        const { user, loginUser, isLoading, error } = useUsers()
         
         const formData = reactive({
             email: '',
@@ -73,7 +73,7 @@ export default {
         return {
             formData,
             redirect,
-            authUser,
+            loginUser,
             isLoading,
             error
         }

@@ -5,11 +5,13 @@ export default function useUsers() {
     const store = useStore()
     
     const user = computed(() => store.getters['getUser'])
-    const authUser = user => store.dispatch('loginUser', user)
+    const loginUser = user => store.dispatch('loginUser', user)
+    const logoutUser = () => store.dispatch('logoutUser')
 
     return {
         user,
-        authUser,
+        loginUser,
+        logoutUser,
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])
     } 

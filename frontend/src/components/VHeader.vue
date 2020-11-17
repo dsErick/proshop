@@ -19,12 +19,27 @@
                         <router-link :to="{ name: 'Cart' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
                             Cart
-                            <span class="badge rounded-circle">
-                                {{ cart }}
-                            </span>
+                            <span class="badge rounded-circle">{{ cartCount }}</span>
                         </router-link>
                     </li>
-                    <li class="nav-item">
+
+                    <li class="nav-item dropdown" v-if="user._id">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <font-awesome-icon :icon="['fas', 'user']" fixed-width />
+                            {{ user.name }}
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
+                            <!-- <router-link :to="{ name: 'Profile' }" class="dropdown-item">Profile</router-link> -->
+                            <a class="dropdown-item" href="/profile" @click.prevent>Profile</a>
+
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" @click="logoutUser">
+                                Logout
+                            </button>
+                        </div>
+                    </li>
+                    <li class="nav-item" v-else>
                         <router-link :to="{ name: 'Login' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'user']" fixed-width />
                             Sign In
@@ -39,18 +54,22 @@
 
 <script>
 import 'bootstrap/js/dist/collapse'
+import 'bootstrap/js/dist/dropdown'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import useUsers from '@/composables/useUsers.js'
 
 export default {
     name: 'VHeader',
     setup() {
         const store = useStore()
-
-        const cart = computed(() => store.getters['getCartCount'])
-
+        const cartCount = computed(() => store.getters['getCartCount'])
+        const { user, logoutUser } = useUsers()
+    
         return {
-            cart
+            cartCount,
+            user,
+            logoutUser
         }
     },
     mounted() {

@@ -26,10 +26,15 @@ const actions = {
         commit('setUser', data.data)
         commit('utils/resetError', null, { root: true })
     }),
+    logoutUser({ commit }) {
+        localStorage.removeItem('user')
+        commit('resetUser')
+    }
 }
 
 const mutations = {
-    setUser: (state, newUser) => Object.keys(newUser).forEach(key => state.user[key] = newUser[key])
+    setUser: (state, newUser) => Object.keys(newUser).forEach(key => state.user[key] = newUser[key]),
+    resetUser: state => state.user = initialUserState()
 }
 
 export default {
