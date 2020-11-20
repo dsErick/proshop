@@ -1,7 +1,7 @@
 <template>
-<div class="form-group">
+<div class="form-group" :class="{'mb-5': errors.length}">
     <input
-        class="form-control"
+        :class="['form-control', errors.length ? 'is-invalid' : '']"
         v-bind="{
             id: inputId,
             type,
@@ -9,9 +9,13 @@
             autocomplete
         }"
         :value="modelValue"
-        @input="updateValue"
+        @input="$emit('update:modelValue', $event.target.value)"
     >
     <label :for="inputId">{{ label }}</label>
+
+    <span class="invalid-feedback" role="alert">
+        <strong>{{ errors[0] }}</strong>
+    </span>
 </div>
 </template>
 
@@ -20,34 +24,34 @@ export default {
     name: 'VFormInput',
     props: {
         modelValue: {
-            type: [Number, String],
+            type: String,
             default: ''
         },
         inputId: { type: String, required: true },
         label: { type: String, required: true },
         type: { type: String, default: 'text' },
+        errors: { type: Array, default: [] },
         autofocus: { type: Boolean, default: false },
         autocomplete: { type: Boolean, default: false }
     },
     emits: {
         'update:modelValue': null
     },
-    methods: {
-        updateValue(e) {
-            const input = document.getElementById(this.inputId)
-
-            e.target.value.length !== 0 ? input.classList.add('active') : input.classList.remove('active')
-            
-            this.$emit('update:modelValue', e.target.value)
-        }
+    updated() {
+        const input = document.getElementById(this.inputId)
+        input.value.length !== 0 ? input.classList.add('active') : input.classList.remove('active')
     }
 }
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/scss/_variables.scss';
+
+.mb-5 { margin-bottom: 2.25rem !important }
+
 .form-group {
     position: relative;
-    background-color: white;
+    background-color: $white;
 
     label {
         position: absolute;
@@ -55,7 +59,7 @@ export default {
         z-index: 1;
         cursor: text;
         transition: all .1s ease-out;
-        color: #6c757d;
+        color: $gray-600;
     }
     input.active ~ label,
     input:focus ~ label {
@@ -65,16 +69,23 @@ export default {
         font-size: .8em;
         font-weight: 700;
     }
-    input:focus ~ label { color: #007bff }
+    input:focus ~ label { color: $primary }
+    input.is-invalid ~ label { color: $danger }
 
     input {
         height: calc(1.5em + 1.5rem + 2px);
         padding: .75rem 1rem;
 
         &:focus {
-            border-color: #007bff;
+            border-color: $primary;
             border-width: 2px;
         }
+        &.is-invalid { border-color: $danger }
+    }
+
+    span.invalid-feedback {
+        position: absolute;
+        top: 100%; left: 0;
     }
 }
 </style>
