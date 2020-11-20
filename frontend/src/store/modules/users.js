@@ -29,7 +29,15 @@ const actions = {
     logoutUser({ commit }) {
         localStorage.removeItem('user')
         commit('resetUser')
-    }
+    },
+    registerUser: actionHandler(async ({ commit }, { name, email, password }) => {
+        const { data } = await axios.post('/api/users', { name, email, password })
+
+        localStorage.setItem('user', JSON.stringify(data.data))
+        
+        commit('setUser', data.data)
+        commit('utils/resetError', null, { root: true })
+    })
 }
 
 const mutations = {
