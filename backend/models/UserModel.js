@@ -28,7 +28,8 @@ const UserSchema = new mongoose.Schema({
         default: false
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 })
 
 // Hash user password if it was modified
@@ -45,7 +46,17 @@ UserSchema.methods.matchPassword = async function(enteredPassword) {
 
 // Generate JWT with user id
 UserSchema.methods.generateToken = function() {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: '7d' })
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: '2d' })
+}
+
+// Check for any options in toObject()
+if (!UserSchema.options.toObject) UserSchema.options.toObject = {}
+
+// Delete password field and set token for toObject()
+UserSchema.options.toObject.transform = function(doc, ret) {
+    delete ret.password
+    ret.token = doc.generateToken()
+    return ret
 }
 
 export default mongoose.model('User', UserSchema)
