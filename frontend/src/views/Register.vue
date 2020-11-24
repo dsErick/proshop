@@ -65,13 +65,15 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { registerUser, redirect, error, isLoading } = useUsersAuthentication()
+        const { registerUser, redirect, redirectWatch, error, isLoading } = useUsersAuthentication()
         const formData = reactive({
             name: '',
             email: '',
             password: '',
             confirmPassword: ''
         })
+
+        redirectWatch()
 
         return {
             formData,

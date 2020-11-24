@@ -22,7 +22,7 @@ export default function useUsers() {
 
 
     const redirect = route.query.redirect ?? ''
-    watch(user.value, user => {
+    const redirectWatch = () => watch(user.value, user => {
         if (user._id) router.push(`/${redirect}`)
     }, { immediate: true })
     
@@ -32,6 +32,7 @@ export default function useUsers() {
         registerUser,
         logoutUser,
         redirect,
+        redirectWatch,
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])
     } 
