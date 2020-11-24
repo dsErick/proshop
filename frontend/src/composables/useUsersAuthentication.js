@@ -7,8 +7,8 @@ export default function useUsers() {
     const route = useRoute()
     const router = useRouter()
 
+    const user = computed(() => store.getters['getLoggedUser'])
     
-    const user = computed(() => store.getters['getUser'])
     const loginUser = user => store.dispatch('loginUser', user)
     const registerUser = user => {
         if (user.password !== user.confirmPassword) {

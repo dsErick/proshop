@@ -55,7 +55,7 @@
 <script>
 import { reactive, defineAsyncComponent } from 'vue'
 import VFormInput from '@/components/VFormInput'
-import useUsers from '@/composables/useUsers.js'
+import useUsersAuthentication from '@/composables/useUsersAuthentication.js'
 
 export default {
     name: 'Register',
@@ -65,7 +65,7 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { registerUser, redirect, error, isLoading } = useUsers()
+        const { registerUser, redirect, error, isLoading } = useUsersAuthentication()
         const formData = reactive({
             name: '',
             email: '',

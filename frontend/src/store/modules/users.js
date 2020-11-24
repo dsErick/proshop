@@ -6,15 +6,17 @@ const initialUserState = () => (JSON.parse(localStorage.getItem('user')) ?? {
     name: '',
     email: '',
     isAdmin: false,
+    createdAt: '',
+    updatedAt: '',
     token: null
 })
 
 const state = {
-    user: initialUserState()
+    loggedUser: initialUserState()
 }
 
 const getters = {
-    getUser: state => state.user
+    getLoggedUser: state => state.loggedUser
 }
 
 const actions = {
@@ -23,26 +25,26 @@ const actions = {
 
         localStorage.setItem('user', JSON.stringify(data.data))
         
-        commit('setUser', data.data)
+        commit('setLoggedUser', data.data)
         commit('utils/resetError', null, { root: true })
     }),
     logoutUser({ commit }) {
         localStorage.removeItem('user')
-        commit('resetUser')
+        commit('resetLoggedUser')
     },
     registerUser: actionHandler(async ({ commit }, { name, email, password }) => {
         const { data } = await axios.post('/api/users', { name, email, password })
 
         localStorage.setItem('user', JSON.stringify(data.data))
         
-        commit('setUser', data.data)
+        commit('setLoggedUser', data.data)
         commit('utils/resetError', null, { root: true })
     })
 }
 
 const mutations = {
-    setUser: (state, newUser) => Object.keys(newUser).forEach(key => state.user[key] = newUser[key]),
-    resetUser: state => state.user = initialUserState()
+    setLoggedUser: (state, newUser) => Object.keys(newUser).forEach(key => state.loggedUser[key] = newUser[key]),
+    resetLoggedUser: state => state.loggedUser = initialUserState()
 }
 
 export default {

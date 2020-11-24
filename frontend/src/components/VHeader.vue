@@ -57,14 +57,14 @@ import 'bootstrap/js/dist/collapse'
 import 'bootstrap/js/dist/dropdown'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import useUsers from '@/composables/useUsers.js'
+import useUsersAuthentication from '@/composables/useUsersAuthentication.js'
 
 export default {
     name: 'VHeader',
     setup() {
         const store = useStore()
         const cartCount = computed(() => store.getters['getCartCount'])
-        const { user, logoutUser } = useUsers()
+        const { user, logoutUser } = useUsersAuthentication()
     
         return {
             cartCount,
