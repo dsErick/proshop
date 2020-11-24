@@ -30,8 +30,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
-                            <!-- <router-link :to="{ name: 'Profile' }" class="dropdown-item">Profile</router-link> -->
-                            <a class="dropdown-item" href="/profile" @click.prevent>Profile</a>
+                            <router-link :to="{ name: 'Profile' }" class="dropdown-item">Profile</router-link>
 
                             <div class="dropdown-divider"></div>
                             <button class="dropdown-item" @click="logoutUser">

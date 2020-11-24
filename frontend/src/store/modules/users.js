@@ -12,11 +12,13 @@ const initialUserState = () => (JSON.parse(localStorage.getItem('user')) ?? {
 })
 
 const state = {
-    loggedUser: initialUserState()
+    loggedUser: initialUserState(),
+    userDetails: {}
 }
 
 const getters = {
-    getLoggedUser: state => state.loggedUser
+    getLoggedUser: state => state.loggedUser,
+    getUserDetails: state => state.userDetails
 }
 
 const actions = {
@@ -39,12 +41,24 @@ const actions = {
         
         commit('setLoggedUser', data.data)
         commit('utils/resetError', null, { root: true })
+    }),
+
+    fetchUserDetails: actionHandler(async ({ commit, state }, user = 'profile') => {
+        const { data } = await axios.get(`/api/users/${user}`, {
+            headers: { Authorization: `Bearer ${state.loggedUser.token}` }
+        })
+        
+        commit('setUserDetails', data.data)
+        commit('utils/resetError', null, { root: true })
     })
 }
 
 const mutations = {
     setLoggedUser: (state, newUser) => Object.keys(newUser).forEach(key => state.loggedUser[key] = newUser[key]),
-    resetLoggedUser: state => state.loggedUser = initialUserState()
+    resetLoggedUser: state => state.loggedUser = initialUserState(),
+
+    setUserDetails: (state, user) => Object.keys(user).forEach(key => state.userDetails[key] = user[key]),
+    resetUserDetails: state => state.userDetails = {}
 }
 
 export default {
