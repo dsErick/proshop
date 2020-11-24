@@ -28,7 +28,6 @@ const actions = {
         localStorage.setItem('user', JSON.stringify(data.data))
         
         commit('setLoggedUser', data.data)
-        commit('utils/resetError', null, { root: true })
     }),
     logoutUser({ commit }) {
         localStorage.removeItem('user')
@@ -40,7 +39,6 @@ const actions = {
         localStorage.setItem('user', JSON.stringify(data.data))
         
         commit('setLoggedUser', data.data)
-        commit('utils/resetError', null, { root: true })
     }),
 
     fetchUserDetails: actionHandler(async ({ commit, state }, user = 'profile') => {
@@ -49,7 +47,6 @@ const actions = {
         })
         
         commit('setUserDetails', data.data)
-        commit('utils/resetError', null, { root: true })
     })
 }
 

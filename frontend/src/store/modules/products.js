@@ -30,13 +30,11 @@ const actions = {
         const { data } = await axios.get('/api/products')
 
         commit('setAllProducts', data.data)
-        commit('utils/resetError', null, { root: true })
     }),
     fetchSingleProduct: actionHandler(async ({ commit }, product) => {
         const { data } = await axios.get(`/api/products/${product}`)
 
         commit('setSingleProduct', data.data)
-        commit('utils/resetError', null, { root: true })
     })
 }
 

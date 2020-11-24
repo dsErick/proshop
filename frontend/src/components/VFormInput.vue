@@ -37,9 +37,17 @@ export default {
     emits: {
         'update:modelValue': null
     },
+    mounted() {
+        this.triggerLabelActiveClass()
+    },
     updated() {
-        const input = document.getElementById(this.inputId)
-        input.value.length !== 0 ? input.classList.add('active') : input.classList.remove('active')
+        this.triggerLabelActiveClass()
+    },
+    methods: {
+        triggerLabelActiveClass() {
+            const input = document.getElementById(this.inputId)
+            input.value.length !== 0 ? input.classList.add('active') : input.classList.remove('active')
+        }
     }
 }
 </script>

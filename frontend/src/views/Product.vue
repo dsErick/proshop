@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { ref, onMounted, defineAsyncComponent } from 'vue'
+import { ref, defineAsyncComponent } from 'vue'
 import useProducts from '@/composables/useProducts.js'
 import VRating from '@/components/products/VRating'
 
@@ -87,7 +87,7 @@ export default {
     setup() {
         const quantity = ref(1)
         const { product, setProduct, isLoading, error, addToCart } = useProducts()
-        onMounted(() => setProduct())
+        setProduct()
 
         return {
             product,

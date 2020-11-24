@@ -2,6 +2,7 @@ export default fn => (context, payload) => {
     context.commit('utils/setLoading', true, { root: true })
 
     Promise.resolve(fn(context, payload))
+        .then(() => context.commit('utils/resetError', null, { root: true }))
         .catch(err => {
             console.log(err, err.response)
             const error = {

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { onMounted, defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import useProducts from '@/composables/useProducts.js'
 
 export default {
@@ -39,7 +39,7 @@ export default {
     },
     setup() {
         const { products, setProducts, isLoading, error } = useProducts()
-        onMounted(() => setProducts())
+        setProducts()
         
         return {
             products,
