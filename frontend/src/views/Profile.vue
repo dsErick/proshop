@@ -10,7 +10,11 @@
         <div class="col-lg-3">
             <h2 class="mb-3">User Profile</h2>
 
-            <form @submit.prevent="updateUserDetails(user)">
+            <v-alert v-if="success" type="alert-success">
+                Profile updated
+            </v-alert>
+
+            <form @submit.prevent="updateUserProfile(user)">
                 <v-form-input
                     v-model="user.name"
                     inputId="name"
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-import { computed, defineAsyncComponent, watch } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import VFormInput from '@/components/VFormInput'
@@ -66,6 +70,8 @@ export default {
         const store = useStore()
         const router = useRouter()
 
+        const success = ref(false)
+
         store.dispatch('fetchUserDetails')
         const user = computed(() => store.getters['getUserDetails'])
 
@@ -77,18 +83,18 @@ export default {
             })
         }, { immediate: true })
 
-        const updateUserDetails = user => {
-            if (user.password !== user.confirmPassword) {
-                store.commit('utils/setError', { message: 'The password confirmation must match' }, { root: true })
-
-            } else {
-                console.log(user)
-            }
+        const updateUserProfile = async user => {
+            user.password !== user.confirmPassword
+                ? store.commit('utils/setError', { message: 'The password confirmation must match' }, { root: true })
+                : (await store.dispatch('updateUserProfile', user))
+                    ? success.value = true
+                    : success.value = false
         }
         
         return {
+            success,
             user,
-            updateUserDetails,
+            updateUserProfile,
             isLoading: computed(() => store.getters['utils/isLoading']),
             error: computed(() => store.getters['utils/getError'])
         }

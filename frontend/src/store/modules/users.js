@@ -42,16 +42,30 @@ const actions = {
     }),
 
     fetchUserDetails: actionHandler(async ({ commit, state }, user = 'profile') => {
+        commit('resetUserDetails')
+        
         const { data } = await axios.get(`/api/users/${user}`, {
             headers: { Authorization: `Bearer ${state.loggedUser.token}` }
         })
         
         commit('setUserDetails', data.data)
+    }),
+    updateUserProfile: actionHandler(async ({ commit, state }, { name, email, password }) => {
+        const { data } = await axios.put('/api/users/profile',
+            { name, email, password },
+            { headers: { Authorization: `Bearer ${state.loggedUser.token}` }}
+        )
+
+        localStorage.setItem('user', JSON.stringify(data.data))
+        commit('setLoggedUser', data.data)
+        
+        commit('resetUserDetails')
+        commit('setUserDetails', data.data)
     })
 }
 
 const mutations = {
-    setLoggedUser: (state, newUser) => Object.keys(newUser).forEach(key => state.loggedUser[key] = newUser[key]),
+    setLoggedUser: (state, user) => Object.keys(user).forEach(key => state.loggedUser[key] = user[key]),
     resetLoggedUser: state => state.loggedUser = initialUserState(),
 
     setUserDetails: (state, user) => Object.keys(user).forEach(key => state.userDetails[key] = user[key]),
