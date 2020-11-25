@@ -55,7 +55,7 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/scss/_variables.scss';
 
-.mb-5 { margin-bottom: 2.25rem !important }
+// .mb-5 { margin-bottom: 2.25rem !important }
 
 .form-group {
     position: relative;

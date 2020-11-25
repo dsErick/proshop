@@ -11,12 +11,9 @@ export default function useUsers() {
     
     const loginUser = user => store.dispatch('loginUser', user)
     const registerUser = user => {
-        if (user.password !== user.confirmPassword) {
-            store.commit('utils/setError', { message: 'The password confirmation must match' }, { root: true })
-            return
-        }
-        
-        store.dispatch('registerUser', user)
+        user.password !== user.confirmPassword
+            ? store.commit('utils/setError', { message: 'The password confirmation must match' }, { root: true })
+            : store.dispatch('registerUser', user)
     }
     const logoutUser = () => store.dispatch('logoutUser')
 

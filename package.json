@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "start": "node backend/server.js",
-        "server": "nodemon backend/server.js",
+        "server": "nodemon --watch backend backend/server.js",
         "client": "npm run serve --prefix frontend",
         "dev": "concurrently \"npm run server\" \"npm run client\"",
         "data:import": "node backend/seeder.js",

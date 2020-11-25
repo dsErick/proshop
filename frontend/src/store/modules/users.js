@@ -26,8 +26,7 @@ const actions = {
         const { data } = await axios.post('/api/users/login', { email, password })
 
         localStorage.setItem('user', JSON.stringify(data.data))
-        
-        commit('setLoggedUser', data.data)
+        commit('setUser', { user: data.data, statePiece: 'loggedUser' })
     }),
     logoutUser({ commit }) {
         localStorage.removeItem('user')
@@ -37,8 +36,7 @@ const actions = {
         const { data } = await axios.post('/api/users', { name, email, password })
 
         localStorage.setItem('user', JSON.stringify(data.data))
-        
-        commit('setLoggedUser', data.data)
+        commit('setUser', { user: data.data, statePiece: 'loggedUser' })
     }),
 
     fetchUserDetails: actionHandler(async ({ commit, state }, user = 'profile') => {
@@ -48,7 +46,7 @@ const actions = {
             headers: { Authorization: `Bearer ${state.loggedUser.token}` }
         })
         
-        commit('setUserDetails', data.data)
+        commit('setUser', { user: data.data, statePiece: 'userDetails' })
     }),
     updateUserProfile: actionHandler(async ({ commit, state }, { name, email, password }) => {
         const { data } = await axios.put('/api/users/profile',
@@ -57,19 +55,20 @@ const actions = {
         )
 
         localStorage.setItem('user', JSON.stringify(data.data))
-        commit('setLoggedUser', data.data)
+        commit('setUser', { user: data.data, statePiece: 'loggedUser' })
         
         commit('resetUserDetails')
-        commit('setUserDetails', data.data)
+        commit('setUser', { user: data.data, statePiece: 'userDetails' })
     })
 }
 
 const mutations = {
-    setLoggedUser: (state, user) => Object.keys(user).forEach(key => state.loggedUser[key] = user[key]),
     resetLoggedUser: state => state.loggedUser = initialUserState(),
-
-    setUserDetails: (state, user) => Object.keys(user).forEach(key => state.userDetails[key] = user[key]),
-    resetUserDetails: state => state.userDetails = {}
+    resetUserDetails: state => state.userDetails = {},
+    
+    setUser: (state, { user, statePiece }) => Object.keys(user).forEach(key => state[statePiece][key] = user[key])
+    // setLoggedUser: (state, user) => Object.keys(user).forEach(key => state.loggedUser[key] = user[key]),
+    // setUserDetails: (state, user) => Object.keys(user).forEach(key => state.userDetails[key] = user[key]),
 }
 
 export default {
