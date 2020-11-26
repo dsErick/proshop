@@ -2,12 +2,15 @@ import axios from 'axios'
 import actionHandler from '../actionHandler'
 
 const state = {
-    items: JSON.parse(localStorage.getItem('cartItems')) ?? []
+    items: JSON.parse(localStorage.getItem('cartItems')) ?? [],
+    shippingAddress: JSON.parse(localStorage.getItem('shippingAddress')) ?? {}
 }
 
 const getters = {
     getCartItems: state => state.items,
-    getCartCount: state => state.items.length
+    getCartCount: state => state.items.length,
+
+    getShippingAddress: state => state.shippingAddress
 }
 
 const actions = {
@@ -30,8 +33,12 @@ const actions = {
     }),
     removeItem({ commit, state }, id) {
         commit('removeCartItem', id)
-        
         localStorage.setItem('cartItems', JSON.stringify(state.items))
+    },
+
+    saveShippingAddress({ commit, state }, { address, city, postalCode, country }) {
+        commit('setShippingAddress', { address, city, postalCode, country })
+        localStorage.setItem('shippingAddress', JSON.stringify(state.shippingAddress))
     }
 }
 
@@ -41,7 +48,9 @@ const mutations = {
         const item = state.items.find(item => item.product === newItem.product)
         Object.keys(newItem).forEach(key => item[key] = newItem[key])
     },
-    removeCartItem: (state, id) => state.items = state.items.filter(item => item.product !== id)
+    removeCartItem: (state, id) => state.items = state.items.filter(item => item.product !== id),
+
+    setShippingAddress: (state, shippingAddress) => Object.keys(shippingAddress).forEach(key => state.shippingAddress[key] = shippingAddress[key])
 }
 
 export default {

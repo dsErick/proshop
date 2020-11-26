@@ -19,7 +19,7 @@ export default function useUsers() {
 
 
     const redirect = route.query.redirect ?? ''
-    const redirectWatch = () => watch(user.value, user => {
+    const redirectWatch = () => watch(user, user => {
         if (user._id) router.push(`/${redirect}`)
     }, { immediate: true })
     

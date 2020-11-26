@@ -5,6 +5,7 @@
         v-bind="{
             id: inputId,
             type,
+            required,
             autofocus,
             autocomplete
         }"
@@ -31,6 +32,7 @@ export default {
         label: { type: String, required: true },
         type: { type: String, default: 'text' },
         errors: { type: Array, default: [] },
+        required: { type: Boolean, default: false },
         autofocus: { type: Boolean, default: false },
         autocomplete: { type: Boolean, default: false }
     },
