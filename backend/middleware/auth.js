@@ -22,6 +22,9 @@ export const protect = asyncHandler(async (req, res, next) => {
         next()
     } catch (err) {
         res.status(401)
+
+        if (err.name === 'TokenExpiredError') throw new Error('Authentication token expired')
+
         throw new Error('Not authorized to access this route')
     }
 })

@@ -14,12 +14,8 @@ export default fn => (context, payload) => {
                 errors: err.response && err.response.data.errors ? err.response.data.errors : undefined
             }
 
-            // if (err.response.status === 422) {
-            //     error = {
-            //         message: err.response.data.message,
-            //         errors: err.response.data.errors
-            //     }
-            // }
+            if (err.response && err.response.data.message === 'Authentication token expired') 
+                context.dispatch('logoutUser')
                 
             context.commit('utils/setError', error, { root: true })
         })
