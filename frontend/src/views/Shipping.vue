@@ -1,5 +1,7 @@
 <template>
 <div id="shipping" class="container-lg container-fluid">
+    <v-checkout-steps step1="active" />
+    
     <div class="d-flex flex-column align-items-center">
         <h2 class="font-weight-bold mb-3">Shipping</h2>
 
@@ -43,17 +45,19 @@ import { computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import VFormInput from '@/components/VFormInput'
+import VCheckoutSteps from '@/components/VCheckoutSteps'
 import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
 export default {
     name: 'Shipping',
     components: {
-        VFormInput
+        VFormInput,
+        VCheckoutSteps
     },
     setup() {
         const store = useStore()
         const router = useRouter()
-        
+
         const { isLogged } = useUsersAuthentication()
         isLogged()
         
