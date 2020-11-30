@@ -58,6 +58,7 @@ import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import VFormInput from '@/components/VFormInput'
+import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
 export default {
     name: 'Profile',
@@ -70,18 +71,12 @@ export default {
         const store = useStore()
         const router = useRouter()
 
+        const { isLogged } = useUsersAuthentication()
+        isLogged()
+
         const success = ref(false)
-
-        store.dispatch('fetchUserDetails')
         const user = computed(() => store.getters['getUserDetails'])
-
-        const loggedUser = computed(() => store.getters['getLoggedUser'])
-        watch(loggedUser, user => {
-            if (!user._id) router.push({
-                name: 'Login',
-                query: { redirect: 'profile' }
-            })
-        }, { immediate: true })
+        store.dispatch('fetchUserDetails')
 
         const updateUserProfile = async user => {
             user.password !== user.confirmPassword

@@ -43,6 +43,7 @@ import { computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import VFormInput from '@/components/VFormInput'
+import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
 export default {
     name: 'Shipping',
@@ -52,6 +53,9 @@ export default {
     setup() {
         const store = useStore()
         const router = useRouter()
+        
+        const { isLogged } = useUsersAuthentication()
+        isLogged()
         
         const shippingAddress = computed(() => store.getters['getShippingAddress'])
         const saveShippingAddress = data => {
