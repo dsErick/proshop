@@ -3,7 +3,7 @@
     <v-checkout-steps step1="active" />
     
     <div class="d-flex flex-column align-items-center">
-        <h2 class="font-weight-bold mb-3">Shipping</h2>
+        <h2 class="font-weight-bold my-3">Shipping</h2>
 
         <form @submit.prevent="saveShippingAddress(shippingAddress)">
             <v-form-input
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import VFormInput from '@/components/VFormInput'
@@ -61,10 +61,10 @@ export default {
         const store = useStore()
         const router = useRouter()
         
-        const shippingAddress = computed(() => store.getters['getShippingAddress'])
+        const shippingAddress = ref(store.getters['getShippingAddress'])
         const saveShippingAddress = data => {
             store.dispatch('saveShippingAddress', data)
-            router.push({ name: 'Login', query: { redirect: 'payment' } })
+            router.push({ name: 'Payment' })
         }
 
         return {

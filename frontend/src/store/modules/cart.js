@@ -3,14 +3,16 @@ import actionHandler from '../actionHandler'
 
 const state = {
     items: JSON.parse(localStorage.getItem('cartItems')) ?? [],
-    shippingAddress: JSON.parse(localStorage.getItem('shippingAddress')) ?? {}
+    shippingAddress: JSON.parse(localStorage.getItem('shippingAddress')) ?? {},
+    paymentMethod: localStorage.getItem('paymentMethod') ?? 'paypal'
 }
 
 const getters = {
     getCartItems: state => state.items,
     getCartCount: state => state.items.length,
 
-    getShippingAddress: state => state.shippingAddress
+    getShippingAddress: state => state.shippingAddress,
+    getPaymentMethod: state => state.paymentMethod
 }
 
 const actions = {
@@ -39,6 +41,10 @@ const actions = {
     saveShippingAddress({ commit, state }, { address, city, postalCode, country }) {
         commit('setShippingAddress', { address, city, postalCode, country })
         localStorage.setItem('shippingAddress', JSON.stringify(state.shippingAddress))
+    },
+    savePaymentMethod({ commit, state }, paymentMethod) {
+        commit('setPaymentMethod', paymentMethod)
+        localStorage.setItem('paymentMethod', state.paymentMethod)
     }
 }
 
@@ -50,7 +56,8 @@ const mutations = {
     },
     removeCartItem: (state, id) => state.items = state.items.filter(item => item.product !== id),
 
-    setShippingAddress: (state, shippingAddress) => Object.keys(shippingAddress).forEach(key => state.shippingAddress[key] = shippingAddress[key])
+    setShippingAddress: (state, shippingAddress) => Object.keys(shippingAddress).forEach(key => state.shippingAddress[key] = shippingAddress[key]),
+    setPaymentMethod: (state, paymentMethod) => state.paymentMethod = paymentMethod
 }
 
 export default {

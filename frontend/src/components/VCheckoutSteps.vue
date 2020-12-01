@@ -23,7 +23,7 @@
     <li class="nav-item">
         <router-link
             class="nav-link"
-            to="/payment"
+            :to="{ name: 'Payment' }"
             :class="{'disabled': !step2, 'active': step2 === 'active'}"
             :tabindex="step2 ? undefined : -1"
             :aria-disabled="step2 ? undefined : true"

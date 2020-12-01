@@ -111,7 +111,7 @@ export default {
 
         const cartItems = computed(() => store.getters['getCartItems'])
         const { addToCart, removeFromCart } = useProducts()
-        const checkout = () => router.push({ name: 'Login', query: { redirect: 'shipping' } })
+        const checkout = () => router.push({ name: 'Shipping' })
         
         return {
             cartItems,
