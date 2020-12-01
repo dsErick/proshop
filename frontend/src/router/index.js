@@ -11,31 +11,34 @@ const routes = [
         name: 'Product',
         component: () => import(/* webpackChunkName: "product-view" */ '@/views/Product.vue')
     },
+    
     {
         path: '/cart',
         name: 'Cart',
-        component: () => import(/* webpackChunkName: "cart-view" */ '@/views/Cart.vue')
+        component: () => import(/* webpackChunkName: "cart-view" */ '@/views/Order/Cart.vue')
     },
     {
         path: '/shipping',
         name: 'Shipping',
-        component: () => import(/* webpackChunkName: "shipping-view" */ '@/views/Shipping.vue')
+        meta: { requiresAuth: true },
+        component: () => import(/* webpackChunkName: "shipping-view" */ '@/views/Order/Shipping.vue')
     },
 
     {
         path: '/login',
         name: 'Login',
-        component: () => import(/* webpackChunkName: "login-view" */ '@/views/Login.vue')
+        component: () => import(/* webpackChunkName: "login-view" */ '@/views/Users/Login.vue')
     },
     {
         path: '/register',
         name: 'Register',
-        component: () => import(/* webpackChunkName: "register-view" */ '@/views/Register.vue')
+        component: () => import(/* webpackChunkName: "register-view" */ '@/views/Users/Register.vue')
     },
     {
         path: '/profile',
         name: 'Profile',
-        component: () => import(/* webpackChunkName: "profile-view" */ '@/views/Profile.vue')
+        meta: { requiresAuth: true },
+        component: () => import(/* webpackChunkName: "profile-view" */ '@/views/Users/Profile.vue')
     }
 ]
 

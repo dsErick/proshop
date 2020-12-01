@@ -68,12 +68,12 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const store = useStore()
-        const router = useRouter()
-
         const { isLogged } = useUsersAuthentication()
         isLogged()
 
+        const store = useStore()
+        const router = useRouter()
+        
         const success = ref(false)
         const user = computed(() => store.getters['getUserDetails'])
         store.dispatch('fetchUserDetails')

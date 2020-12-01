@@ -55,11 +55,11 @@ export default {
         VCheckoutSteps
     },
     setup() {
-        const store = useStore()
-        const router = useRouter()
-
         const { isLogged } = useUsersAuthentication()
         isLogged()
+
+        const store = useStore()
+        const router = useRouter()
         
         const shippingAddress = computed(() => store.getters['getShippingAddress'])
         const saveShippingAddress = data => {
