@@ -25,7 +25,7 @@
                     class="form-check-input"
                     type="radio"
                     name="paymentMethod"
-                    value="pagseguro"
+                    value="PagSeguro"
                     v-model="paymentMethod"
                 >
                 <label class="form-check-label" for="pagseguro">PagSeguro</label>
@@ -40,12 +40,12 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import useUsersAuthentication from '@/composables/useUsersAuthentication'
 import VFormInput from '@/components/VFormInput'
 import VCheckoutSteps from '@/components/VCheckoutSteps'
+import useUsersAuthentication from '@/composables/useUsersAuthentication'
+import useCart from '@/composables/useCart'
 
 export default {
     name: 'Payment',
@@ -56,21 +56,17 @@ export default {
     setup() {
         const { isLogged } = useUsersAuthentication()
         isLogged()
+
+        const { shippingAddress, paymentMethod, savePaymentMethod } = useCart()
+        const method = ref(paymentMethod.value)
         
-        const store = useStore()
-        const router = useRouter()
-
-        const shippingAddress = computed(() => store.getters['getShippingAddress'])
-        if (Object.keys(shippingAddress.value).length === 0 ) router.push({ name: 'Shipping' })
-
-        const paymentMethod = ref(store.getters['getPaymentMethod'])
-        const savePaymentMethod = data => {
-            store.dispatch('savePaymentMethod', data)
-            router.push({ name: 'Place Order' })
+        if (Object.keys(shippingAddress.value).length === 0 ) {
+            const router = useRouter()
+            router.push({ name: 'Shipping' })
         }
-        
+
         return {
-            paymentMethod,
+            paymentMethod: method,
             savePaymentMethod
         }
     }

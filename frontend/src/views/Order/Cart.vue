@@ -93,10 +93,9 @@
 </template>
 
 <script>
-import { computed, defineAsyncComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { defineAsyncComponent } from 'vue'
 import useProducts from '@/composables/useProducts'
+import useCart from '@/composables/useCart'
 
 export default {
     name: 'Cart',
@@ -105,21 +104,16 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const route = useRoute()
-        const router = useRouter()
-        const store = useStore()
-
-        const cartItems = computed(() => store.getters['getCartItems'])
+        const { cartItems, checkout, isLoading, error } = useCart()
         const { addToCart, removeFromCart } = useProducts()
-        const checkout = () => router.push({ name: 'Shipping' })
         
         return {
             cartItems,
             addToCart,
             removeFromCart,
             checkout,
-            isLoading: computed(() => store.getters['utils/isLoading']),
-            error: computed(() => store.getters['utils/getError'])
+            isLoading,
+            error
         }
     }
 }

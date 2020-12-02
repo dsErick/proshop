@@ -42,11 +42,10 @@
 
 <script>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 import VFormInput from '@/components/VFormInput'
 import VCheckoutSteps from '@/components/VCheckoutSteps'
 import useUsersAuthentication from '@/composables/useUsersAuthentication'
+import useCart from '@/composables/useCart'
 
 export default {
     name: 'Shipping',
@@ -58,17 +57,11 @@ export default {
         const { isLogged } = useUsersAuthentication()
         isLogged()
 
-        const store = useStore()
-        const router = useRouter()
+        const { shippingAddress, saveShippingAddress } = useCart()
+        const address = ref(shippingAddress.value)
         
-        const shippingAddress = ref(store.getters['getShippingAddress'])
-        const saveShippingAddress = data => {
-            store.dispatch('saveShippingAddress', data)
-            router.push({ name: 'Payment' })
-        }
-
         return {
-            shippingAddress,
+            shippingAddress: address,
             saveShippingAddress
         }
     }
