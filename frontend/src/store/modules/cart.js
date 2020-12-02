@@ -4,7 +4,7 @@ import actionHandler from '../actionHandler'
 const state = {
     items: JSON.parse(localStorage.getItem('cartItems')) ?? [],
     shippingAddress: JSON.parse(localStorage.getItem('shippingAddress')) ?? {},
-    paymentMethod: localStorage.getItem('paymentMethod') ?? 'paypal'
+    paymentMethod: 'PayPal'
 }
 
 const getters = {
@@ -42,9 +42,8 @@ const actions = {
         commit('setShippingAddress', { address, city, postalCode, country })
         localStorage.setItem('shippingAddress', JSON.stringify(state.shippingAddress))
     },
-    savePaymentMethod({ commit, state }, paymentMethod) {
+    savePaymentMethod({ commit }, paymentMethod) {
         commit('setPaymentMethod', paymentMethod)
-        localStorage.setItem('paymentMethod', state.paymentMethod)
     }
 }
 

@@ -14,12 +14,12 @@
                     class="form-check-input"
                     type="radio"
                     name="paymentMethod"
-                    value="paypal"
+                    value="PayPal"
                     v-model="paymentMethod"
                 >
                 <label class="form-check-label" for="paypal">PayPal or Credit Card</label>
             </div>
-            <div class="form-check">
+            <!-- <div class="form-check">
                 <input
                     id="pagseguro"
                     class="form-check-input"
@@ -29,7 +29,7 @@
                     v-model="paymentMethod"
                 >
                 <label class="form-check-label" for="pagseguro">PagSeguro</label>
-            </div>
+            </div> -->
             
             <button type="submit" class="btn btn-dark px-4 mt-4">
                 Continue
@@ -66,7 +66,7 @@ export default {
         const paymentMethod = ref(store.getters['getPaymentMethod'])
         const savePaymentMethod = data => {
             store.dispatch('savePaymentMethod', data)
-            // router.push({ name: 'Place Order' })
+            router.push({ name: 'Place Order' })
         }
         
         return {

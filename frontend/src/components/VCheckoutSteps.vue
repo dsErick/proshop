@@ -34,7 +34,7 @@
     <li class="nav-item">
         <router-link
             class="nav-link"
-            to="/order"
+            :to="{ name: 'Place Order' }"
             :class="{'disabled': !step3, 'active': step3 === 'active'}"
             :tabindex="step3 ? undefined : -1"
             :aria-disabled="step3 ? undefined : true"
