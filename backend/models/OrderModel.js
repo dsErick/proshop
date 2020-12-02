@@ -7,36 +7,27 @@ const OrderSchema = new mongoose.Schema({
         required: [true, 'The user field is required']
     },
     orderItems: [
-        // {
-        //     name: {
-        //         type: String,
-        //         required: true
-        //     },
-        //     quantity: {
-        //         type: Number,
-        //         required: true,
-        //     },
-        //     image: {
-        //         type: String,
-        //         required: true
-        //     },
-        //     price: {
-        //         type: Number,
-        //         required: true
-        //     },
-        //     product: {
-        //         type: mongoose.SchemaTypes.ObjectId,
-        //         ref: 'Product',
-        //         required: true
-        //     }
-        // }
         {
-            type: mongoose.SchemaTypes.Mixed,
-            ref: 'Product',
+            name: {
+                type: String,
+                required: true
+            },
             quantity: {
                 type: Number,
-                required: [true, 'The quantity field is required'],
-                default: 0
+                required: true,
+            },
+            image: {
+                type: String,
+                required: true
+            },
+            price: {
+                type: Number,
+                required: true
+            },
+            product: {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: 'Product',
+                required: true
             }
         }
     ],

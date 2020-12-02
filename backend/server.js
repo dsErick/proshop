@@ -7,6 +7,7 @@ import connectDB from './config/db.js'
 
 import { notFound, errorHandler } from './middleware/errorHandler.js'
 
+import OrderRoutes from './routes/OrderRoutes.js'
 import ProductRoutes from './routes/ProductRoutes.js'
 import UserRoutes from './routes/UserRoutes.js'
 
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
     })
 })
 
+app.use('/api/orders', OrderRoutes)
 app.use('/api/products', ProductRoutes)
 app.use('/api/users', UserRoutes)
 
