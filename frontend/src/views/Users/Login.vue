@@ -1,6 +1,6 @@
 <template>
 <div id="login" class="container-lg container-fluid">
-    <div class="d-flex flex-column align-items-center">
+    <div class="centered-flex-div">
         <h2 class="font-weight-bold mb-3 mt-4">Sign In</h2>
 
         <v-loader v-if="isLoading" />
@@ -74,28 +74,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#login {
-    .d-flex > .alert,
-    .d-flex > form {
-        min-width: 50%;
-    }
-}
-
-@media (max-width: 767px) {
-    #login {
-        .d-flex > .alert,
-        .d-flex > form {
-            min-width: 75%;
-        }
-    }
-}
-
-@media (max-width: 575px) {
-    #login {
-        .d-flex > .alert,
-        .d-flex > form {
-            min-width: 90%;
-        }
-    }
-}
+@import '@/assets/scss/_centeredFlexDiv.scss';
 </style>

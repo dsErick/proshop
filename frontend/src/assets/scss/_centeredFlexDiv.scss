@@ -1,0 +1,29 @@
+.centered-flex-div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    > .alert,
+    > form {
+        min-width: 50%;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .centered-flex-div {
+        > .alert,
+        > form {
+            min-width: 75%;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .centered-flex-div {
+        > .alert,
+        > form {
+            min-width: 90%;
+        }
+    }
+}

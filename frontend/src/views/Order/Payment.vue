@@ -2,7 +2,7 @@
 <div id="payment" class="container-lg container-fluid">
     <v-checkout-steps step2="active" />
     
-    <div class="d-flex flex-column align-items-center">
+    <div class="centered-flex-div">
         <h2 class="font-weight-bold my-3 text-center">Payment</h2>
 
         <form @submit.prevent="savePaymentMethod(paymentMethod)">
@@ -78,28 +78,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#payment {
-    .d-flex > .alert,
-    .d-flex > form {
-        min-width: 50%;
-    }
-}
-
-@media (max-width: 767px) {
-    #payment {
-        .d-flex > .alert,
-        .d-flex > form {
-            min-width: 75%;
-        }
-    }
-}
-
-@media (max-width: 575px) {
-    #payment {
-        .d-flex > .alert,
-        .d-flex > form {
-            min-width: 90%;
-        }
-    }
-}
+@import '@/assets/scss/_centeredFlexDiv.scss';
 </style>

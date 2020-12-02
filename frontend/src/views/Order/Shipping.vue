@@ -2,7 +2,7 @@
 <div id="shipping" class="container-lg container-fluid">
     <v-checkout-steps step1="active" />
     
-    <div class="d-flex flex-column align-items-center">
+    <div class="centered-flex-div">
         <h2 class="font-weight-bold my-3">Shipping</h2>
 
         <form @submit.prevent="saveShippingAddress(shippingAddress)">
@@ -76,28 +76,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#shipping {
-    .d-flex > .alert,
-    .d-flex > form {
-        min-width: 50%;
-    }
-}
-
-@media (max-width: 767px) {
-    #shipping {
-        .d-flex > .alert,
-        .d-flex > form {
-            min-width: 75%;
-        }
-    }
-}
-
-@media (max-width: 575px) {
-    #shipping {
-        .d-flex > .alert,
-        .d-flex > form {
-            min-width: 90%;
-        }
-    }
-}
+@import '@/assets/scss/_centeredFlexDiv.scss';
 </style>
