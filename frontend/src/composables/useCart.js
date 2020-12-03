@@ -15,8 +15,8 @@ export default function useCart() {
         itemsPrice: cartItems.value.reduce((acc, item) => acc + item.quantity * item.price, 0)
     })
     cartSummary.shippingPrice = cartSummary.itemsPrice > 100 ? 0 : 50
-    cartSummary.taxPrice = Number(0.15 * cartSummary.itemsPrice)
-    cartSummary.totalPrice = cartSummary.itemsPrice + cartSummary.shippingPrice + cartSummary.taxPrice
+    cartSummary.taxPrice = Number((0.15 * cartSummary.itemsPrice).toFixed(2))
+    cartSummary.totalPrice = Number((cartSummary.itemsPrice + cartSummary.shippingPrice + cartSummary.taxPrice).toFixed(2))
 
 
     const checkout = () => router.push({ name: 'Shipping' })
@@ -28,7 +28,11 @@ export default function useCart() {
         store.dispatch('savePaymentMethod', paymentMethod)
         router.push({ name: 'Place Order' })
     }
-    const placeOrder = () => console.log('Place Order')
+    const placeOrder = async () => {
+        if (await store.dispatch('createOrder', cartSummary)) router.push(`/orders/${(store.getters['getSingleOrder'])._id}`)
+        
+        // if (await store.dispatch('createOrder', cartSummary)) router.push({ name: 'Order', params: { id: (store.getters['getSingleOrder'])._id }})
+    }
 
     
     return {
