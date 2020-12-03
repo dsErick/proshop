@@ -66,7 +66,8 @@ const ProductSchema = new mongoose.Schema({
         default: 0
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 })
 
 export default mongoose.model('Product', ProductSchema)

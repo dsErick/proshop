@@ -1,5 +1,10 @@
 <template>
 <div id="place-order" class="container-lg container-fluid">
+    <v-loader v-if="isLoading" />
+    <v-alert v-else-if="error.message">
+        {{ error.message }}
+    </v-alert>
+
     <v-checkout-steps step2 step3="active" />
 
     <div class="row mt-3">
@@ -133,6 +138,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import VCheckoutSteps from '@/components/VCheckoutSteps'
 import useUsersAuthentication from '@/composables/useUsersAuthentication'
 import useCart from '@/composables/useCart'
@@ -141,20 +147,28 @@ export default {
     name: 'Place Order',
     components: {
         VCheckoutSteps,
+        VLoader: defineAsyncComponent(() => import(/* webpackChunkName: "loader-component" */ '@/components/utils/VLoader')),
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
         const { isLogged } = useUsersAuthentication()
         isLogged()
 
-        const { cartItems, shippingAddress, paymentMethod, cartSummary, placeOrder } = useCart()
+        const { cartItems, shippingAddress, paymentMethod, cartSummary, placeOrder, isLoading, error } = useCart()
+
+        if (Object.keys(cartItems.value).length === 0 ) {
+            const router = useRouter()
+            router.push({ name: 'Cart' })
+        }
 
         return {
             cartItems,
             shippingAddress,
             paymentMethod,
             cartSummary,
-            placeOrder
+            placeOrder,
+            isLoading,
+            error
         }
     }
 }

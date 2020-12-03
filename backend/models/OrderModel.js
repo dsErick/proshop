@@ -91,7 +91,8 @@ const OrderSchema = new mongoose.Schema({
         type: Date
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 })
 
 export default mongoose.model('Order', OrderSchema)

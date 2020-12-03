@@ -60,7 +60,7 @@ export default {
         const { shippingAddress, paymentMethod, savePaymentMethod } = useCart()
         const method = ref(paymentMethod.value)
         
-        if (Object.keys(shippingAddress.value).length === 0 ) {
+        if (Object.values(shippingAddress.value).some(value => value.length === 0)) {
             const router = useRouter()
             router.push({ name: 'Shipping' })
         }
