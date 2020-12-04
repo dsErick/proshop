@@ -35,6 +35,7 @@ export const createOrder = asyncHandler(async (req, res) => {
         orderItems,
         shippingAddress,
         paymentMethod,
+        itemsPrice,
         shippingPrice,
         taxPrice,
         totalPrice

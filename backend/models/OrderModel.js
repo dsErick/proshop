@@ -59,6 +59,11 @@ const OrderSchema = new mongoose.Schema({
         updateTime: { type: String },
         emailAddress: { type: String }
     },
+    itemsPrice: {
+        type: Number,
+        required: [true, 'The items price field is required'],
+        default: 0.0
+    },
     taxPrice: {
         type: Number,
         required: [true, 'The tax price field is required'],

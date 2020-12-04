@@ -29,9 +29,7 @@ export default function useCart() {
         router.push({ name: 'Place Order' })
     }
     const placeOrder = async () => {
-        if (await store.dispatch('createOrder', cartSummary)) router.push(`/orders/${(store.getters['getSingleOrder'])._id}`)
-        
-        // if (await store.dispatch('createOrder', cartSummary)) router.push({ name: 'Order', params: { id: (store.getters['getSingleOrder'])._id }})
+        if (await store.dispatch('createOrder', cartSummary)) router.push({ name: 'Order Details', params: { id: (store.getters['getSingleOrder'])._id }})
     }
 
     

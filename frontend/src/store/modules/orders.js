@@ -1,9 +1,16 @@
 import axios from 'axios'
 import actionHandler from '../actionHandler'
 
+const initialSingleOrderState = () => ({
+    _id: '',
+    user: '',
+    orderItems: [],
+    shippingAddress: {}
+})
+
 const state = {
     orders: [],
-    order: {}
+    order: initialSingleOrderState()
 }
 
 const getters = {
@@ -12,6 +19,13 @@ const getters = {
 }
 
 const actions = {
+    fetchSingleOrder: actionHandler(async ({ commit, rootState }, order) => {
+        const { data } = await axios.get(`/api/orders/${order}`, {
+            headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
+        })
+
+        commit('setSingleOrder', data.data)
+    }),
     createOrder: actionHandler(async ({ commit, rootState }, cartSummary) => {
         const { items, shippingAddress, paymentMethod } = rootState.cart
 
