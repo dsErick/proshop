@@ -41,7 +41,33 @@ export const createOrder = asyncHandler(async (req, res) => {
         totalPrice
     })
     
-    res.status(201).json({
-        data: order
-    })
+    res.status(201).json({ data: order })
+})
+
+/* 
+ * @desc        Update order to paid
+ * @route       PUT /api/orders/:id/pay
+ * @access      Private
+ */
+export const updateOrderToPaid = asyncHandler(async (req, res) => {
+    const { id, status, updateTime, payer: { emailAddress } } = req.body
+    const order = await Order.findById(req.params.id)
+    
+    if (!order) {
+        res.status(404)
+        throw new Error(`Order not found with the id of ${req.params.id}`)
+    }
+
+    order.isPaid = true
+    order.paidAt = Date.now()
+    order.paymentResult = {
+        id,
+        status,
+        updateTime,
+        emailAddress,
+    }
+
+    await order.save()
+
+    res.status(200).json({ data: order })
 })
