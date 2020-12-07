@@ -50,7 +50,7 @@ export const createOrder = asyncHandler(async (req, res) => {
  * @access      Private
  */
 export const updateOrderToPaid = asyncHandler(async (req, res) => {
-    const { id, status, updateTime, payer: { emailAddress } } = req.body
+    const { id, status, updateTime, emailAddress } = req.body
     const order = await Order.findById(req.params.id)
     
     if (!order) {

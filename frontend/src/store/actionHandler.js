@@ -2,10 +2,10 @@ export default fn => (context, payload) => {
     context.commit('utils/setLoading', true, { root: true })
 
     return Promise.resolve(fn(context, payload))
-        .then(() => {
+        .then(res => {
             context.commit('utils/resetError', null, { root: true })
 
-            return true
+            return res ?? true
         })
         .catch(err => {
             console.log(err, err.response)

@@ -2,7 +2,7 @@
 <div id="order" class="container-lg container-fluid">
     <h2 class="mb-3">Order {{ order._id }}</h2>
     
-    <v-loader v-if="isLoading" />
+    <v-loader v-if="isLoading || !isSdkReady" />
     <v-alert v-else-if="error.message">
         {{ error.message }}
     </v-alert>
@@ -136,6 +136,7 @@
                         </div>
                     </div>
                 </li>
+                <li id="paypal-button-container" class="list-group-item" v-if="!order.isPaid"></li>
             </ul>
         </div>
     </div>
@@ -143,7 +144,7 @@
 </template>
 
 <script>
-import { computed, defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import useUsersAuthentication from '@/composables/useUsersAuthentication'
@@ -164,8 +165,56 @@ export default {
         store.dispatch('fetchSingleOrder', route.params.id)
         const order = computed(() => store.getters['getSingleOrder'])
 
+        const isSdkReady = ref(false)
+        const addPayPalScript = async () => {
+            const clientId = await store.dispatch('paypalClientId')
+
+            const script = document.createElement('script')
+            script.type = 'text/javascript'
+            script.async = true
+            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+            
+            script.onload = () => {
+                isSdkReady.value = true
+
+                $(document).ready(() => {
+                    window.paypal.Buttons({
+                        createOrder: function(data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        currency_code: 'USD',
+                                        value: order.value.totalPrice
+                                    }
+                                }]
+                            })
+                        },
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(details => {
+                                store.dispatch('payOrder', {
+                                    orderId: order.value._id,
+                                    details
+                                })
+                            })
+                        }
+                    }).render('#paypal-button-container')
+                })
+            }
+
+            document.body.appendChild(script)
+        }
+
+        watch(order.value, order => {
+            if (order._id) {
+                !order.isPaid
+                    ? addPayPalScript()
+                    : isSdkReady.value = true
+            }
+        })
+
         return {
             order,
+            isSdkReady,
             isLoading: computed(() => store.getters['utils/isLoading']),
             error: computed(() => store.getters['utils/getError'])
         }

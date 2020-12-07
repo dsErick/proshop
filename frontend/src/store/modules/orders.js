@@ -19,18 +19,18 @@ const getters = {
 }
 
 const actions = {
-    fetchSingleOrder: actionHandler(async ({ commit, rootState }, order) => {
-        const { data } = await axios.get(`/api/orders/${order}`, {
+    fetchSingleOrder: actionHandler(async ({ commit, rootState }, orderId) => {
+        const { data } = await axios.get(`/api/orders/${orderId}`, {
             headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
         })
 
         commit('setSingleOrder', data.data)
     }),
     createOrder: actionHandler(async ({ commit, rootState }, cartSummary) => {
-        const { items, shippingAddress, paymentMethod } = rootState.cart
+        const { items: orderItems, shippingAddress, paymentMethod } = rootState.cart
 
         const { data } = await axios.post('/api/orders', {
-            orderItems: items,
+            orderItems,
             shippingAddress,
             paymentMethod,
             ...cartSummary
@@ -39,6 +39,26 @@ const actions = {
         })
 
         commit('setSingleOrder', data.data)
+    }),
+
+    payOrder: actionHandler(async ({ commit, rootState }, { orderId, details }) => {
+        const { id, status, update_time: updateTime, payer: { email_address: emailAddress } } = details
+        
+        const { data } = await axios.put(`/api/orders/${orderId}/pay`, {
+            id,
+            status,
+            updateTime,
+            emailAddress
+        }, {
+            headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
+        })
+        
+        commit('setSingleOrder', data.data)
+    }),
+    paypalClientId: actionHandler(async () => {
+        const { data } = await axios.get('/api/config/paypal')
+
+        return data
     })
 }
 
