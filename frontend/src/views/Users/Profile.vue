@@ -46,8 +46,56 @@
                 </button>
             </form>
         </div>
-        <div class="col-lg-9">
-            <h2>My Orders</h2>
+        <div class="col-lg-9 mt-lg-0 mt-4">
+            <h2 class="mb-3">My Orders</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Paid</th>
+                            <th>Delivered</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="order in orders" :key="order._id">
+                            <td>{{ order._id }}</td>
+                            <td>{{ order.createdAt.substring(0, 10) }}</td>
+                            <td>
+                                {{
+                                    new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    }).format(order.totalPrice)
+                                }}
+                            </td>
+                            <td>
+                                <span v-if="order.isPaid">
+                                    {{ order.paidAt.substring(0, 10) }}
+                                </span>
+                                <font-awesome-icon :icon="['fas', 'times']" v-else />
+                            </td>
+                            <td>
+                                <span v-if="order.isDelivered">
+                                    {{ order.deliveredAt.substring(0, 10) }}
+                                </span>
+                                <font-awesome-icon :icon="['fas', 'times']" v-else />
+                            </td>
+                            <td>
+                                <router-link
+                                    :to="{ name: 'Order Details', params: { id: order._id }}"
+                                    class="btn btn-link btn-sm"
+                                >
+                                    <font-awesome-icon :icon="['fas', 'info-circle']" />
+                                </router-link>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -56,7 +104,6 @@
 <script>
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 import VFormInput from '@/components/VFormInput'
 import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
@@ -72,11 +119,12 @@ export default {
         isLogged()
 
         const store = useStore()
-        const router = useRouter()
         
+        store.dispatch('fetchUserDetails')
+        store.dispatch('fetchMyOrders')
         const success = ref(false)
         const user = computed(() => store.getters['getUserDetails'])
-        store.dispatch('fetchUserDetails')
+        const orders = computed(() => store.getters['getMyOrders'])
 
         const updateUserProfile = async user => {
             user.password !== user.confirmPassword
@@ -89,6 +137,7 @@ export default {
         return {
             success,
             user,
+            orders,
             updateUserProfile,
             isLoading: computed(() => store.getters['utils/isLoading']),
             error: computed(() => store.getters['utils/getError'])
@@ -98,4 +147,31 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/scss/_variables.scss';
+
+table {
+    tbody tr td {
+        text-align: center;
+        vertical-align: middle;
+
+        svg {
+            &.fa-times { color: $danger }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    form {
+        max-width: 50%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 767px) {
+    form { max-width: 75% }
+}
+
+@media (max-width: 575px) {
+    form { max-width: unset }
+}
 </style>

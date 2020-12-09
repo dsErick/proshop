@@ -18,6 +18,17 @@ export const getOrderById = asyncHandler(async (req, res) => {
 })
 
 /* 
+ * @desc        Get logged in user orders
+ * @route       GET /api/orders/myorders
+ * @access      Private
+ */
+export const getMyOrders = asyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id }).sort('-createdAt')
+    
+    res.status(200).json({ data: orders })
+})
+
+/* 
  * @desc        Create new order
  * @route       POST /api/orders
  * @access      Private

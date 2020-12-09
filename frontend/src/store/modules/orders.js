@@ -14,11 +14,18 @@ const state = {
 }
 
 const getters = {
-    getAllOrders: state => state.orders,
+    getMyOrders: state => state.orders,
     getSingleOrder: state => state.order
 }
 
 const actions = {
+    fetchMyOrders: actionHandler(async ({ commit, rootState }) => {
+        const { data } = await axios.get('/api/orders/myorders', {
+            headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
+        })
+
+        commit('setMyOrders', data.data)
+    }),
     fetchSingleOrder: actionHandler(async ({ commit, rootState }, orderId) => {
         const { data } = await axios.get(`/api/orders/${orderId}`, {
             headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
@@ -63,6 +70,7 @@ const actions = {
 }
 
 const mutations = {
+    setMyOrders: (state, orders) => state.orders = orders,
     setSingleOrder: (state, order) => Object.keys(order).forEach(key => state.order[key] = order[key])
 }
 
