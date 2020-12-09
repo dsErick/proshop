@@ -63,7 +63,7 @@
                     <tbody>
                         <tr v-for="order in orders" :key="order._id">
                             <td>{{ order._id }}</td>
-                            <td>{{ order.createdAt.substring(0, 10) }}</td>
+                            <td>{{ dayjs(order.createdAt).format('lll') }}</td>
                             <td>
                                 {{
                                     new Intl.NumberFormat('en-US', {
@@ -74,13 +74,13 @@
                             </td>
                             <td>
                                 <span v-if="order.isPaid">
-                                    {{ order.paidAt.substring(0, 10) }}
+                                    {{ dayjs(order.paidAt).format('lll') }}
                                 </span>
                                 <font-awesome-icon :icon="['fas', 'times']" v-else />
                             </td>
                             <td>
                                 <span v-if="order.isDelivered">
-                                    {{ order.deliveredAt.substring(0, 10) }}
+                                    {{ dayjs(order.deliveredAt).format('lll') }}
                                 </span>
                                 <font-awesome-icon :icon="['fas', 'times']" v-else />
                             </td>
@@ -106,6 +106,10 @@ import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import VFormInput from '@/components/VFormInput'
 import useUsersAuthentication from '@/composables/useUsersAuthentication'
+
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+dayjs.extend(localizedFormat)
 
 export default {
     name: 'Profile',
@@ -139,6 +143,7 @@ export default {
             user,
             orders,
             updateUserProfile,
+            dayjs,
             isLoading: computed(() => store.getters['utils/isLoading']),
             error: computed(() => store.getters['utils/getError'])
         }
