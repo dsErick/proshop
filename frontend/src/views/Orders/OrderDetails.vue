@@ -1,13 +1,16 @@
 <template>
 <div id="order" class="container-lg container-fluid">
-    <h2 class="mb-3">Order {{ order._id }}</h2>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="mb-0">Order {{ order._id }}</h2>
+        <router-link :to="{ name: 'Profile' }" class="btn btn-dark">Go back</router-link>
+    </div>
     
     <v-loader v-if="isLoading || !isSdkReady" />
     <v-alert v-else-if="error.message">
         {{ error.message }}
     </v-alert>
 
-    <div class="row mt-3" v-else>
+    <div class="row mt-3">
         <div class="col-md-8 col-12">
             <ul id="order-details-wrapper" class="list-group list-group-flush">
 
@@ -27,7 +30,7 @@
 
                     <v-alert :type="order.isDelivered ? 'alert-success' : 'alert-danger'" class="mb-0">
                         {{
-                            order.isDelivered ? `Delivered on ${order.deliveredAt }` : `Not delivered`
+                            order.isDelivered ? `Delivered on ${dayjs(order.deliveredAt).format('LLL')}` : `Not delivered`
                         }}
                     </v-alert>
                 </li>
@@ -41,7 +44,7 @@
 
                     <v-alert :type="order.isPaid ? 'alert-success' : 'alert-danger'" class="mb-0">
                         {{
-                            order.isPaid ? `Paid on ${order.paidAt }` : `Not paid`
+                            order.isPaid ? `Paid on ${dayjs(order.paidAt).format('LLL')}` : `Not paid`
                         }}
                     </v-alert>
                 </li>
@@ -149,6 +152,10 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+dayjs.extend(localizedFormat)
+
 export default {
     name: 'OrderDetails',
     components: {
@@ -215,6 +222,7 @@ export default {
         return {
             order,
             isSdkReady,
+            dayjs,
             isLoading: computed(() => store.getters['utils/isLoading']),
             error: computed(() => store.getters['utils/getError'])
         }
