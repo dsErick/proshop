@@ -65,3 +65,14 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
         data: req.user.toObject()
     })
 })
+
+/* 
+ * @desc    Get all users
+ * @route   GET /api/users
+ * @access  Private/Admin
+ */
+export const getAllUsers = asyncHandler(async (req, res) => {
+    const users = await User.find({})
+    
+    res.status(200).json({ data: users })
+})
