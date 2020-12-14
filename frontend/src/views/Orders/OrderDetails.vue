@@ -10,7 +10,7 @@
         {{ error.message }}
     </v-alert>
 
-    <div class="row mt-3">
+    <div class="row mt-3" v-else>
         <div class="col-md-8 col-12">
             <ul id="order-details-wrapper" class="list-group list-group-flush">
 
@@ -171,6 +171,7 @@ export default {
 
         store.dispatch('fetchSingleOrder', route.params.id)
         const order = computed(() => store.getters['getSingleOrder'])
+        const error = computed(() => store.getters['utils/getError'])
 
         const isSdkReady = ref(false)
         const addPayPalScript = async () => {
@@ -213,10 +214,14 @@ export default {
 
         watch(order.value, order => {
             if (order._id) {
-                !order.isPaid
-                    ? addPayPalScript()
-                    : isSdkReady.value = true
+                order.isPaid
+                    ? isSdkReady.value = true
+                    : addPayPalScript()
             }
+        })
+
+        watch(error, error => {
+            if (error.status === 403) isSdkReady.value = true
         })
 
         return {
@@ -224,7 +229,7 @@ export default {
             isSdkReady,
             dayjs,
             isLoading: computed(() => store.getters['utils/isLoading']),
-            error: computed(() => store.getters['utils/getError'])
+            error
         }
     }
 }

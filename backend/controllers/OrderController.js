@@ -14,6 +14,11 @@ export const getOrderById = asyncHandler(async (req, res) => {
         throw new Error(`Order not found with the id of ${req.params.id}`)
     }
 
+    if (!req.user.isAdmin && !order.user.equals(req.user)) {
+        res.status(403)
+        throw new Error(`Not authorized to access this order. You must have to be the order owner.`)
+    }
+
     res.status(200).json({ data: order })
 })
 

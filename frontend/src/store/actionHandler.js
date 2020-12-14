@@ -11,7 +11,8 @@ export default fn => (context, payload) => {
             console.log(err, err.response)
             const error = {
                 message: err.response && err.response.data.message ? err.response.data.message : err.message,
-                errors: err.response && err.response.data.errors ? err.response.data.errors : undefined
+                errors: err.response && err.response.data.errors ? err.response.data.errors : undefined,
+                status: err.response ? err.response.status : undefined,
             }
 
             if (err.response && err.response.data.message === 'Authentication token expired') 
