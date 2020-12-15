@@ -12,6 +12,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "product-view" */ '@/views/Product.vue')
     },
     
+    // Cart
     {
         path: '/cart',
         name: 'Cart',
@@ -36,6 +37,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "place-order-view" */ '@/views/Cart/PlaceOrder.vue')
     },
 
+    // Orders
     {
         path: '/order/:id',
         name: 'Order Details',
@@ -43,6 +45,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "order-details-view" */ '@/views/Orders/OrderDetails.vue')
     },
 
+    // Users
     {
         path: '/login',
         name: 'Login',
@@ -58,6 +61,14 @@ const routes = [
         name: 'Profile',
         meta: { requiresAuth: true },
         component: () => import(/* webpackChunkName: "profile-view" */ '@/views/Users/Profile.vue')
+    },
+
+    // Admin
+    {
+        path: '/admin/users',
+        name: 'Admin Users',
+        meta: { requiresAuth: true },
+        component: () => import(/* webpackChunkName: "admin-users" */ '@/views/Admin/Users.vue')
     }
 ]
 

@@ -32,6 +32,15 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
                             <router-link :to="{ name: 'Profile' }" class="dropdown-item">Profile</router-link>
 
+                            <div v-if="user.isAdmin">
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">Admin</h6>
+
+                                <router-link :to="{ name: 'Admin Users' }" class="dropdown-item">Users</router-link>
+                                <router-link to="/admin/products" class="dropdown-item">Products</router-link>
+                                <router-link to="/admin/orders" class="dropdown-item">Orders</router-link>
+                            </div>
+
                             <div class="dropdown-divider"></div>
                             <button class="dropdown-item" @click="logoutUser">
                                 Logout

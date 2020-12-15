@@ -13,12 +13,16 @@ const initialUserState = () => (JSON.parse(localStorage.getItem('user')) ?? {
 
 const state = {
     loggedUser: initialUserState(),
-    userDetails: {}
+    userDetails: {},
+
+    users: []
 }
 
 const getters = {
     getLoggedUser: state => state.loggedUser,
-    getUserDetails: state => state.userDetails
+    getUserDetails: state => state.userDetails,
+    
+    getAllUsers: state => state.users
 }
 
 const actions = {
@@ -82,6 +86,22 @@ const actions = {
         
         commit('resetUserDetails')
         commit('setUser', { user: data.data, statePiece: 'userDetails' })
+    }),
+
+    /* 
+     * @desc        Get all registered users
+     * @access      Admin
+     */
+    fetchAllUsers: actionHandler(async ({ commit, state }) => {
+        // if (!state.loggedUser.isAdmin) return false
+
+        // commit('resetAllUsers')
+        
+        const { data } = await axios.get('/api/users', {
+            headers: { Authorization: `Bearer ${state.loggedUser.token}` }
+        })
+
+        commit('setAllUsers', data.data)
     })
 }
 
@@ -89,9 +109,10 @@ const mutations = {
     resetLoggedUser: state => state.loggedUser = initialUserState(),
     resetUserDetails: state => state.userDetails = {},
     
-    setUser: (state, { user, statePiece }) => Object.keys(user).forEach(key => state[statePiece][key] = user[key])
-    // setLoggedUser: (state, user) => Object.keys(user).forEach(key => state.loggedUser[key] = user[key]),
-    // setUserDetails: (state, user) => Object.keys(user).forEach(key => state.userDetails[key] = user[key]),
+    setUser: (state, { user, statePiece }) => Object.keys(user).forEach(key => state[statePiece][key] = user[key]),
+
+    resetAllUsers: state => state.users = [],
+    setAllUsers: (state, users) => state.users = users
 }
 
 export default {
