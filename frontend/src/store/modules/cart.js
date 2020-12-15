@@ -16,6 +16,10 @@ const getters = {
 }
 
 const actions = {
+    /*
+     * @desc        Add or update a cart item
+     * @access      Public
+     */
     addItem: actionHandler(async ({ commit, state }, { id, quantity }) => {
         const { data } = await axios.get(`/api/products/${id}`)
         const { _id, name, image, price, countInStock } = data.data
@@ -33,15 +37,29 @@ const actions = {
 
         localStorage.setItem('cartItems', JSON.stringify(state.items))
     }),
+    
+    /*
+     * @desc        Remove a cart item
+     * @access      Public
+     */
     removeItem({ commit, state }, id) {
         commit('removeCartItem', id)
         localStorage.setItem('cartItems', JSON.stringify(state.items))
     },
 
+    /*
+     * @desc        Save the user shipping address on localStorage
+     * @access      Public
+     */
     saveShippingAddress({ commit, state }, { address, city, postalCode, country }) {
         commit('setShippingAddress', { address, city, postalCode, country })
         localStorage.setItem('shippingAddress', JSON.stringify(state.shippingAddress))
     },
+
+    /*
+     * @desc        Save the user payment method on localStorage
+     * @access      Public
+     */
     savePaymentMethod({ commit }, paymentMethod) {
         commit('setPaymentMethod', paymentMethod)
     }

@@ -23,6 +23,10 @@ const getters = {
 }
 
 const actions = {
+    /*
+     * @desc        Fetch the logged in user orders
+     * @access      Private
+     */
     fetchMyOrders: actionHandler(async ({ commit, rootState }) => {
         commit('resetMyOrders')
         
@@ -32,6 +36,11 @@ const actions = {
 
         commit('setMyOrders', data.data)
     }),
+    
+    /*
+     * @desc        Fetch a user order by id
+     * @access      Private
+     */
     fetchSingleOrder: actionHandler(async ({ commit, rootState }, orderId) => {
         commit('resetSingleOrder')
 
@@ -41,6 +50,11 @@ const actions = {
 
         commit('setSingleOrder', data.data)
     }),
+    
+    /*
+     * @desc        Creates a new user order
+     * @access      Private
+     */
     createOrder: actionHandler(async ({ commit, rootState }, cartSummary) => {
         const { items: orderItems, shippingAddress, paymentMethod } = rootState.cart
 
@@ -56,6 +70,10 @@ const actions = {
         commit('setSingleOrder', data.data)
     }),
 
+    /*
+     * @desc        Update order paid status
+     * @access      Private
+     */
     payOrder: actionHandler(async ({ commit, rootState }, { orderId, details }) => {
         const { id, status, update_time: updateTime, payer: { email_address: emailAddress } } = details
         
@@ -70,6 +88,11 @@ const actions = {
         
         commit('setSingleOrder', data.data)
     }),
+    
+    /*
+     * @desc        Fetch the paypal client id
+     * @access      Private
+     */
     paypalClientId: actionHandler(async () => {
         const { data } = await axios.get('/api/config/paypal')
 

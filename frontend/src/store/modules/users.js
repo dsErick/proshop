@@ -22,16 +22,30 @@ const getters = {
 }
 
 const actions = {
+    /* 
+     * @desc        Authenticate user & get token
+     * @access      Public
+     */
     loginUser: actionHandler(async ({ commit }, { email, password }) => {
         const { data } = await axios.post('/api/users/login', { email, password })
 
         localStorage.setItem('user', JSON.stringify(data.data))
         commit('setUser', { user: data.data, statePiece: 'loggedUser' })
     }),
+    
+    /* 
+     * @desc        Sign out logged user
+     * @access      Private
+     */
     logoutUser({ commit }) {
         localStorage.removeItem('user')
         commit('resetLoggedUser')
     },
+
+    /* 
+     * @desc        Register a new user
+     * @access      Public
+     */
     registerUser: actionHandler(async ({ commit }, { name, email, password }) => {
         const { data } = await axios.post('/api/users', { name, email, password })
 
@@ -39,6 +53,10 @@ const actions = {
         commit('setUser', { user: data.data, statePiece: 'loggedUser' })
     }),
 
+    /* 
+     * @desc        Get User by id or the logged in
+     * @access      Private || Admin
+     */
     fetchUserDetails: actionHandler(async ({ commit, state }, user = 'profile') => {
         commit('resetUserDetails')
         
@@ -48,6 +66,11 @@ const actions = {
         
         commit('setUser', { user: data.data, statePiece: 'userDetails' })
     }),
+    
+    /* 
+     * @desc        Update logged in user data
+     * @access      Private
+     */
     updateUserProfile: actionHandler(async ({ commit, state }, { name, email, password }) => {
         const { data } = await axios.put('/api/users/profile',
             { name, email, password },

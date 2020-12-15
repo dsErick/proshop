@@ -26,11 +26,20 @@ const getters = {
 }
 
 const actions = {
+    /*
+     * @desc        Fetch all products
+     * @access      Public
+     */
     fetchAllProducts: actionHandler(async ({ commit }) => {
         const { data } = await axios.get('/api/products')
 
         commit('setAllProducts', data.data)
     }),
+
+    /*
+     * @desc        Fetch a single products by id
+     * @access      Public
+     */
     fetchSingleProduct: actionHandler(async ({ commit }, product) => {
         const { data } = await axios.get(`/api/products/${product}`)
 
