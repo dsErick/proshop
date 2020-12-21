@@ -93,9 +93,7 @@ const actions = {
      * @access      Admin
      */
     fetchAllUsers: actionHandler(async ({ commit, state }) => {
-        // if (!state.loggedUser.isAdmin) return false
-
-        // commit('resetAllUsers')
+        commit('resetAllUsers')
         
         const { data } = await axios.get('/api/users', {
             headers: { Authorization: `Bearer ${state.loggedUser.token}` }

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
 
 const routes = [
     {
@@ -67,7 +68,7 @@ const routes = [
     {
         path: '/admin/users',
         name: 'Admin Users',
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: 'Admin', },
         component: () => import(/* webpackChunkName: "admin-users" */ '@/views/Admin/Users.vue')
     }
 ]
@@ -76,6 +77,14 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
     scrollBehavior: () => ({ left: 0, top: 0 })
+})
+
+// Checking if the logged user is admin before entering Admin routes
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(route => route.meta.requiresAuth === 'Admin') && !(store.getters['getLoggedUser']).isAdmin) {
+        next({ name: 'Home' })
+
+    } else next()
 })
 
 export default router

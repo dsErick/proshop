@@ -65,12 +65,6 @@ export default {
 
         const store = useStore()
 
-        // const router = useRouter()
-        // const fetchUsers = async () => {
-        //     if (!await store.dispatch('fetchAllUsers')) router.replace({ name: 'Home' })
-        // }
-        // fetchUsers()
-
         store.dispatch('fetchAllUsers')
         const users = computed(() => store.getters['getAllUsers'])
         const deleteUser = userId => console.log(userId)

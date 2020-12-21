@@ -34,7 +34,10 @@
 
                             <div v-if="user.isAdmin">
                                 <div class="dropdown-divider"></div>
-                                <h6 class="dropdown-header">Admin</h6>
+                                <h6 class="dropdown-header">
+                                    <font-awesome-icon :icon="['fas', 'user-cog']" fixed-width />
+                                    Admin
+                                </h6>
 
                                 <router-link :to="{ name: 'Admin Users' }" class="dropdown-item">Users</router-link>
                                 <router-link to="/admin/products" class="dropdown-item">Products</router-link>
@@ -82,7 +85,10 @@ export default {
     },
     mounted() {
         // Close collapsed navbar after clicking any nav-link
-        $(document).on('click', '.navbar-collapse.show .nav-item .nav-link', () => {
+        $(document).on('click', `
+            .navbar-collapse.show .nav-item .nav-link:not('.dropdown-toggle'),
+            .navbar-collapse.show .nav-item.dropdown .dropdown-menu a.dropdown-item
+        `, () => {
             $('.navbar-collapse.show').collapse('hide')
         })
     }
