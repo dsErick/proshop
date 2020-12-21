@@ -67,7 +67,7 @@ export default {
 
         store.dispatch('fetchAllUsers')
         const users = computed(() => store.getters['getAllUsers'])
-        const deleteUser = userId => console.log(userId)
+        const deleteUser = userId => store.dispatch('deleteUser', userId)
         
         return {
             users,

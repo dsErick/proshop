@@ -100,6 +100,18 @@ const actions = {
         })
 
         commit('setAllUsers', data.data)
+    }),
+    
+    /* 
+     * @desc        Delete user by id
+     * @access      Admin
+     */
+    deleteUser: actionHandler(async ({ dispatch, state }, userId ) => {
+        await axios.delete(`/api/users/${userId}`, {
+            headers: { Authorization: `Bearer ${state.loggedUser.token}` }
+        })
+
+        dispatch('fetchAllUsers')
     })
 }
 
