@@ -42,9 +42,10 @@
 <script>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
 import VFormInput from '@/components/VFormInput'
 import VCheckoutSteps from '@/components/VCheckoutSteps'
-import useUsersAuthentication from '@/composables/useUsersAuthentication'
+
 import useCart from '@/composables/useCart'
 
 export default {
@@ -54,9 +55,6 @@ export default {
         VCheckoutSteps
     },
     setup() {
-        const { isLogged } = useUsersAuthentication()
-        isLogged()
-
         const { shippingAddress, paymentMethod, savePaymentMethod } = useCart()
         const method = ref(paymentMethod.value)
         

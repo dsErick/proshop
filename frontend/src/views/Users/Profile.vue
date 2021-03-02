@@ -48,6 +48,7 @@
         </div>
         <div class="col-lg-9 mt-lg-0 mt-4">
             <h2 class="mb-3">My Orders</h2>
+            <!-- Some message if there is no orders -->
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover table-sm">
                     <thead>
@@ -104,8 +105,8 @@
 <script>
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useStore } from 'vuex'
+
 import VFormInput from '@/components/VFormInput'
-import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -119,9 +120,6 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { isLogged } = useUsersAuthentication()
-        isLogged()
-
         const store = useStore()
         
         store.dispatch('fetchUserDetails')

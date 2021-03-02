@@ -23,14 +23,6 @@ export default function useUsers() {
         if (user._id) router.push(`/${redirect}`)
     }, { immediate: true })
     
-
-    const isLogged = () => watch(user, user => {
-        if (!user._id) router.push({
-            name: 'Login',
-            query: { redirect: route.fullPath.slice(1) }
-        })
-    }, { immediate: true })
-
     return {
         user,
         loginUser,
@@ -38,7 +30,6 @@ export default function useUsers() {
         logoutUser,
         redirect,
         redirectWatch,
-        isLogged,
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])
     } 

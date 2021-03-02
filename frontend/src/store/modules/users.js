@@ -1,5 +1,6 @@
 import axios from 'axios'
 import actionHandler from '../actionHandler'
+import router from '@/router'
 
 const initialUserState = () => (JSON.parse(localStorage.getItem('user')) ?? {
     _id: '',
@@ -44,6 +45,8 @@ const actions = {
     logoutUser({ commit }) {
         localStorage.removeItem('user')
         commit('resetLoggedUser')
+
+        router.push({ name: 'Login', query: { redirect: router.currentRoute.value.fullPath.slice(1) } })
     },
 
     /* 

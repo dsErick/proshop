@@ -150,7 +150,6 @@
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -163,9 +162,6 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { isLogged } = useUsersAuthentication()
-        isLogged()
-
         const store = useStore()
         const route = useRoute()
 

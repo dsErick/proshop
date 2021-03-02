@@ -139,8 +139,9 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
+
 import VCheckoutSteps from '@/components/VCheckoutSteps'
-import useUsersAuthentication from '@/composables/useUsersAuthentication'
+
 import useCart from '@/composables/useCart'
 
 export default {
@@ -151,9 +152,6 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { isLogged } = useUsersAuthentication()
-        isLogged()
-
         const { cartItems, shippingAddress, paymentMethod, cartSummary, placeOrder, isLoading, error } = useCart()
 
         if (Object.keys(cartItems.value).length === 0 ) {

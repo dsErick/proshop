@@ -79,12 +79,16 @@ const router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 })
 })
 
-// Checking if the logged user is admin before entering Admin routes
-router.beforeEach((to, from, next) => {
-    if (to.matched.some(route => route.meta.requiresAuth === 'Admin') && !(store.getters['getLoggedUser']).isAdmin) {
-        next({ name: 'Home' })
+// Checking for logged user and for admin user
+router.beforeEach((to, _, next) => {
+    const user = (store.getters['getLoggedUser'])
+    
+    if (to.matched.some(route => route.meta.requiresAuth === true) && !user._id)
+        next({ name: 'Login', query: { redirect: to.fullPath.slice(1) } })
+    
+    else if (to.matched.some(route => route.meta.requiresAuth === 'Admin') && !user.isAdmin) next({ name: 'Home' })
 
-    } else next()
+    else next()
 })
 
 export default router

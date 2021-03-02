@@ -29,6 +29,7 @@
                         <font-awesome-icon :icon="['fas', user.isAdmin ? 'check' : 'times']" />
                     </td>
                     <td>
+                    <!-- Instead of buttons, use a dropdown menu -->
                         <router-link
                             :to="`/admin/users/${user._id}/edit`"
                             class="btn btn-link btn-sm text-dark"
@@ -51,7 +52,6 @@
 import { computed, defineAsyncComponent } from 'vue'
 import { useStore } from 'vuex'
 // import { useRouter } from 'vue-router'
-import useUsersAuthentication from '@/composables/useUsersAuthentication'
 
 export default {
     name: 'Users',
@@ -60,9 +60,6 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { isLogged } = useUsersAuthentication()
-        isLogged()
-
         const store = useStore()
 
         store.dispatch('fetchAllUsers')
