@@ -72,5 +72,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/scss/_centeredFlexDiv.scss';
+@import '@/assets/scss/centered-flex-div';
 </style>
