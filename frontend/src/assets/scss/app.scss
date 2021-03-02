@@ -21,6 +21,7 @@
 @import 'node_modules/bootstrap/scss/buttons';
 @import 'node_modules/bootstrap/scss/transitions';
 @import 'node_modules/bootstrap/scss/dropdown';
+@import 'node_modules/bootstrap/scss/button-group';
 @import 'node_modules/bootstrap/scss/nav';
 @import 'node_modules/bootstrap/scss/navbar';
 @import 'node_modules/bootstrap/scss/card';
@@ -28,6 +29,12 @@
 @import 'node_modules/bootstrap/scss/alert';
 @import 'node_modules/bootstrap/scss/list-group';
 @import 'node_modules/bootstrap/scss/spinners';
+
+
+h2 {
+    font-size: $font-size-base * 2.25;
+    font-weight: 600;
+}
 
 // Media queries
 @import 'mobile';

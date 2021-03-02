@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
+                    <th class="min-width">Name</th>
                     <th>Email</th>
                     <th>Admin</th>
                     <th></th>
@@ -29,16 +29,22 @@
                         <font-awesome-icon :icon="['fas', user.isAdmin ? 'check' : 'times']" />
                     </td>
                     <td>
-                    <!-- Instead of buttons, use a dropdown menu -->
-                        <router-link
-                            :to="`/admin/users/${user._id}/edit`"
-                            class="btn btn-link btn-sm text-dark"
-                        >
-                            <font-awesome-icon :icon="['fas', 'user-edit']" />
-                        </router-link>
-                        <button class="btn btn-link btn-sm text-danger" @click.prevent="deleteUser(user._id)">
-                            <font-awesome-icon :icon="['fas', 'user-times']" />
-                        </button>
+                        <div class="btn-group dropleft">
+                            <button type="button" class="btn btn-dark btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <font-awesome-icon :icon="['fas', 'chevron-left']" />
+                            </button>
+
+                            <div class="dropdown-menu">
+                                <h6 class="dropdown-header">{{ user.name }}</h6>
+                                <router-link class="dropdown-item" :to="`/admin/users/${user._id}/edit`">
+                                    <font-awesome-icon :icon="['fas', 'user-edit']" class="mr-2" /> Editar
+                                </router-link>
+
+                                <button class="dropdown-item" @click.prevent="deleteUser(user._id)">
+                                    <font-awesome-icon :icon="['fas', 'user-times']" class="mr-2" /> Excluir
+                                </button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -64,7 +70,9 @@ export default {
 
         store.dispatch('fetchAllUsers')
         const users = computed(() => store.getters['getAllUsers'])
-        const deleteUser = userId => store.dispatch('deleteUser', userId)
+        const deleteUser = userId => {
+            if (window.confirm(`Do you really want to remove the user ${userId}?`)) store.dispatch('deleteUser', userId)
+        }
         
         return {
             users,
@@ -87,6 +95,25 @@ table {
             &.fa-check { color: var(--success) }
             &.fa-times { color: var(--danger) }
         }
+        
+        .btn-group.dropleft {
+            .dropdown-menu {
+                max-width: 14rem;
+
+                .dropdown-header,
+                .dropdown-item {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+    }
+}
+
+@media (max-width: 767px) {
+    table thead tr th.min-width {
+        min-width: 12rem
     }
 }
 </style>

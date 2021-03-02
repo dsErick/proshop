@@ -1,8 +1,8 @@
 <template>
     <v-header />
     
-    <main class="min-vh-100 py-3">
-        <router-view />
+    <main class="py-3">
+        <router-view class="mb-5" />
     </main>
 
     <v-footer />
@@ -27,5 +27,9 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     // text-align: center;
     // color: #2c3e50;
+
+    main {
+        min-height: calc(100vh - 7rem);
+    }
 }
 </style>

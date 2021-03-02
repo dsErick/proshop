@@ -1,8 +1,14 @@
 <template>
 <div id="order" class="container-lg container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2 class="mb-0">Order {{ order._id }}</h2>
-        <router-link :to="{ name: 'Profile' }" class="btn btn-dark">Go back</router-link>
+        <h2 class="mb-0">
+            <router-link :to="{ name: 'Profile' }" class="text-secondary">
+                Orders
+            </router-link>
+            <span class="text-secondary">/</span>
+            {{ order._id }}
+        </h2>
+        <!-- <router-link :to="{ name: 'Profile' }" class="btn btn-dark">Go back</router-link> -->
     </div>
     
     <v-loader v-if="isLoading || !isSdkReady" />

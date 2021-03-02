@@ -12,13 +12,14 @@ import {
     faInfoCircle,
     faUserEdit,
     faUserTimes,
-    faUserCog
+    faUserCog,
+    faChevronLeft
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
     faStar as faStarRegular
 } from '@fortawesome/free-regular-svg-icons'
 
-library.add(faShoppingCart, faUser, faHome, faStarSolid, faStarRegular, faStarHalfAlt, faTrash, faTimes, faCheck, faInfoCircle, faUserEdit, faUserTimes, faUserCog)
+library.add(faShoppingCart, faUser, faHome, faStarSolid, faStarRegular, faStarHalfAlt, faTrash, faTimes, faCheck, faInfoCircle, faUserEdit, faUserTimes, faUserCog, faChevronLeft)
 
 export default FontAwesomeIcon

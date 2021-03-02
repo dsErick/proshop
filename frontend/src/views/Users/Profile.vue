@@ -48,16 +48,20 @@
         </div>
         <div class="col-lg-9 mt-lg-0 mt-4">
             <h2 class="mb-3">My Orders</h2>
-            <!-- Some message if there is no orders -->
-            <div class="table-responsive">
+
+            <v-alert type="alert-info" v-if="orders.length === 0">
+                You don't have any order yet.
+            </v-alert>
+            
+            <div class="table-responsive" v-else>
                 <table class="table table-striped table-bordered table-hover table-sm">
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Date</th>
+                            <th class="min-width">Date</th>
                             <th>Total</th>
-                            <th>Paid</th>
-                            <th>Delivered</th>
+                            <th class="min-width">Paid</th>
+                            <th :class="{'min-width': orders.some(order => order.isDelivered)}">Delivered</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -151,6 +155,7 @@ export default {
 
 <style scoped lang="scss">
 table {
+    thead tr th,
     tbody tr td {
         text-align: center;
         vertical-align: middle;
@@ -166,9 +171,21 @@ table {
         max-width: 50%;
         margin: 0 auto;
     }
+    
+    table thead tr th.min-width {
+        min-width: 11.5rem
+    }
 }
 
 @media (max-width: 767px) {
+    #profile {
+        > .row {
+            margin: 0;
+        
+            > div { padding: 0; }
+        }
+    }
+
     form { max-width: 75% }
 }
 
