@@ -77,8 +77,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/scss/_variables.scss';
-
 table {
     thead tr th,
     tbody tr td {
@@ -86,8 +84,8 @@ table {
         vertical-align: middle;
 
         svg {
-            &.fa-check { color: $success }
-            &.fa-times { color: $danger }
+            &.fa-check { color: var(--success) }
+            &.fa-times { color: var(--danger) }
         }
     }
 }

@@ -55,13 +55,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/scss/_variables.scss';
-
 // .mb-5 { margin-bottom: 2.25rem !important }
 
 .form-group {
     position: relative;
-    background-color: $white;
+    background-color: var(--white);
 
     label {
         position: absolute;
@@ -69,7 +67,7 @@ export default {
         z-index: 1;
         cursor: text;
         transition: all .1s ease-out;
-        color: $gray-600;
+        color: var(--gray);
     }
     input.active ~ label,
     input:focus ~ label {
@@ -79,18 +77,18 @@ export default {
         font-size: .8em;
         font-weight: 700;
     }
-    input:focus ~ label { color: $primary }
-    input.is-invalid ~ label { color: $danger }
+    input:focus ~ label { color: var(--primary) }
+    input.is-invalid ~ label { color: var(--danger) }
 
     input {
         height: calc(1.5em + 1.5rem + 2px);
         padding: .75rem 1rem;
 
         &:focus {
-            border-color: $primary;
+            border-color: var(--primary);
             border-width: 2px;
         }
-        &.is-invalid { border-color: $danger }
+        &.is-invalid { border-color: var(--danger) }
     }
 
     span.invalid-feedback {

@@ -97,14 +97,6 @@ export default {
 
 <style scoped lang="scss">
 .navbar {
-    // .navbar-brand {
-    //     color: $navbar-dark-brand-color;
-
-    //     @include hover-focus() {
-    //         color: $navbar-dark-brand-hover-color;
-    //     }
-    // }
-
     .navbar-nav {
         .nav-link {
             font-weight: 600;
@@ -117,24 +109,14 @@ export default {
             }
         }
 
-        // .show > .nav-link,
-        // .active > .nav-link,
-        // .nav-link.show,
-        // .nav-link.active,
-        .nav-link.router-link-active {
-            color: #42b983;
+        .dropdown-item { font-weight: 600; }
 
-            > .badge { background-color: #42b983 }
+        .dropdown-item.router-link-active,
+        .nav-link.router-link-active {
+            color: var(--secondary);
+
+            > .badge { background-color: var(--secondary) }
         }
     }
-
-    // .navbar-toggler {
-    //     color: $navbar-dark-color;
-    //     border-color: $navbar-dark-toggler-border-color;
-    // }
-
-    // .navbar-toggler-icon {
-    //     background-image: escape-svg($navbar-dark-toggler-icon-bg);
-    // }
 }
 </style>

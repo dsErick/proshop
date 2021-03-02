@@ -59,17 +59,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/scss/_variables.scss';
-
 .nav-item {
     .nav-link {
         font-weight: 600;
-        color: $dark;
+        color: var(--dark);
 
-        &.active { color: #42b983 }
+        &.active { color: var(--secondary) }
         &.disabled {
-            background-color: rgba($gray-300, .25);
-            color: $gray-600;
+            background-color: var(--light);
+            color: var(--gray);
             text-decoration: line-through;
         }
     }
