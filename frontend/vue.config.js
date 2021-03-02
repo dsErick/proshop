@@ -16,6 +16,9 @@ module.exports = {
                 'window.jQuery': 'jquery',
                 Popper: ['popper.js', 'default']
             })
-        ]
+        ],
+        optimization: {
+            splitChunks: { minSize: 0 }
+        }
     }
 }
