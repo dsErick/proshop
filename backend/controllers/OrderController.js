@@ -1,7 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import Order from '../models/OrderModel.js'
 
-/* 
+/** 
  * @desc        Fetch a single order by id
  * @route       GET /api/orders/:id
  * @access      Private
@@ -22,7 +22,7 @@ export const getOrderById = asyncHandler(async (req, res) => {
     res.status(200).json({ data: order })
 })
 
-/* 
+/** 
  * @desc        Get logged in user orders
  * @route       GET /api/orders/myorders
  * @access      Private
@@ -33,7 +33,7 @@ export const getMyOrders = asyncHandler(async (req, res) => {
     res.status(200).json({ data: orders })
 })
 
-/* 
+/** 
  * @desc        Create new order
  * @route       POST /api/orders
  * @access      Private
@@ -60,7 +60,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     res.status(201).json({ data: order })
 })
 
-/* 
+/** 
  * @desc        Update order to paid
  * @route       PUT /api/orders/:id/pay
  * @access      Private

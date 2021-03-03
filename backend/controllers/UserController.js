@@ -1,7 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import User from '../models/UserModel.js'
 
-/* 
+/** 
  * @desc    Authenticate use & get token
  * @route   POST /api/users/login
  * @access  Public
@@ -21,7 +21,7 @@ export const authUser = asyncHandler(async (req, res) => {
     }
 })
 
-/* 
+/** 
  * @desc    Register a new user
  * @route   POST /api/users
  * @access  Public
@@ -36,7 +36,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     })
 })
 
-/* 
+/** 
  * @desc    Get logged in user
  * @route   GET /api/users/profile
  * @access  Private
@@ -47,7 +47,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     })
 })
 
-/* 
+/** 
  * @desc    Update logged in user data
  * @route   PUT /api/users/profile
  * @access  Private
@@ -66,7 +66,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     })
 })
 
-/* 
+/** 
  * @desc    Get all users
  * @route   GET /api/users
  * @access  Private/Admin
@@ -77,7 +77,48 @@ export const getAllUsers = asyncHandler(async (_, res) => {
     res.status(200).json({ data: users })
 })
 
-/* 
+/**
+ * @desc    Get user by id
+ * @route   GET /api/users/:id
+ * @access  Private/Admin
+ */
+export const getUserById = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+
+    if (!user) {
+        res.status(404)
+        throw new Error(`User not found with the id of ${req.params.id}`)
+    }
+
+    res.status(200).json({ data: user })
+})
+
+
+/**
+ * @desc    Update user data by id
+ * @route   PUT /api/users/:id
+ * @access  Private/Admin
+ */
+export const updateUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+
+    if (!user) {
+        res.status(404)
+        throw new Error(`User not found with the id of ${req.params.id}`)
+    }
+
+    const { name, email, isAdmin } = req.body
+
+    user.name = name || user.name
+    user.email = email || user.email
+    user.isAdmin = isAdmin
+
+    await user.save()
+    
+    res.status(200).json({ data: user })
+})
+
+/** 
  * @desc    Delete user by id
  * @route   DELETE /api/users/:id
  * @access  Private/Admin
