@@ -36,7 +36,7 @@
 
                             <div class="dropdown-menu">
                                 <h6 class="dropdown-header">{{ user.name }}</h6>
-                                <router-link class="dropdown-item" :to="`/admin/users/${user._id}/edit`">
+                                <router-link :to="`/admin/users/${user._id}/edit`" class="dropdown-item">
                                     <font-awesome-icon :icon="['fas', 'user-edit']" class="mr-2" /> Editar
                                 </router-link>
 
@@ -55,9 +55,8 @@
 </template>
 
 <script>
-import { computed, defineAsyncComponent } from 'vue'
-import { useStore } from 'vuex'
-// import { useRouter } from 'vue-router'
+import { defineAsyncComponent } from 'vue'
+import useUsersDetails from '@/composables/useUsersDetails'
 
 export default {
     name: 'Users',
@@ -66,19 +65,15 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const store = useStore()
+        const { users, fetchAllUsers, deleteUser, isLoading, error } = useUsersDetails()
 
-        store.dispatch('fetchAllUsers')
-        const users = computed(() => store.getters['getAllUsers'])
-        const deleteUser = userId => {
-            if (window.confirm(`Do you really want to remove the user ${userId}?`)) store.dispatch('deleteUser', userId)
-        }
-        
+        fetchAllUsers()
+
         return {
             users,
             deleteUser,
-            isLoading: computed(() => store.getters['utils/isLoading']),
-            error: computed(() => store.getters['utils/getError']),
+            isLoading,
+            error
         }
     }
 }

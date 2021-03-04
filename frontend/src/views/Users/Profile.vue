@@ -107,9 +107,8 @@
 </template>
 
 <script>
-import { computed, defineAsyncComponent, ref, watch } from 'vue'
-import { useStore } from 'vuex'
-
+import { defineAsyncComponent, ref } from 'vue'
+import useUsersDetails from '@/composables/useUsersDetails'
 import VFormInput from '@/components/VFormInput'
 
 import dayjs from 'dayjs'
@@ -124,30 +123,21 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const store = useStore()
+        const { success, userDetails, userOrders: orders, fetchUserDetails, fetchMyOrders, updateUserProfile, isLoading, error } = useUsersDetails()
         
-        store.dispatch('fetchUserDetails')
-        store.dispatch('fetchMyOrders')
-        const success = ref(false)
-        const user = computed(() => store.getters['getUserDetails'])
-        const orders = computed(() => store.getters['getMyOrders'])
+        fetchUserDetails()
+        fetchMyOrders()
 
-        const updateUserProfile = async user => {
-            user.password !== user.confirmPassword
-                ? store.commit('utils/setError', { message: 'The password confirmation must match' }, { root: true })
-                : (await store.dispatch('updateUserProfile', user))
-                    ? success.value = true
-                    : success.value = false
-        }
-        
+        const user = ref(userDetails.value)
+
         return {
             success,
             user,
             orders,
             updateUserProfile,
             dayjs,
-            isLoading: computed(() => store.getters['utils/isLoading']),
-            error: computed(() => store.getters['utils/getError'])
+            isLoading,
+            error
         }
     }
 }

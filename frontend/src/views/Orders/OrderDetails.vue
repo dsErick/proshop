@@ -266,4 +266,12 @@ export default {
         }
     }
 }
+
+@media (max-width: 575px) {
+    #order {
+        h2 {
+            font-size: 1.9rem;
+        }
+    }
+}
 </style>

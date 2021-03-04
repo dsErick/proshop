@@ -64,10 +64,10 @@ const actions = {
      * @desc        Get User by id or the logged in
      * @access      Private || Admin
      */
-    fetchUserDetails: actionHandler(async ({ commit, state }, user = 'profile') => {
+    fetchUserDetails: actionHandler(async ({ commit, state }, route = 'profile') => {
         commit('resetUserDetails')
         
-        const { data } = await axios.get(`/api/users/${user}`, {
+        const { data } = await axios.get(`/api/users/${route}`, {
             headers: { Authorization: `Bearer ${state.loggedUser.token}` }
         })
         
@@ -75,17 +75,21 @@ const actions = {
     }),
     
     /* 
-     * @desc        Update logged in user data
-     * @access      Private
+     * @desc        Update logged in or by id user data
+     * @access      Private || Admin
      */
-    updateUserProfile: actionHandler(async ({ commit, state }, { name, email, password }) => {
-        const { data } = await axios.put('/api/users/profile',
-            { name, email, password },
+    updateUserDetails: actionHandler(async ({ commit, state }, { user, route = 'profile' }) => {
+        const { name, email, password, isAdmin } = user
+
+        const { data } = await axios.put(`/api/users/${route}`,
+            { name, email, password, isAdmin },
             { headers: { Authorization: `Bearer ${state.loggedUser.token}` }}
         )
 
-        localStorage.setItem('user', JSON.stringify(data.data))
-        commit('setUser', { user: data.data, statePiece: 'loggedUser' })
+        if (route === 'profile') {
+            localStorage.setItem('user', JSON.stringify(data.data))
+            commit('setUser', { user: data.data, statePiece: 'loggedUser' })
+        }
         
         commit('resetUserDetails')
         commit('setUser', { user: data.data, statePiece: 'userDetails' })

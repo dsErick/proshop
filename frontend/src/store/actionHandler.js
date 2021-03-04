@@ -19,6 +19,8 @@ export default fn => (context, payload) => {
                 context.dispatch('logoutUser')
                 
             context.commit('utils/setError', error, { root: true })
+            
+            return false
         })
         .finally(() => {
             context.commit('utils/setLoading', false, { root: true })
