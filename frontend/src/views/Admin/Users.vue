@@ -36,12 +36,12 @@
 
                             <div class="dropdown-menu">
                                 <h6 class="dropdown-header">{{ user.name }}</h6>
-                                <router-link :to="`/admin/users/${user._id}/edit`" class="dropdown-item">
-                                    <font-awesome-icon :icon="['fas', 'user-edit']" class="mr-2" /> Editar
+                                <router-link :to="{ name: 'Admin - User Details', params: { id: user._id } }" class="dropdown-item">
+                                    <font-awesome-icon :icon="['fas', 'user-edit']" class="mr-2" /> Edit
                                 </router-link>
 
                                 <button class="dropdown-item" @click.prevent="deleteUser(user._id)">
-                                    <font-awesome-icon :icon="['fas', 'user-times']" class="mr-2" /> Excluir
+                                    <font-awesome-icon :icon="['fas', 'user-times']" class="mr-2" /> Remove
                                 </button>
                             </div>
                         </div>

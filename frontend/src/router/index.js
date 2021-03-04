@@ -12,14 +12,14 @@ const routes = [
         component: () => import(/* webpackChunkName: "home-view" */ '@/views/Home.vue')
     },
     {
-        path: '/product/:id',
+        path: '/products/:id',
         name: 'Product',
         component: () => import(/* webpackChunkName: "product-view" */ '@/views/Product.vue')
     },
     
     // Orders
     {
-        path: '/order/:id',
+        path: '/orders/:id',
         name: 'Order Details',
         meta: { requiresAuth: true },
         component: () => import(/* webpackChunkName: "order-details-view" */ '@/views/Orders/OrderDetails.vue')
