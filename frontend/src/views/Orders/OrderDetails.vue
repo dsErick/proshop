@@ -154,7 +154,7 @@
 
 <script>
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 import dayjs from 'dayjs'
@@ -170,6 +170,7 @@ export default {
     setup() {
         const store = useStore()
         const route = useRoute()
+        const router = useRouter()
 
         store.dispatch('fetchSingleOrder', route.params.id)
         const order = computed(() => store.getters['getSingleOrder'])
@@ -189,7 +190,7 @@ export default {
 
                 $(document).ready(() => {
                     window.paypal.Buttons({
-                        createOrder: function(data, actions) {
+                        createOrder: function(_, actions) {
                             return actions.order.create({
                                 purchase_units: [{
                                     amount: {
@@ -199,7 +200,7 @@ export default {
                                 }]
                             })
                         },
-                        onApprove: function(data, actions) {
+                        onApprove: function(_, actions) {
                             return actions.order.capture().then(details => {
                                 store.dispatch('payOrder', {
                                     orderId: order.value._id,
@@ -223,7 +224,8 @@ export default {
         })
 
         watch(error, error => {
-            if (error.status === 403) isSdkReady.value = true
+            // if (error.status === 403) isSdkReady.value = true
+            if (error.status === 403) router.replace({ name: 'Home' })
         })
 
         return {

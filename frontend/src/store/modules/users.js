@@ -64,13 +64,13 @@ const actions = {
      * @desc        Get User by id or the logged in
      * @access      Private || Admin
      */
-    fetchUserDetails: actionHandler(async ({ commit, state }, route = 'profile') => {
+    fetchUserDetails: actionHandler(async ({ commit, state }, user = 'profile') => {
         commit('resetUserDetails')
         
-        const { data } = await axios.get(`/api/users/${route}`, {
+        const { data } = await axios.get(`/api/users/${user}`, {
             headers: { Authorization: `Bearer ${state.loggedUser.token}` }
         })
-        
+
         commit('setUser', { user: data.data, statePiece: 'userDetails' })
     }),
     

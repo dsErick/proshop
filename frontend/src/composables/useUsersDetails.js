@@ -10,7 +10,7 @@ export default function useUsersDetails() {
     const userOrders = computed(() => store.getters['getMyOrders'])
 
     const fetchAllUsers = () => store.dispatch('fetchAllUsers')
-    const fetchUserDetails = (route = 'profile') => store.dispatch('fetchUserDetails', route)
+    const fetchUserDetails = (user = 'profile') => store.dispatch('fetchUserDetails', user)
     const fetchMyOrders = () => store.dispatch('fetchMyOrders')
 
     const updateUserProfile = async user => {
@@ -18,6 +18,8 @@ export default function useUsersDetails() {
             ? store.commit('utils/setError', { message: 'The password confirmation must match' }, { root: true })
             : success.value = await store.dispatch('updateUserDetails', { user })
     }
+    const updateUserDetails = async user => success.value = await store.dispatch('updateUserDetails', { user, route: user._id })
+
     const deleteUser = userId => {
         if (window.confirm(`Do you really want to remove the user ${userId}?`)) store.dispatch('deleteUser', userId)
     }
@@ -31,6 +33,7 @@ export default function useUsersDetails() {
         fetchUserDetails,
         fetchMyOrders,
         updateUserProfile,
+        updateUserDetails,
         deleteUser,
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])

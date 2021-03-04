@@ -89,12 +89,11 @@ export default {
     },
     setup() {
         const route = useRoute()
-        const { success, userDetails, fetchUserDetails, isLoading, error } = useUsersDetails()
+        const { success, userDetails, fetchUserDetails, updateUserDetails, isLoading, error } = useUsersDetails()
 
         fetchUserDetails(route.params.id)
 
         const user = ref(userDetails.value)
-        const updateUserDetails = user => console.log(user)
 
         return {
             success,
