@@ -1,10 +1,11 @@
 import { Router } from 'express'
-import { createOrder, getMyOrders, getOrderById, updateOrderToPaid } from '../controllers/OrderController.js'
-import { protect } from '../middleware/auth.js'
+import { createOrder, getMyOrders, getAllOrders, getOrderById, updateOrderToPaid } from '../controllers/OrderController.js'
+import { isAdmin, protect } from '../middleware/auth.js'
 
-const router = Router()
+const router = Router({ mergeParams: true })
 
 router.route('/')
+    .get(protect, isAdmin, getAllOrders)
     .post(protect, createOrder)
 
 router.get('/myorders', protect, getMyOrders)

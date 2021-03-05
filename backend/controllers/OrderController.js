@@ -1,10 +1,26 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import Order from '../models/OrderModel.js'
 
+/**
+ * @desc        Fetch all orders
+ * @route       GET /api/orders
+ * @route       GET /api/users/:userId/orders
+ * @access      Private/Admin
+ */
+export const getAllOrders = asyncHandler(async (req, res) => {
+    let query = req.params.userId
+        ? { user: req.params.userId }
+        : {}
+
+    const orders = await Order.find(query).populate('user', 'name email').sort('-createdAt')
+
+    res.status(200).json({ data: orders })
+})
+
 /** 
  * @desc        Fetch a single order by id
  * @route       GET /api/orders/:id
- * @access      Private
+ * @access      Private || Admin
  */
 export const getOrderById = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id).populate('user', 'name email')
@@ -16,7 +32,7 @@ export const getOrderById = asyncHandler(async (req, res) => {
 
     if (!req.user.isAdmin && !order.user.equals(req.user)) {
         res.status(403)
-        throw new Error(`Not authorized to access this order. You must have to be the order owner.`)
+        throw new Error(`Not authorized to access this order.`)
     }
 
     res.status(200).json({ data: order })
@@ -34,7 +50,7 @@ export const getMyOrders = asyncHandler(async (req, res) => {
 })
 
 /** 
- * @desc        Create new order
+ * @desc        Create new order for logged in user
  * @route       POST /api/orders
  * @access      Private
  */
