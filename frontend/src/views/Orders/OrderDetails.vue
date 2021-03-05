@@ -8,9 +8,8 @@
             <span class="text-secondary">/</span>
             {{ order._id }}
         </h2>
-        <!-- <router-link :to="{ name: 'Profile' }" class="btn btn-dark">Go back</router-link> -->
     </div>
-    
+
     <v-loader v-if="isLoading || !isSdkReady" />
     <v-alert v-else-if="error.message">
         {{ error.message }}
@@ -153,9 +152,9 @@
 </template>
 
 <script>
-import { computed, defineAsyncComponent, ref, watch } from 'vue'
+import { defineAsyncComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import useOrders from '@/composables/useOrders'
 
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -168,17 +167,15 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const store = useStore()
+        const { order, fetchSingleOrder, payOrder, fetchPaypalClientId, isLoading, error } = useOrders()
         const route = useRoute()
         const router = useRouter()
-
-        store.dispatch('fetchSingleOrder', route.params.id)
-        const order = computed(() => store.getters['getSingleOrder'])
-        const error = computed(() => store.getters['utils/getError'])
-
         const isSdkReady = ref(false)
+
+        fetchSingleOrder(route.params.id)
+
         const addPayPalScript = async () => {
-            const clientId = await store.dispatch('paypalClientId')
+            const clientId = await fetchPaypalClientId()
 
             const script = document.createElement('script')
             script.type = 'text/javascript'
@@ -201,12 +198,7 @@ export default {
                             })
                         },
                         onApprove: function(_, actions) {
-                            return actions.order.capture().then(details => {
-                                store.dispatch('payOrder', {
-                                    orderId: order.value._id,
-                                    details
-                                })
-                            })
+                            return actions.order.capture().then(details => payOrder(order.value._id, details))
                         }
                     }).render('#paypal-button-container')
                 })
@@ -224,7 +216,6 @@ export default {
         })
 
         watch(error, error => {
-            // if (error.status === 403) isSdkReady.value = true
             if (error.status === 403) router.replace({ name: 'Home' })
         })
 
@@ -232,7 +223,7 @@ export default {
             order,
             isSdkReady,
             dayjs,
-            isLoading: computed(() => store.getters['utils/isLoading']),
+            isLoading,
             error
         }
     }

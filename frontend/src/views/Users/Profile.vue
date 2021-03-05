@@ -108,8 +108,10 @@
 
 <script>
 import { defineAsyncComponent, ref } from 'vue'
-import useUsersDetails from '@/composables/useUsersDetails'
 import VFormInput from '@/components/VFormInput'
+
+import useUsersDetails from '@/composables/useUsersDetails'
+import useOrders from '@/composables/useOrders'
 
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -123,7 +125,8 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { success, userDetails, userOrders: orders, fetchUserDetails, fetchMyOrders, updateUserProfile, isLoading, error } = useUsersDetails()
+        const { success, userDetails, fetchUserDetails , updateUserProfile, isLoading, error } = useUsersDetails()
+        const { orders, fetchMyOrders } = useOrders()
         
         fetchUserDetails()
         fetchMyOrders()

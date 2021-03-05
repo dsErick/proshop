@@ -101,5 +101,7 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 
     await order.save()
 
+    await order.populate('user', 'name email').execPopulate()
+
     res.status(200).json({ data: order })
 })

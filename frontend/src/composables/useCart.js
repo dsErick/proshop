@@ -6,7 +6,6 @@ export default function useCart() {
     const store = useStore()
     const router = useRouter()
 
-    
     const cartItems = computed(() => store.getters['getCartItems'])
     const shippingAddress = computed(() => store.getters['getShippingAddress'])
     const paymentMethod = computed(() => store.getters['getPaymentMethod'])
@@ -28,10 +27,6 @@ export default function useCart() {
         store.dispatch('savePaymentMethod', paymentMethod)
         router.push({ name: 'Place Order' })
     }
-    const placeOrder = async () => {
-        if (await store.dispatch('createOrder', cartSummary)) router.push({ name: 'Order Details', params: { id: (store.getters['getSingleOrder'])._id }})
-    }
-
     
     return {
         cartItems,
@@ -42,7 +37,6 @@ export default function useCart() {
         checkout,
         saveShippingAddress,
         savePaymentMethod,
-        placeOrder,
         
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])

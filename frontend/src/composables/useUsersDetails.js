@@ -22,25 +22,17 @@ export default function useUsersDetails() {
         if (window.confirm(`Do you really want to remove the user ${userId}?`)) store.dispatch('deleteUser', userId)
     }
 
-    // Orders module
-    const userOrders = computed(() => store.getters['getAllOrders'])
-    const fetchMyOrders = () => store.dispatch('fetchMyOrders')
-    const fetchAllOrders = (userId = undefined) => store.dispatch('fetchAllOrders', userId)
-
     return {
         success,
         users,
         userDetails,
+        
         fetchAllUsers,
         fetchUserDetails,
         updateUserProfile,
         updateUserDetails,
         deleteUser,
         
-        userOrders,
-        fetchMyOrders,
-        fetchAllOrders,
-
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])
     }

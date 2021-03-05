@@ -109,8 +109,10 @@
 <script>
 import { defineAsyncComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import useUsersDetails from '@/composables/useUsersDetails'
 import VFormInput from '@/components/VFormInput'
+
+import useUsersDetails from '@/composables/useUsersDetails'
+import useOrders from '@/composables/useOrders'
 
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -125,7 +127,8 @@ export default {
     },
     setup() {
         const route = useRoute()
-        const { success, userDetails, userOrders, fetchUserDetails, updateUserDetails, fetchAllOrders, isLoading, error } = useUsersDetails()
+        const { success, userDetails, fetchUserDetails, updateUserDetails, isLoading, error } = useUsersDetails()
+        const { orders, fetchAllOrders } = useOrders();
 
         fetchUserDetails(route.params.id)
         fetchAllOrders(route.params.id)
@@ -135,7 +138,7 @@ export default {
         return {
             success,
             user,
-            orders: userOrders,
+            orders,
             updateUserDetails,
             dayjs,
             isLoading,

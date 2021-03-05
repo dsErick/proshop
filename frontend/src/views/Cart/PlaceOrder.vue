@@ -125,7 +125,7 @@
                         type="button"
                         class="btn btn-dark btn-block"
                         :disabled="cartItems.length === 0"
-                        @click="placeOrder"
+                        @click="placeOrder(cartSummary)"
                     >
                         Place Order
                     </button>
@@ -143,6 +143,7 @@ import { useRouter } from 'vue-router'
 import VCheckoutSteps from '@/components/VCheckoutSteps'
 
 import useCart from '@/composables/useCart'
+import useOrders from '@/composables/useOrders'
 
 export default {
     name: 'Place Order',
@@ -152,7 +153,8 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { cartItems, shippingAddress, paymentMethod, cartSummary, placeOrder, isLoading, error } = useCart()
+        const { cartItems, shippingAddress, paymentMethod, cartSummary, isLoading, error } = useCart()
+        const { placeOrder } = useOrders()
 
         if (Object.keys(cartItems.value).length === 0 ) {
             const router = useRouter()
