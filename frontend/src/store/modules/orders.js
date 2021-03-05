@@ -18,23 +18,37 @@ const state = {
 }
 
 const getters = {
-    getMyOrders: state => state.orders,
+    getAllOrders: state => state.orders,
     getSingleOrder: state => state.order
 }
 
 const actions = {
     /*
+     * @desc        Fetch all orders
+     * @access      Admin
+     */
+    fetchAllOrders: actionHandler(async ({ commit, rootState }, userId = undefined) => {
+        commit('resetAllOrders')
+
+        const { data } = await axios.get(`/api${userId ? `/users/${userId}` : ''}/orders`, {
+            headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
+        })
+
+        commit('setAllOrders', data.data)
+    }),
+    
+    /*
      * @desc        Fetch the logged in user orders
      * @access      Private
      */
     fetchMyOrders: actionHandler(async ({ commit, rootState }) => {
-        commit('resetMyOrders')
+        commit('resetAllOrders')
         
         const { data } = await axios.get('/api/orders/myorders', {
             headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
         })
 
-        commit('setMyOrders', data.data)
+        commit('setAllOrders', data.data)
     }),
     
     /*
@@ -101,8 +115,8 @@ const actions = {
 }
 
 const mutations = {
-    resetMyOrders: state => state.orders = [],
-    setMyOrders: (state, orders) => state.orders = orders,
+    resetAllOrders: state => state.orders = [],
+    setAllOrders: (state, orders) => state.orders = orders,
     
     resetSingleOrder: state => state.order = initialSingleOrderState(),
     setSingleOrder: (state, order) => Object.keys(order).forEach(key => state.order[key] = order[key])

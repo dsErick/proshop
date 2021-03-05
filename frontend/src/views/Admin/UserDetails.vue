@@ -5,7 +5,7 @@
             Users
         </router-link>
         <span class="text-secondary">/</span>
-        {{ $route.params.id }}
+        {{ user.name }}
     </h2>
 
     <v-loader v-if="isLoading" />
@@ -47,25 +47,57 @@
             </form>
         </div>
         <div class="col-lg-9 mt-lg-0 mt-4">
-            <h3 class="mb-3">Orders</h3>
+            <h3 class="mb-3">Orders <sup>{{ orders.length }}</sup></h3>
 
-            <!-- <v-alert type="alert-info" v-if="orders.length === 0">
+            <v-alert type="alert-info" v-if="!isLoading && orders.length === 0">
                 {{ user.name }} don't have any order yet.
-            </v-alert> -->
+            </v-alert>
             
-            <div class="table-responsive">
+            <div class="table-responsive" v-else>
                 <table class="table table-striped table-bordered table-hover table-sm">
                     <thead>
                         <tr>
                             <th>Id</th>
                             <th class="min-width">Date</th>
                             <th>Total</th>
-                            <th class="min-width">Paid</th>
-                            <th class="min-width">Delivered</th>
+                            <th :class="{'min-width': orders.some(order => order.isPaid)}">Paid</th>
+                            <th :class="{'min-width': orders.some(order => order.isDelivered)}">Delivered</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr v-for="order in orders" :key="order._id">
+                            <td>{{ order._id }}</td>
+                            <td>{{ dayjs(order.createdAt).format('lll') }}</td>
+                            <td>
+                                {{
+                                    new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    }).format(order.totalPrice)
+                                }}
+                            </td>
+                            <td>
+                                <span v-if="order.isPaid">
+                                    {{ dayjs(order.paidAt).format('lll') }}
+                                </span>
+                                <font-awesome-icon :icon="['fas', 'times']" v-else />
+                            </td>
+                            <td>
+                                <span v-if="order.isDelivered">
+                                    {{ dayjs(order.deliveredAt).format('lll') }}
+                                </span>
+                                <font-awesome-icon :icon="['fas', 'times']" v-else />
+                            </td>
+                            <td>
+                                <router-link
+                                    :to="{ name: 'Order Details', params: { id: order._id }}"
+                                    class="btn btn-link btn-sm"
+                                >
+                                    <font-awesome-icon :icon="['fas', 'info-circle']" />
+                                </router-link>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -80,6 +112,10 @@ import { useRoute } from 'vue-router'
 import useUsersDetails from '@/composables/useUsersDetails'
 import VFormInput from '@/components/VFormInput'
 
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+dayjs.extend(localizedFormat)
+
 export default {
     name: 'User Details',
     components: {
@@ -89,16 +125,19 @@ export default {
     },
     setup() {
         const route = useRoute()
-        const { success, userDetails, fetchUserDetails, updateUserDetails, isLoading, error } = useUsersDetails()
+        const { success, userDetails, userOrders, fetchUserDetails, updateUserDetails, fetchAllOrders, isLoading, error } = useUsersDetails()
 
         fetchUserDetails(route.params.id)
+        fetchAllOrders(route.params.id)
 
         const user = ref(userDetails.value)
 
         return {
             success,
             user,
+            orders: userOrders,
             updateUserDetails,
+            dayjs,
             isLoading,
             error
         }
@@ -107,4 +146,40 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.row > div {
+    h3 sup {
+        font-size: 45%;
+        vertical-align: top;
+        top: .3em;
+        font-weight: 900;
+    }
+}
+
+table {
+    thead tr th,
+    tbody tr td {
+        text-align: center;
+        vertical-align: middle;
+
+        svg {
+            &.fa-times { color: var(--danger) }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    table thead tr th.min-width {
+        min-width: 11.5rem
+    }
+}
+
+@media (max-width: 767px) {
+    #user-details {
+        > .row {
+            margin: 0;
+        
+            > div { padding: 0; }
+        }
+    }
+}
 </style>
