@@ -2,7 +2,8 @@
 <div id="order" class="container-lg container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h2 class="mb-0">
-            <router-link :to="{ name: 'Profile' }" class="text-secondary">
+            <!-- <router-link :to="{ name: user.isAdmin ? 'Admin - Orders' : 'Profile' }" class="text-secondary"> -->
+            <router-link :to="user.isAdmin ? '/admin/orders' : { name: 'Profile' }" class="text-secondary">
                 Orders
             </router-link>
             <span class="text-secondary">/</span>
@@ -18,9 +19,14 @@
     <div class="row mt-3" v-else>
         <div class="col-md-8 col-12">
             <ul id="order-details-wrapper" class="list-group list-group-flush">
-
                 <li class="list-group-item">
                     <h3>Shipping</h3>
+                    <p class="mb-1" v-if="user.isAdmin">
+                        <strong>User: </strong> 
+                        <router-link :to="{ name: 'Admin - User Details', params: { id: order.user._id }}">
+                            {{ order.user._id }}
+                        </router-link>
+                    </p>
                     <p class="mb-1">
                         <strong>Name: </strong> {{ order.user.name }}
                     </p>
@@ -154,6 +160,8 @@
 <script>
 import { defineAsyncComponent, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+import useUsersAuthentication from '@/composables/useUsersAuthentication'
 import useOrders from '@/composables/useOrders'
 
 import dayjs from 'dayjs'
@@ -168,6 +176,7 @@ export default {
     },
     setup() {
         const { order, fetchSingleOrder, payOrder, fetchPaypalClientId, isLoading, error } = useOrders()
+        const { user } = useUsersAuthentication()
         const route = useRoute()
         const router = useRouter()
         const isSdkReady = ref(false)
@@ -220,6 +229,7 @@ export default {
         })
 
         return {
+            user,
             order,
             isSdkReady,
             dayjs,

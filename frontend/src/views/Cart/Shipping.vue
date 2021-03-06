@@ -3,7 +3,7 @@
     <v-checkout-steps step1="active" />
     
     <div class="centered-flex-div">
-        <h2 class="font-weight-bold my-3">Shipping</h2>
+        <h2 class="my-3">Shipping</h2>
 
         <form @submit.prevent="saveShippingAddress(shippingAddress)">
             <v-form-input

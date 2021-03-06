@@ -3,7 +3,7 @@
     <v-checkout-steps step2="active" />
     
     <div class="centered-flex-div">
-        <h2 class="font-weight-bold my-3 text-center">Payment</h2>
+        <h2 class="my-3 text-center">Payment</h2>
 
         <form @submit.prevent="savePaymentMethod(paymentMethod)">
             <legend>Payment Method</legend>

@@ -1,6 +1,6 @@
 <template>
 <div id="users" class="container-lg container-fluid">
-    <h2 class="font-weight-bold mb-3">Users</h2>
+    <h2 class="mb-3">Users</h2>
     
     <v-loader v-if="isLoading" />
     <v-alert v-else-if="error.message">
@@ -8,7 +8,7 @@
     </v-alert>
 
     <div class="table-responsive" v-else>
-        <table class="table table-striped table-bordered table-hover table-sm">
+        <table class="table table-hover table-sm">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -30,8 +30,8 @@
                     </td>
                     <td>
                         <div class="btn-group dropleft">
-                            <button type="button" class="btn btn-dark btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <font-awesome-icon :icon="['fas', 'chevron-left']" />
+                            <button type="button" class="btn p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <font-awesome-icon :icon="['fas', 'ellipsis-v']" />
                             </button>
 
                             <div class="dropdown-menu">
@@ -50,7 +50,6 @@
             </tbody>
         </table>
     </div>
-
 </div>
 </template>
 
@@ -92,6 +91,10 @@ table {
         }
         
         .btn-group.dropleft {
+            > .btn {
+                font-size: 1.4em;
+            }
+            
             .dropdown-menu {
                 max-width: 14rem;
 

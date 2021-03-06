@@ -1,7 +1,7 @@
 <template>
 <div id="login" class="container-lg container-fluid">
     <div class="centered-flex-div">
-        <h2 class="font-weight-bold mb-3 mt-4">Sign In</h2>
+        <h2 class="mb-3 mt-4">Sign In</h2>
 
         <v-loader v-if="isLoading" />
 

@@ -54,7 +54,7 @@
             </v-alert>
             
             <div class="table-responsive" v-else>
-                <table class="table table-striped table-bordered table-hover table-sm">
+                <table class="table table-hover table-sm">
                     <thead>
                         <tr>
                             <th>Id</th>
