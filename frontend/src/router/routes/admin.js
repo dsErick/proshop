@@ -1,4 +1,5 @@
 export default [
+    // Users
     {
         path: '/admin/users',
         name: 'Admin - Users',
@@ -10,5 +11,13 @@ export default [
         name: 'Admin - User Details',
         meta: { requiresAuth: 'Admin' },
         component: () => import(/* webpackChunkName: "admin-user-details" */ '@/views/Admin/UserDetails.vue')
-    }
+    },
+
+    // Products
+    {
+        path: '/admin/products',
+        name: 'Admin - Products',
+        meta: { requiresAuth: 'Admin' },
+        component: () => import(/* webpackChunkName: "admin-products" */ '@/views/Admin/Products.vue')
+    },
 ]

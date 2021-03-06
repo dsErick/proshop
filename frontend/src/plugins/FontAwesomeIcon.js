@@ -6,20 +6,20 @@ import {
     faHome,
     faStar as faStarSolid,
     faStarHalfAlt,
+    faEdit,
     faTrash,
     faTimes,
     faCheck,
     faInfoCircle,
-    faUserEdit,
-    faUserTimes,
     faUserCog,
-    faEllipsisV
+    faEllipsisV,
+    faPlus
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
     faStar as faStarRegular
 } from '@fortawesome/free-regular-svg-icons'
 
-library.add(faShoppingCart, faUser, faHome, faStarSolid, faStarRegular, faStarHalfAlt, faTrash, faTimes, faCheck, faInfoCircle, faUserEdit, faUserTimes, faUserCog, faEllipsisV)
+library.add(faShoppingCart, faUser, faHome, faStarSolid, faStarRegular, faStarHalfAlt, faEdit, faTrash, faTimes, faCheck, faInfoCircle, faUserCog, faEllipsisV, faPlus)
 
 export default FontAwesomeIcon

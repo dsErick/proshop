@@ -40,7 +40,7 @@
                                 </h6>
 
                                 <router-link :to="{ name: 'Admin - Users' }" class="dropdown-item">Users</router-link>
-                                <router-link to="/admin/products" class="dropdown-item">Products</router-link>
+                                <router-link :to="{ name: 'Admin - Products' }" class="dropdown-item">Products</router-link>
                                 <router-link to="/admin/orders" class="dropdown-item">Orders</router-link>
                             </div>
 
