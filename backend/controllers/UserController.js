@@ -133,5 +133,5 @@ export const deleteUser = asyncHandler(async (req, res) => {
 
     await user.remove()
     
-    res.status(200).json({ data: {} })
+    res.status(204).send()
 })

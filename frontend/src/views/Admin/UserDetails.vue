@@ -4,7 +4,7 @@
         <router-link :to="{ name: 'Admin - Users' }" class="text-secondary">
             Users
         </router-link>
-        <span class="text-secondary">/</span>
+        <span class="text-muted">/</span>
         {{ user.name }}
     </h2>
 

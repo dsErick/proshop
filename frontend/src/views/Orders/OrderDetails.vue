@@ -6,7 +6,7 @@
             <router-link :to="user.isAdmin ? '/admin/orders' : { name: 'Profile' }" class="text-secondary">
                 Orders
             </router-link>
-            <span class="text-secondary">/</span>
+            <span class="text-muted">/</span>
             {{ order._id }}
         </h2>
     </div>
@@ -221,6 +221,8 @@ export default {
                 order.isPaid
                     ? isSdkReady.value = true
                     : addPayPalScript()
+                
+                if (order.user === null) order.user = {}
             }
         })
 

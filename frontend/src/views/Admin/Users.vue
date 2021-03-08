@@ -30,18 +30,18 @@
                     </td>
                     <td>
                         <div class="btn-group dropleft">
-                            <button type="button" class="btn p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn py-0 px-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <font-awesome-icon :icon="['fas', 'ellipsis-v']" />
                             </button>
 
                             <div class="dropdown-menu">
                                 <h6 class="dropdown-header">{{ user.name }}</h6>
                                 <router-link :to="{ name: 'Admin - User Details', params: { id: user._id } }" class="dropdown-item">
-                                    <font-awesome-icon :icon="['fas', 'user-edit']" class="mr-2" /> Edit
+                                    <font-awesome-icon :icon="['fas', 'edit']" class="mr-2" /> Edit
                                 </router-link>
 
                                 <button class="dropdown-item" @click.prevent="deleteUser(user._id)">
-                                    <font-awesome-icon :icon="['fas', 'user-times']" class="mr-2" /> Remove
+                                    <font-awesome-icon :icon="['fas', 'trash']" class="mr-2" /> Remove
                                 </button>
                             </div>
                         </div>
