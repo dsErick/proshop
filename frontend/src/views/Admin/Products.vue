@@ -23,6 +23,7 @@
                     <th>Price</th>
                     <th>Category</th>
                     <th>Brand</th>
+                    <th>Qty</th>
                     <th></th>
                 </tr>
             </thead>
@@ -40,6 +41,7 @@
                     </td>
                     <td>{{ product.category }}</td>
                     <td>{{ product.brand }}</td>
+                    <td>{{ product.countInStock }}</td>
                     <td>
                         <div class="btn-group dropleft">
                             <button type="button" class="btn py-0 px-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,7 +54,7 @@
                                     <font-awesome-icon :icon="['fas', 'edit']" class="mr-2" /> Edit
                                 </router-link>
 
-                                <button class="dropdown-item" @click.prevent="">
+                                <button class="dropdown-item" @click.prevent="deleteProduct(product._id)">
                                     <font-awesome-icon :icon="['fas', 'trash']" class="mr-2" /> Remove
                                 </button>
                             </div>
@@ -76,12 +78,13 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { products, setProducts, isLoading, error } = useProducts()
+        const { products, setProducts, deleteProduct, isLoading, error } = useProducts()
 
         setProducts()
 
         return {
             products,
+            deleteProduct,
             isLoading,
             error
         }

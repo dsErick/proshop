@@ -40,10 +40,22 @@ const actions = {
      * @desc        Fetch a single products by id
      * @access      Public
      */
-    fetchSingleProduct: actionHandler(async ({ commit }, product) => {
-        const { data } = await axios.get(`/api/products/${product}`)
+    fetchSingleProduct: actionHandler(async ({ commit }, productId) => {
+        const { data } = await axios.get(`/api/products/${productId}`)
 
         commit('setSingleProduct', data.data)
+    }),
+    
+    /*
+     * @desc        Delete product by id
+     * @access      Admin
+     */
+    deleteProduct: actionHandler(async ({ dispatch, rootState }, productId) => {
+        await axios.delete(`/api/products/${productId}`, {
+            headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
+        })
+
+        dispatch('fetchAllProducts')
     })
 }
 

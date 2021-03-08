@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { getAllProducts, getProductById } from '../controllers/ProductController.js'
+import { getAllProducts, getProductById, deleteProduct } from '../controllers/ProductController.js'
+import { isAdmin, protect } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -8,5 +9,6 @@ router.route('/')
 
 router.route('/:id')
     .get(getProductById)
+    .delete(protect, isAdmin, deleteProduct)
 
 export default router

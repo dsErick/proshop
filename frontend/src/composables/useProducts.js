@@ -8,11 +8,14 @@ export default function useProducts() {
     const router = useRouter()
 
     const products = computed(() => store.getters['getAllProducts'])
-    const setProducts = () => store.dispatch('fetchAllProducts')
-
     const product = computed(() => store.getters['getSingleProduct'])
-    const setProduct = () => store.dispatch('fetchSingleProduct', route.params.id)
 
+    const setProducts = () => store.dispatch('fetchAllProducts')
+    const setProduct = () => store.dispatch('fetchSingleProduct', route.params.id)
+    const deleteProduct = productId => {
+        if (window.confirm(`Do you really want to remove the product ${productId}`)) store.dispatch('deleteProduct', productId)
+    }
+    
     const addToCart = (id, qty = 1) => {
         store.dispatch('addItem', {
             id,
@@ -24,11 +27,15 @@ export default function useProducts() {
 
     return {
         products,
-        setProducts,
         product,
+
+        setProducts,
         setProduct,
+        deleteProduct,
+
         addToCart,
         removeFromCart,
+
         isLoading: computed(() => store.getters['utils/isLoading']),
         error: computed(() => store.getters['utils/getError'])
     }
