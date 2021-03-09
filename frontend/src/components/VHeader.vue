@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container-lg container-fluid">
-            <router-link :to="{ name: 'Home' }" class="navbar-brand">ProShop</router-link>
+            <router-link :to="{ name: 'home' }" class="navbar-brand">ProShop</router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -10,13 +10,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <router-link :to="{ name: 'Home' }" class="nav-link">
+                        <router-link :to="{ name: 'home' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'home']" fixed-width />
                             Home
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'Cart' }" class="nav-link">
+                        <router-link :to="{ name: 'cart' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'shopping-cart']" fixed-width />
                             Cart
                             <span class="badge rounded-circle">{{ cartCount }}</span>
@@ -30,7 +30,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuDropdown">
-                            <router-link :to="{ name: 'Profile' }" class="dropdown-item">Profile</router-link>
+                            <router-link :to="{ name: 'profile' }" class="dropdown-item">Profile</router-link>
 
                             <div v-if="user.isAdmin">
                                 <div class="dropdown-divider"></div>
@@ -39,8 +39,8 @@
                                     Admin
                                 </h6>
 
-                                <router-link :to="{ name: 'Admin - Users' }" class="dropdown-item">Users</router-link>
-                                <router-link :to="{ name: 'Admin - Products' }" class="dropdown-item">Products</router-link>
+                                <router-link :to="{ name: 'admin.users.index' }" class="dropdown-item">Users</router-link>
+                                <router-link :to="{ name: 'admin.products.index' }" class="dropdown-item">Products</router-link>
                                 <router-link to="/admin/orders" class="dropdown-item">Orders</router-link>
                             </div>
 
@@ -51,7 +51,7 @@
                         </div>
                     </li>
                     <li class="nav-item" v-else>
-                        <router-link :to="{ name: 'Login' }" class="nav-link">
+                        <router-link :to="{ name: 'login' }" class="nav-link">
                             <font-awesome-icon :icon="['fas', 'user']" fixed-width />
                             Sign In
                         </router-link>

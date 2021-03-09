@@ -36,7 +36,7 @@
 
                             <div class="dropdown-menu">
                                 <h6 class="dropdown-header">{{ user.name }}</h6>
-                                <router-link :to="{ name: 'Admin - User Details', params: { id: user._id } }" class="dropdown-item">
+                                <router-link :to="{ name: 'admin.users.show', params: { id: user._id } }" class="dropdown-item">
                                     <font-awesome-icon :icon="['fas', 'edit']" class="mr-2" /> Edit
                                 </router-link>
 

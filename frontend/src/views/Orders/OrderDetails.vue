@@ -2,8 +2,7 @@
 <div id="order" class="container-lg container-fluid">
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h2 class="mb-0">
-            <!-- <router-link :to="{ name: user.isAdmin ? 'Admin - Orders' : 'Profile' }" class="text-secondary"> -->
-            <router-link :to="user.isAdmin ? '/admin/orders' : { name: 'Profile' }" class="text-secondary">
+            <router-link :to="user.isAdmin ? '/admin/orders' : { name: 'profile' }" class="text-secondary">
                 Orders
             </router-link>
             <span class="text-muted">/</span>
@@ -23,7 +22,7 @@
                     <h3>Shipping</h3>
                     <p class="mb-1" v-if="user.isAdmin">
                         <strong>User: </strong> 
-                        <router-link :to="{ name: 'Admin - User Details', params: { id: order.user._id }}">
+                        <router-link :to="{ name: 'admin.users.show', params: { id: order.user._id }}">
                             {{ order.user._id }}
                         </router-link>
                     </p>
@@ -74,7 +73,7 @@
                                     <img :src="item.image" :alt="item.name" class="img-fluid">
                                 </div>
                                 <div class="col">
-                                    <router-link :to="{ name: 'Product', params: { id: item.product }}" class="text-wrap text-dark">
+                                    <router-link :to="{ name: 'products.show', params: { id: item.product }}" class="text-wrap text-dark">
                                         {{ item.name }}
                                     </router-link>
                                 </div>

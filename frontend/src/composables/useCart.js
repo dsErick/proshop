@@ -18,14 +18,14 @@ export default function useCart() {
     cartSummary.totalPrice = Number((cartSummary.itemsPrice + cartSummary.shippingPrice + cartSummary.taxPrice).toFixed(2))
 
 
-    const checkout = () => router.push({ name: 'Shipping' })
+    const checkout = () => router.push({ name: 'shipping' })
     const saveShippingAddress = shippingAddress => {
         store.dispatch('saveShippingAddress', shippingAddress)
-        router.push({ name: 'Payment' })
+        router.push({ name: 'payment' })
     }
     const savePaymentMethod = paymentMethod => {
         store.dispatch('savePaymentMethod', paymentMethod)
-        router.push({ name: 'Place Order' })
+        router.push({ name: 'place_order' })
     }
     
     return {

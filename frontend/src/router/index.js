@@ -8,19 +8,19 @@ import users from './routes/users'
 const routes = [
     {
         path: '/',
-        name: 'Home',
+        name: 'home',
         component: () => import(/* webpackChunkName: "home-view" */ '@/views/Home.vue')
     },
     {
         path: '/products/:id',
-        name: 'Product',
+        name: 'products.show',
         component: () => import(/* webpackChunkName: "product-view" */ '@/views/Product.vue')
     },
     
     // Orders
     {
         path: '/orders/:id',
-        name: 'Order Details',
+        name: 'orders.show',
         meta: { requiresAuth: true },
         component: () => import(/* webpackChunkName: "order-details-view" */ '@/views/Orders/OrderDetails.vue')
     },
@@ -41,7 +41,7 @@ router.beforeEach((to, _, next) => {
     const user = (store.getters['getLoggedUser'])
     
     if (to.matched.some(route => route.meta.requiresAuth === true) && !user._id)
-        next({ name: 'Login', query: { redirect: to.fullPath.slice(1) } })
+        next({ name: 'login', query: { redirect: to.fullPath.slice(1) } })
     
     else if (to.matched.some(route => route.meta.requiresAuth === 'Admin') && !user.isAdmin) next({ name: 'Home' })
 

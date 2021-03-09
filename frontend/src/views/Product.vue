@@ -1,6 +1,6 @@
 <template>
 <div id="product" class="container-lg container-fluid">
-    <router-link :to="{ name: 'Home' }" class="btn btn-dark mb-3">Go back</router-link>
+    <router-link :to="{ name: 'home' }" class="btn btn-dark mb-3">Go back</router-link>
 
     <v-loader v-if="isLoading" />
 

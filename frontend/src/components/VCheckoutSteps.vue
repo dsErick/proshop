@@ -4,7 +4,7 @@
         <router-link
             class="nav-link"
             style="pointer-events: none; cursor: default;"
-            :to="{ name: 'Login' }"
+            :to="{ name: 'login' }"
             tabindex="-1"
             aria-disabled="true"
         >
@@ -14,7 +14,7 @@
     <li class="nav-item">
         <router-link
             class="nav-link"
-            :to="{ name: 'Shipping' }"
+            :to="{ name: 'shipping' }"
             :class="{'active': step1 === 'active'}"
         >
             Shipping
@@ -23,7 +23,7 @@
     <li class="nav-item">
         <router-link
             class="nav-link"
-            :to="{ name: 'Payment' }"
+            :to="{ name: 'payment' }"
             :class="{'disabled': !step2, 'active': step2 === 'active'}"
             :tabindex="step2 ? undefined : -1"
             :aria-disabled="step2 ? undefined : true"
@@ -34,7 +34,7 @@
     <li class="nav-item">
         <router-link
             class="nav-link"
-            :to="{ name: 'Place Order' }"
+            :to="{ name: 'place_order' }"
             :class="{'disabled': !step3, 'active': step3 === 'active'}"
             :tabindex="step3 ? undefined : -1"
             :aria-disabled="step3 ? undefined : true"

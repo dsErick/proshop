@@ -14,7 +14,7 @@ export default function useOrders() {
     const fetchSingleOrder = orderId => store.dispatch('fetchSingleOrder', orderId)
     
     const placeOrder = async cartSummary => {
-        if (await store.dispatch('createOrder', cartSummary)) router.push({ name: 'Order Details', params: { id: order.value._id }})
+        if (await store.dispatch('createOrder', cartSummary)) router.push({ name: 'orders.show', params: { id: order.value._id }})
     }
     
     const payOrder = (orderId, details) => store.dispatch('payOrder', { orderId, details })

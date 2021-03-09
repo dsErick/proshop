@@ -44,7 +44,7 @@
                                     <img :src="item.image" :alt="item.name" class="img-fluid">
                                 </div>
                                 <div class="col">
-                                    <router-link :to="{ name: 'Product', params: { id: item.product }}" class="text-wrap text-dark">
+                                    <router-link :to="{ name: 'products.show', params: { id: item.product }}" class="text-wrap text-dark">
                                         {{ item.name }}
                                     </router-link>
                                 </div>
@@ -158,7 +158,7 @@ export default {
 
         if (Object.keys(cartItems.value).length === 0 ) {
             const router = useRouter()
-            router.push({ name: 'Cart' })
+            router.push({ name: 'cart' })
         }
 
         return {

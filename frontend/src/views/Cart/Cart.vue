@@ -15,7 +15,7 @@
                 type="alert-info"
             >
                 Your cart is empty
-                <router-link :to="{ name: 'Home' }" class="btn btn-info btn-sm">Go back</router-link>
+                <router-link :to="{ name: 'home' }" class="btn btn-info btn-sm">Go back</router-link>
             </v-alert>
 
             <ul id="cart-items-wrapper" class="list-group list-group-flush" v-else>
@@ -29,7 +29,7 @@
                             <img :src="item.image" :alt="item.name" class="img-fluid">
                         </div>
                         <div class="col">
-                            <router-link :to="{ name: 'Product', params: { id: item.product }}" class="text-wrap text-dark">
+                            <router-link :to="{ name: 'products.show', params: { id: item.product }}" class="text-wrap text-dark">
                                 {{ item.name }}
                             </router-link>
                         </div>

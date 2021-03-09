@@ -46,7 +46,7 @@ const actions = {
         localStorage.removeItem('user')
         commit('resetLoggedUser')
 
-        router.push({ name: 'Login', query: { redirect: router.currentRoute.value.fullPath.slice(1) } })
+        router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath.slice(1) } })
     },
 
     /* 

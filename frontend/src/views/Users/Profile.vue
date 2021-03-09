@@ -91,7 +91,7 @@
                             </td>
                             <td>
                                 <router-link
-                                    :to="{ name: 'Order Details', params: { id: order._id }}"
+                                    :to="{ name: 'orders.show', params: { id: order._id }}"
                                     class="btn btn-link btn-sm"
                                 >
                                     <font-awesome-icon :icon="['fas', 'info-circle']" />

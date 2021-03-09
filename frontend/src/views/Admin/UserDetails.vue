@@ -1,7 +1,7 @@
 <template>
 <div id="user-details" class="container-lg container-fluid">
     <h2 class="mb-4">
-        <router-link :to="{ name: 'Admin - Users' }" class="text-secondary">
+        <router-link :to="{ name: 'admin.users.index' }" class="text-secondary">
             Users
         </router-link>
         <span class="text-muted">/</span>
@@ -91,7 +91,7 @@
                             </td>
                             <td>
                                 <router-link
-                                    :to="{ name: 'Order Details', params: { id: order._id }}"
+                                    :to="{ name: 'orders.show', params: { id: order._id }}"
                                     class="btn btn-link btn-sm"
                                 >
                                     <font-awesome-icon :icon="['fas', 'info-circle']" />

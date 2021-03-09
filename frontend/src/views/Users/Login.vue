@@ -33,7 +33,7 @@
 
                 <p class="mb-0">
                     New Costumer? 
-                    <router-link :to="{ name: 'Register', query: { redirect }}">Sign Up</router-link>
+                    <router-link :to="{ name: 'register', query: { redirect }}">Sign Up</router-link>
                 </p>
             </div>
         </form>

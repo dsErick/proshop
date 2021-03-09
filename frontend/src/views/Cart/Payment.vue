@@ -60,7 +60,7 @@ export default {
         
         if (Object.values(shippingAddress.value).some(value => value.length === 0)) {
             const router = useRouter()
-            router.push({ name: 'Shipping' })
+            router.push({ name: 'shipping' })
         }
 
         return {

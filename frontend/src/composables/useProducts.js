@@ -26,7 +26,7 @@ export default function useProducts() {
             id,
             quantity: Number(qty)
         })
-        router.push({ name: 'Cart' })
+        router.push({ name: 'cart' })
     }
     const removeFromCart = id => store.dispatch('removeItem', id)
 

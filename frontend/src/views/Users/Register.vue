@@ -44,7 +44,7 @@
 
                 <p class="mb-0">
                     Have an account? 
-                    <router-link :to="{ name: 'Login', query: { redirect }}">Sign In</router-link>
+                    <router-link :to="{ name: 'login', query: { redirect }}">Sign In</router-link>
                 </p>
             </div>
         </form>
