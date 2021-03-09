@@ -47,6 +47,18 @@ const actions = {
     }),
     
     /*
+     * @desc        Create a new product with sample data
+     * @access      Admin
+     */
+    createProduct: actionHandler(async ({ rootState }) => {
+        const { data } = await axios.post('/api/products', {}, {
+            headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }
+        })
+
+        return data.data._id
+    }),
+    
+    /*
      * @desc        Delete product by id
      * @access      Admin
      */

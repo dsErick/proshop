@@ -12,6 +12,11 @@ export default function useProducts() {
 
     const setProducts = () => store.dispatch('fetchAllProducts')
     const setProduct = () => store.dispatch('fetchSingleProduct', route.params.id)
+    const createProduct = async () => {
+        const productId = await store.dispatch('createProduct')
+        
+        if (productId) router.push(`/admin/products/${productId}`)
+    }
     const deleteProduct = productId => {
         if (window.confirm(`Do you really want to remove the product ${productId}`)) store.dispatch('deleteProduct', productId)
     }
@@ -31,6 +36,7 @@ export default function useProducts() {
 
         setProducts,
         setProduct,
+        createProduct,
         deleteProduct,
 
         addToCart,

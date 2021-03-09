@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h2 class="mb-0">Products</h2>
 
-        <button class="btn btn-secondary btn-sm">
+        <button class="btn btn-secondary btn-sm" @click="createProduct">
             <font-awesome-icon :icon="['fas', 'plus']" class="mr-1" />
             Create product
         </button>
@@ -78,12 +78,13 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { products, setProducts, deleteProduct, isLoading, error } = useProducts()
+        const { products, setProducts, createProduct, deleteProduct, isLoading, error } = useProducts()
 
         setProducts()
 
         return {
             products,
+            createProduct,
             deleteProduct,
             isLoading,
             error
