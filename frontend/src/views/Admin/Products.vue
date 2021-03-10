@@ -50,7 +50,7 @@
 
                             <div class="dropdown-menu">
                                 <h6 class="dropdown-header">{{ product.name }}</h6>
-                                <router-link :to="`/admin/products/${product._id}`" class="dropdown-item">
+                                <router-link :to="{ name: 'admin.products.show', params: { id: product._id }}" class="dropdown-item">
                                     <font-awesome-icon :icon="['fas', 'edit']" class="mr-2" /> Edit
                                 </router-link>
 

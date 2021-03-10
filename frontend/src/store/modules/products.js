@@ -41,6 +41,8 @@ const actions = {
      * @access      Public
      */
     fetchSingleProduct: actionHandler(async ({ commit }, productId) => {
+        commit('resetSingleProduct')
+        
         const { data } = await axios.get(`/api/products/${productId}`)
 
         commit('setSingleProduct', data.data)
@@ -73,6 +75,8 @@ const actions = {
 
 const mutations = {
     setAllProducts: (state, products) => state.products = products,
+
+    resetSingleProduct: (state) => state.product = initialSingleProductState(),
     setSingleProduct: (state, newProduct) => Object.keys(newProduct).forEach(key => state.product[key] = newProduct[key])
 }
 

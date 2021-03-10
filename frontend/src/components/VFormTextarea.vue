@@ -1,18 +1,16 @@
 <template>
 <div class="form-group" :class="{'mb-5': errors.length}">
-    <input
+    <textarea
         :class="['form-control', errors.length ? 'is-invalid' : '']"
+        rows="1"
         v-bind="{
             id: inputId,
-            type,
             required,
-            autofocus,
-            autocomplete,
-            min: type === 'number' ? min : undefined
+            autofocus
         }"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-    >
+    ></textarea>
     <label :for="inputId">{{ label }}</label>
 
     <span class="invalid-feedback" role="alert">
@@ -23,34 +21,35 @@
 
 <script>
 export default {
-    name: 'VFormInput',
+    name: 'VFormTextarea',
     props: {
-        modelValue: {
-            type: [String, Number],
-            default: ''
-        },
+        modelValue: { type: String, default: '' },
         inputId: { type: String, required: true },
         label: { type: String, required: true },
-        type: { type: String, default: 'text' },
         errors: { type: Array, default: [] },
         required: { type: Boolean, default: false },
         autofocus: { type: Boolean, default: false },
-        autocomplete: { type: Boolean, default: false },
-        min: { type: [Number, Boolean], default: 0 }
     },
     emits: {
         'update:modelValue': null
     },
     mounted() {
         this.triggerLabelActiveClass()
+
+        document.getElementById(this.inputId).addEventListener('input', e => {
+            const textareaHeight = e.target.getBoundingClientRect().height
+            const scrollHeight = e.target.scrollHeight
+
+            if (textareaHeight < scrollHeight) e.target.style.height = `${scrollHeight + 4}px`
+        })
     },
     updated() {
         this.triggerLabelActiveClass()
     },
     methods: {
         triggerLabelActiveClass() {
-            const input = document.getElementById(this.inputId)
-            input.value.length !== 0 ? input.classList.add('active') : input.classList.remove('active')
+            const textarea = document.getElementById(this.inputId)
+            textarea.value.length !== 0 ? textarea.classList.add('active') : textarea.classList.remove('active')
         }
     }
 }
@@ -65,31 +64,37 @@ export default {
 
     label {
         position: absolute;
-        top: 26%; left: 1.06rem;
+        top: .8em; left: 1.06rem;
         z-index: 1;
         cursor: text;
         transition: all .1s ease-out;
         color: var(--gray);
     }
-    input.active ~ label,
-    input:focus ~ label {
-        transform: translateY(-1.75em);
+
+    textarea.active ~ label,
+    textarea:focus ~ label {
+        transform: translateY(-1.45em);
         background-color: inherit;
         padding: 0 .25rem;
         font-size: .8em;
         font-weight: 700;
     }
-    input:focus ~ label { color: var(--primary) }
-    input.is-invalid ~ label { color: var(--danger) }
 
-    input {
+    textarea:focus ~ label { color: var(--primary) }
+    textarea.is-invalid ~ label { color: var(--danger) }
+
+    textarea {
         height: calc(1.5em + 1.5rem + 2px);
-        padding: .75rem 1rem;
+        max-height: calc(1.5em + 8em);
+
+        padding: .7rem 1rem;
+        resize: none;
 
         &:focus {
             border-color: var(--primary);
             border-width: 2px;
         }
+        
         &.is-invalid { border-color: var(--danger) }
     }
 

@@ -20,4 +20,10 @@ export default [
         meta: { requiresAuth: 'Admin' },
         component: () => import(/* webpackChunkName: "admin-products" */ '@/views/Admin/Products.vue')
     },
+    {
+        path: '/admin/products/:id',
+        name: 'admin.products.show',
+        meta: { requiresAuth: 'Admin' },
+        component: () => import(/* webpackChunkName: "admin-products-details" */ '@/views/Admin/ProductDetails.vue')
+    }
 ]

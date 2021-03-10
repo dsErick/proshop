@@ -17,6 +17,7 @@ export default function useProducts() {
         
         if (productId) router.push(`/admin/products/${productId}`)
     }
+    const updateProduct = product => console.log(product)
     const deleteProduct = productId => {
         if (window.confirm(`Do you really want to remove the product ${productId}`)) store.dispatch('deleteProduct', productId)
     }
@@ -37,6 +38,7 @@ export default function useProducts() {
         setProducts,
         setProduct,
         createProduct,
+        updateProduct,
         deleteProduct,
 
         addToCart,
