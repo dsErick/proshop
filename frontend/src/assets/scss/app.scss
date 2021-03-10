@@ -33,6 +33,8 @@
 
 h2 {
     font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 // Media queries

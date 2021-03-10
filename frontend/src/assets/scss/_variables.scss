@@ -9,20 +9,41 @@ $theme-colors: (
 // Typography
 //
 $font-family-sans-serif: 'Nunito Sans', sans-serif;
-// $font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-// $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-// $font-family-base:            $font-family-sans-serif;
 
-// $font-weight-lighter:       lighter;
-// $font-weight-light:         300;
-// $font-weight-normal:        400;
-// $font-weight-bold:          700;
-$font-weight-bolder:        900;
+$font-weight-bolder: 900;
 
 // Options
 //
 $enable-rounded:                                false;
 $enable-prefers-reduced-motion-media-query:     false;
+
+// Grid breakpoints
+//
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    hdp: 1500px,    // HD plus  1600x900
+    fhd: 1800px,    // Full HD  1920x1080
+    qhd: 2400px,    // 2k       2560x1440
+    uhd: 3600px     // 4k       3840x2160
+);
+
+// Grid containers
+//
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    hdp: 1425px,    // 95%
+    fhd: 1710px,    // 95%
+    qhd: 2280px,    // 95%
+    uhd: 2880px     // 75%
+    // uhd: 3420px  // 95%
+);
 
 // Body
 // $body-bg:       #2c3e50;
