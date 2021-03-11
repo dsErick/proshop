@@ -39,6 +39,22 @@ export const errorHandler = (err, req, res, next) => {
         const field = Object.keys(err.keyValue)[0]
         errors[field] = [`The ${field} has already been taken`]
     }
+
+    // Multer errors
+    if (err.name === 'MulterError') {
+        statusCode = 422
+        message = 'The given data was invalid'
+
+        switch(err.code) {
+            case 'LIMIT_FILE_SIZE':
+                errors[err.field] = `The image may not be greater than 1mb`
+                break
+                
+            case 'INVALID_FILE_TYPE':
+                errors[err.field] = err.message
+                break
+        }
+    }
     
     res.status(statusCode).json({
         message,

@@ -1,3 +1,4 @@
+import { join, resolve } from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
@@ -9,6 +10,7 @@ import { notFound, errorHandler } from './middleware/errorHandler.js'
 
 import OrderRoutes from './routes/OrderRoutes.js'
 import ProductRoutes from './routes/ProductRoutes.js'
+import UploadRoutes from './routes/UploadRoutes.js'
 import UserRoutes from './routes/UserRoutes.js'
 
 
@@ -25,6 +27,7 @@ const app = express()
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
 app.use(express.json())
+app.use('/uploads', express.static(join(resolve(), '/uploads')))
 
 
 // API routes
@@ -36,6 +39,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/orders', OrderRoutes)
 app.use('/api/products', ProductRoutes)
+app.use('/api/uploads', UploadRoutes)
 app.use('/api/users', UserRoutes)
 
 // PayPal ClientId
