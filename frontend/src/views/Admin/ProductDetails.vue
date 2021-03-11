@@ -8,9 +8,9 @@
         {{ product._id }}
     </h2>
 
-    <!-- <pre>
-        {{ error }}
-    </pre> -->
+    <v-alert v-if="success" class="mb-4" type="alert-success">
+        Product updated
+    </v-alert>
 
     <v-loader v-if="isLoading" />
     <v-alert v-else-if="error.message">
@@ -41,6 +41,7 @@
                 inputId="price"
                 label="Price"
                 type="number"
+                :step="0.01"
                 :errors="error.errors ? error.errors.price : undefined"
             />
         </div>
@@ -69,7 +70,7 @@
             :errors="error.errors ? error.errors.description : undefined"
         />
         
-        <div class="col-lg-6 col-md-8 col-12 mx-auto mt-4 p-0">
+        <div class="col-lg-4 col-md-6 col-sm-8 col-12 mx-auto mt-4 p-0">
             <button type="submit" class="btn btn-dark btn-block">
                 Update
             </button>
@@ -93,11 +94,12 @@ export default {
         VAlert: defineAsyncComponent(() => import(/* webpackChunkName: "message-component" */ '@/components/utils/VAlert'))
     },
     setup() {
-        const { product, setProduct, updateProduct, isLoading, error } = useProducts()
+        const { success, product, setProduct, updateProduct, isLoading, error } = useProducts()
 
         setProduct()
 
         return {
+            success,
             product: ref(product.value),
             updateProduct,
             isLoading,

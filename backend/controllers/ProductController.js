@@ -66,13 +66,13 @@ export const updateProduct = asyncHandler(async (req, res) => {
         throw new Error(`Product not found with the id of ${req.params.id}`)
     }
 
-    product.name = name || product.name
-    product.image = image || product.image
-    product.brand = brand || product.brand
-    product.price = price || product.price
-    product.category = category || product.category
-    product.description = description || product.description
-    product.countInStock = countInStock || product.countInStock
+    product.name = name/*  || product.name */
+    product.image = image/*  || product.image */
+    product.brand = brand/*  || product.brand */
+    product.price = price/*  || product.price */
+    product.category = category/*  || product.category */
+    product.description = description/*  || product.description */
+    product.countInStock = countInStock/*  || product.countInStock */
 
     await product.save()
 

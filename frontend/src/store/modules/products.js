@@ -61,6 +61,22 @@ const actions = {
     }),
     
     /*
+     * @desc        Update product data by id
+     * @access      Admin
+     */
+    updateProduct: actionHandler(async ({ commit, rootState }, product) => {
+        const { _id, name, image, brand, category, description, price, countInStock } = product
+
+        const { data } = await axios.put(`/api/products/${_id}`,
+            { name, image, brand, category, description, price, countInStock },
+            { headers: { Authorization: `Bearer ${rootState.users.loggedUser.token}` }}
+        )
+
+        commit('resetSingleProduct')
+        commit('setSingleProduct', data.data)
+    }),
+    
+    /*
      * @desc        Delete product by id
      * @access      Admin
      */

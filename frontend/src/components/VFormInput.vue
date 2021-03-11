@@ -8,7 +8,8 @@
             required,
             autofocus,
             autocomplete,
-            min: type === 'number' ? min : undefined
+            min: type === 'number' ? min : undefined,
+            step: type === 'number' ? step : undefined
         }"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
@@ -36,7 +37,8 @@ export default {
         required: { type: Boolean, default: false },
         autofocus: { type: Boolean, default: false },
         autocomplete: { type: Boolean, default: false },
-        min: { type: [Number, Boolean], default: 0 }
+        min: { type: [Number, Boolean], default: 0 },
+        step: { type: Number, default: 1 }
     },
     emits: {
         'update:modelValue': null

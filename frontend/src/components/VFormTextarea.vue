@@ -33,22 +33,20 @@ export default {
     emits: {
         'update:modelValue': null
     },
-    mounted() {
-        this.triggerLabelActiveClass()
-
-        document.getElementById(this.inputId).addEventListener('input', e => {
-            const textareaHeight = e.target.getBoundingClientRect().height
-            const scrollHeight = e.target.scrollHeight
-
-            if (textareaHeight < scrollHeight) e.target.style.height = `${scrollHeight + 4}px`
-        })
-    },
     updated() {
-        this.triggerLabelActiveClass()
+        this.setElementHeightAndActiveClass()
     },
     methods: {
-        triggerLabelActiveClass() {
+        setElementHeightAndActiveClass() {
             const textarea = document.getElementById(this.inputId)
+
+            const textareaHeight = textarea.getBoundingClientRect().height
+            const scrollHeight = textarea.scrollHeight
+
+            // Set element height
+            if (textareaHeight < scrollHeight) textarea.style.height = `${scrollHeight + 4}px`
+            
+            // Trigger label active class
             textarea.value.length !== 0 ? textarea.classList.add('active') : textarea.classList.remove('active')
         }
     }
